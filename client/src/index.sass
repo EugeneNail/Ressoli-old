@@ -1,0 +1,41 @@
+@import ./_variables.sass
+    
+* 
+    margin: 0
+    padding: 0
+    box-sizing: border-box
+    list-style-type: none
+    text-decoration: none
+    font-family: Helvetica
+    outline: none
+    border: none
+
+html
+    font-size: 62.5%
+
+body
+    font-size: 1.6rem
+
+.button
+    cursor: pointer
+    font-size: 1.6rem
+    border-radius: 0.5em
+    text-align: center
+    padding: 1.2rem 2rem
+    box-shadow: $shadow
+    transition: .5s
+    width: fit-content
+
+    &_regular
+        color: white
+        background: $accent
+
+        &:hover 
+            background: darken($accent, 10%)
+
+    &_light
+        background: white
+        color: black
+
+        &:hover
+            box-shadow:0 0 12px #00000040
