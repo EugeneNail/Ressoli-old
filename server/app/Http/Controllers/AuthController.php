@@ -30,11 +30,17 @@ class AuthController extends Controller
     }
 
     public function signup(SignupRequest $request) {
+        if (User::where("email", $request->email)->first()) {
+            $errors = (new MessageBag())->add("email", "Этот адрес электронной почты уже занят. Попробуйте другой");
+            return response($errors, Response::HTTP_CONFLICT);
+        }
+
         User::create($request->all());
         $userInfo = [
             "username" => $request->name,
             "imageUrl" => null
         ];
+
         return response($userInfo, Response::HTTP_CREATED);
     }
 }

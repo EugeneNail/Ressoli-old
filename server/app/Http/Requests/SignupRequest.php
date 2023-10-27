@@ -25,7 +25,7 @@ class SignupRequest extends FormRequest
         return [
             "name" => "required|alpha",
             "surname" => "required|alpha",
-            "email" => "required|email|unique:users,email",
+            "email" => "required|email",
             "password" => ["required", Password::min(8)->letters()->numbers()->mixedCase()],
             "password_confirmation" => "required|same:password",
         ];
@@ -34,7 +34,6 @@ class SignupRequest extends FormRequest
     public function messages(): array {
         return [
             "name.required" => "Как Вас зовут?",
-            "email.unique" => "Этот адрес электронной почты уже занят. Попробуйте другой",
             "password_confirmation.same" => "Пароли не совпадают", 
         ];
     }
