@@ -1,0 +1,70 @@
+@import ../../_variables.sass
+    
+.inputbox
+    background: $input-bg
+    border-radius: 0.8rem
+    border: 1px solid $input-bd
+    
+    &:hover
+        background: $input-bg-hover
+
+    &:has(&__input:focus)
+        background: $input-bg-focus
+        border: 1px solid $accent
+
+    &:has(&__input:focus) &__label
+        color: $accent        
+    
+    &:has(&__input:focus) &__leading-icon
+        color: $accent
+
+
+    &__outer-wrapper
+        display: grid
+        grid-template-columns: auto 1fr auto
+        grid-template-areas: "leading input trailing"
+        padding: 0 1.5rem
+
+    &__inner-wrapper
+        grid-area: input
+        position: relative
+
+    &__leading-icon
+        user-select: none
+        width: 1.8rem
+        color: $subfont
+        margin-right: 1rem
+        place-self: center
+        grid-area: leading
+
+    &__label
+        transition: .3s
+        position: absolute
+        left: 0
+        top: 1.3rem
+        font-size: 1.6rem
+        color: $subfont
+        pointer-events: none
+
+        &_active
+            font-size: 1.0rem
+            top: 0.5rem
+
+    &__input
+        width: 100%
+        background: none
+        font-size: 1.6rem
+        padding: 1.8rem 0 .6rem 0
+
+    &__trailing-icon
+        place-self: center
+        grid-area: trailing
+        color: $subfont
+        user-select: none
+        margin-left: 1rem
+
+        &:hover
+            color: $accent
+            cursor: pointer
+
+    &__hint
