@@ -17,7 +17,6 @@ api.interceptors.request.use((config) => {
 
 api.interceptors.response.use(
   (response) => response,
-  //TODO добавить редирект на отдельную страницу при ошибке 500
   (error) => error.response
 );
 
