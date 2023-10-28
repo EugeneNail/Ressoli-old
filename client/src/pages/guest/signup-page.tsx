@@ -4,9 +4,11 @@ import Passwordbox from "../../components/inputbox/passwordbox";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons/faEnvelope";
 import { faKey } from "@fortawesome/free-solid-svg-icons/faKey";
 import { faUser } from "@fortawesome/free-solid-svg-icons/faUser";
-import useFormState from "../../service/useFormData";
+import useFormState from "../../service/useFormState";
+import api from "../../service/api";
+import { useNavigate } from "react-router";
 
-class SignupPageData {
+class SignupFormFields {
   name: string = "";
   surname: string = "";
   email: string = "";
@@ -14,7 +16,7 @@ class SignupPageData {
   password_confirmation: string = "";
 }
 
-class SignupPageErrors {
+class SignupFormErrors {
   name: string[] = [];
   surname: string[] = [];
   email: string[] = [];
@@ -23,13 +25,27 @@ class SignupPageErrors {
 }
 
 const SignupPage: FC = () => {
-  const [data, errors, { setField, setErrors, clearFieldErrors }] = useFormState(
-    new SignupPageData(),
-    new SignupPageErrors()
+  const navigate = useNavigate();
+  const [fields, errors, { setField, setErrors, clearFieldErrors }] = useFormState(
+    new SignupFormFields(),
+    new SignupFormErrors()
   );
 
-  const submit = (event: MouseEvent) => {
+  const submit = async (event: MouseEvent) => {
     event.preventDefault();
+    const response = await api.post("/signup", fields);
+    const data = response.data;
+
+    if (response.status === 422 || response.status === 409) {
+      setErrors(data.errors);
+      return;
+    }
+
+    api.get("/csrf");
+    localStorage.setItem("access_token", data.token);
+    localStorage.setItem("user_name", data.username);
+    localStorage.setItem("image_url", data.imageUrl);
+    navigate("/");
   };
 
   return (

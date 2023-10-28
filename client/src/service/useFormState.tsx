@@ -20,7 +20,7 @@ const useFormState = <D, E>(
     setData({ ...data, [input.name]: input.type == "checkbox" ? input.checked : input.value });
   };
 
-  const setErrors = (newErrors: any) => {
+  const setErrors = (newErrors: E) => {
     _setErrors({ ...newErrors });
   };
 
