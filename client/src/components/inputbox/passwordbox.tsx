@@ -10,6 +10,8 @@ interface PasswordboxProps {
   hint?: string;
   name: string;
   leadingIcon?: IconDefinition;
+  errors?: string[];
+  clearErrors?: (name: string) => void;
 }
 
 const Passwordbox: FC<PasswordboxProps> = (props) => {
@@ -21,6 +23,7 @@ const Passwordbox: FC<PasswordboxProps> = (props) => {
     if (event.target.value.length === 0) {
       setActive(false);
     }
+    props.clearErrors?.(props.name);
   };
 
   return (
@@ -49,6 +52,15 @@ const Passwordbox: FC<PasswordboxProps> = (props) => {
       </div>
 
       <p className="inputbox__hint">{props.hint}</p>
+      {props.errors && props.errors?.length > 0 && (
+        <ul className="inputbox__errors">
+          {props.errors.map((error, index) => (
+            <li key={index} className="inputbox__error">
+              {error}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };

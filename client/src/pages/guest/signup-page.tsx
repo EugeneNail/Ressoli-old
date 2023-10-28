@@ -1,9 +1,10 @@
-import { ChangeEvent, MouseEvent, FC, useState } from "react";
+import { MouseEvent, FC } from "react";
 import Textbox from "../../components/inputbox/textbox";
 import Passwordbox from "../../components/inputbox/passwordbox";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons/faEnvelope";
 import { faKey } from "@fortawesome/free-solid-svg-icons/faKey";
 import { faUser } from "@fortawesome/free-solid-svg-icons/faUser";
+import useFormState from "../../service/useFormData";
 
 class SignupPageData {
   name: string = "";
@@ -13,17 +14,19 @@ class SignupPageData {
   password_confirmation: string = "";
 }
 
-const SignupPage: FC = () => {
-  const [data, setData] = useState(new SignupPageData());
+class SignupPageErrors {
+  name: string[] = [];
+  surname: string[] = [];
+  email: string[] = [];
+  password: string[] = [];
+  password_confirmation: string[] = [];
+}
 
-  //TODO вынести в отдельный хук
-  const updateData = (event: ChangeEvent<HTMLInputElement>) => {
-    const input = event.target;
-    setData({
-      ...data,
-      [input.name]: input.type === "checkbox" ? input.checked : input.value,
-    });
-  };
+const SignupPage: FC = () => {
+  const [data, errors, { setField, setErrors, clearFieldErrors }] = useFormState(
+    new SignupPageData(),
+    new SignupPageErrors()
+  );
 
   const submit = (event: MouseEvent) => {
     event.preventDefault();
@@ -35,11 +38,46 @@ const SignupPage: FC = () => {
         <h1 className="guest__header">Регистрация</h1>
       </div>
       <div className="guest__input-group">
-        <Textbox label="Имя" name="name" onChange={updateData} leadingIcon={faUser} />
-        <Textbox label="Фамилия" name="surname" onChange={updateData} leadingIcon={faUser} />
-        <Textbox label="Электронная почта" name="email" onChange={updateData} leadingIcon={faEnvelope} />
-        <Passwordbox label="Пароль" name="password" onChange={updateData} leadingIcon={faKey} />
-        <Passwordbox label="Повторите пароль" name="password_confirmation" onChange={updateData} leadingIcon={faKey} />
+        <Textbox
+          label="Имя"
+          name="name"
+          onChange={setField}
+          leadingIcon={faUser}
+          errors={errors.name}
+          clearErrors={clearFieldErrors}
+        />
+        <Textbox
+          label="Фамилия"
+          name="surname"
+          onChange={setField}
+          leadingIcon={faUser}
+          errors={errors.surname}
+          clearErrors={clearFieldErrors}
+        />
+        <Textbox
+          label="Электронная почта"
+          name="email"
+          onChange={setField}
+          leadingIcon={faEnvelope}
+          errors={errors.email}
+          clearErrors={clearFieldErrors}
+        />
+        <Passwordbox
+          label="Пароль"
+          name="password"
+          onChange={setField}
+          leadingIcon={faKey}
+          errors={errors.password}
+          clearErrors={clearFieldErrors}
+        />
+        <Passwordbox
+          label="Повторите пароль"
+          name="password_confirmation"
+          onChange={setField}
+          leadingIcon={faKey}
+          errors={errors.password_confirmation}
+          clearErrors={clearFieldErrors}
+        />
       </div>
       <button onClick={submit} className="guest__button button button_regular button_wide">
         Создать аккаунт

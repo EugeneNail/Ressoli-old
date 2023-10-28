@@ -10,6 +10,8 @@ interface TextboxProps {
   name: string;
   leadingIcon?: IconDefinition;
   trailingIcon?: IconDefinition;
+  errors?: string[];
+  clearErrors?: (name: string) => void;
 }
 
 const Textbox: FC<TextboxProps> = (props) => {
@@ -20,6 +22,7 @@ const Textbox: FC<TextboxProps> = (props) => {
     if (event.target.value.length === 0) {
       setActive(false);
     }
+    props.clearErrors?.(props.name);
   };
 
   return (
@@ -43,6 +46,15 @@ const Textbox: FC<TextboxProps> = (props) => {
         {props.trailingIcon && <FontAwesomeIcon icon={props.trailingIcon} className="inputbox__trailing-icon" />}
       </div>
       <p className="inputbox__hint">{props.hint}</p>
+      {props.errors && props.errors?.length > 0 && (
+        <ul className="inputbox__errors">
+          {props.errors.map((error, index) => (
+            <li key={index} className="inputbox__error">
+              {error}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };

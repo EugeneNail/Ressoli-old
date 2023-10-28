@@ -12,7 +12,6 @@ class LoginPageData {
 const LoginPage: FC = () => {
   const [data, setData] = useState(new LoginPageData());
 
-  //TODO вынести в отдельный хук
   const updateData = (event: ChangeEvent<HTMLInputElement>) => {
     const input = event.target;
     setData({

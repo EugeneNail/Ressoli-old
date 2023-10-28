@@ -18,25 +18,25 @@ select:-webkit-autofill:focus
 
 
 .inputbox
-    background: $input-bg
-    border-radius: 0.8rem
-    border: 1px solid $input-bd
     
-    &:hover
+    &__outer-wrapper:hover
         background: $input-bg-hover
 
-    &:has(&__input:focus)
+    &__outer-wrapper:has(&__input:focus)
         background: $input-bg-focus
         border: 1px solid $accent
 
-    &:has(&__input:focus) &__label
+    &__outer-wrapper:has(&__input:focus) &__label
         color: $accent        
     
-    &:has(&__input:focus) &__leading-icon
+    &__outer-wrapper:has(&__input:focus) &__leading-icon
         color: $accent
 
 
     &__outer-wrapper
+        background: $input-bg
+        border-radius: 0.8rem
+        border: 1px solid $input-bd
         display: grid
         grid-template-columns: auto 1fr auto
         grid-template-areas: "leading input trailing"
@@ -85,3 +85,16 @@ select:-webkit-autofill:focus
             cursor: pointer
 
     &__hint
+
+    
+    &__errors
+        display: flex
+        flex-direction: column
+        margin-top: 0.4rem
+        padding-left: 2rem
+
+    &__error
+        display: list-item
+        list-style-type: disc
+        font-size: 1.2rem
+        color: darken(red, 10%)
