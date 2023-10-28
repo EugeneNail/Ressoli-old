@@ -1,0 +1,68 @@
+@import ../../_variables.sass
+    
+.default-layout
+    display: grid
+    grid-template-rows: 9rem 1fr
+    grid-template-columns: 27.5rem 1fr
+    grid-template-areas: "header header" "aside main"
+    width: 100vw
+    height: 100vh
+
+.header
+    grid-area: header
+    display: grid
+    grid-template-columns: 27.5rem 1fr
+    border-bottom: 1px solid $border
+
+    &__logo-wrapper
+        gap: 1rem
+        padding: 0 1.6rem
+        border-right: 1px solid $border
+        cursor: pointer
+        display: flex
+        place-items: center
+
+    &__logo
+        height: 3rem
+    
+    &__name
+        font-size: 2rem
+        font-weight: 600
+        color: $accent
+
+    &__main-wrapper
+        display: grid
+        grid-template-columns: 1fr auto auto
+        grid-template-areas: "search interaction user"
+        padding: 2rem 3rem
+
+    &__search
+        grid-area: search
+
+    & .inputbox
+        max-width: 60rem
+
+    &__interaction-group
+        padding: 0 2rem
+        display: flex
+        gap: 1.2rem
+        grid-area: interaction
+        border-right: 1px solid $border 
+
+    &__user
+        width: 4.5rem
+        height: 4.5rem
+        margin-left: 2rem
+        box-shadow: $shadow
+        border-radius: 50%
+        grid-area: user
+
+
+.aside
+    grid-area: aside
+    border-right: 1px solid $border
+    padding: 1.6rem
+
+
+.main
+    grid-area: main
