@@ -10,13 +10,22 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\MessageBag;
 
-class AuthController extends Controller
-{
+class AuthController extends Controller {
+
+    public function authenticate() {
+        return response()->noContent();
+    }
+
+    public function logout(Request $request) {
+        $request->user()->tokens()->where("name", $request->ip())->delete();
+        return response()->noContent();
+    }
+
     public function login(LoginRequest $request) {
         if (!Auth::attempt($request->only(["email", "password"]))) {
             $messages = (new MessageBag())
                 ->add("email", "Неверные данные. Повторите попытку.")
-                ->add("password", "Неверные данные. Повторите попытку."); 
+                ->add("password", "Неверные данные. Повторите попытку.");
             $errors = ["errors" => $messages];
             return response($errors, Response::HTTP_UNAUTHORIZED);
         }
