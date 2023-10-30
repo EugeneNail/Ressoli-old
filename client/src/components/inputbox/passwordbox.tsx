@@ -35,6 +35,7 @@ const Passwordbox: FC<PasswordboxProps> = (props) => {
             {props.label}
           </label>
           <input
+            id={props.name}
             onChange={props.onChange}
             ref={inputRef}
             name={props.name}

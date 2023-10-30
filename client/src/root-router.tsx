@@ -21,6 +21,28 @@ const rootRouter = createBrowserRouter([
   {
     path: "/",
     element: <DefaultLayout />,
+    children: [
+      {
+        path: "/houses",
+        element: null,
+      },
+      {
+        path: "/plots",
+        element: null,
+      },
+      {
+        path: "/apartments",
+        element: null,
+      },
+      {
+        path: "/rooms",
+        element: null,
+      },
+      {
+        path: "/clients",
+        element: null,
+      },
+    ],
   },
 ]);
 

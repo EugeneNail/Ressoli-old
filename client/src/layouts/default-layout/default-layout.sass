@@ -2,7 +2,7 @@
     
 .default-layout
     display: grid
-    grid-template-rows: 9rem 1fr
+    grid-template-rows: 7rem 1fr
     grid-template-columns: 27.5rem 1fr
     grid-template-areas: "header header" "aside main"
     width: 100vw
@@ -34,7 +34,8 @@
         display: grid
         grid-template-columns: 1fr auto auto
         grid-template-areas: "search interaction user"
-        padding: 2rem 3rem
+        padding: 0 3rem
+        align-items: center
 
     &__search
         grid-area: search
@@ -59,7 +60,6 @@
         position: relative
         overflow: hidden
         cursor: pointer
-        transition: .3s
 
         &:hover
             box-shadow: $shadow-hover
@@ -78,3 +78,59 @@
 
 .main
     grid-area: main
+
+.aside
+    display: grid
+    grid-template-rows: auto 1fr
+    flex-direction: column
+
+    &__navigation
+        flex-direction: column
+        display: flex
+        gap: .5rem
+
+    &__logout
+        align-self: end
+        cursor: pointer
+        user-select: none
+        color: darken(red, 10%)
+        font-size: 1.8rem
+        height: 4.5rem
+        align-items: center
+        padding: 0 1.5rem
+        display: grid
+        grid-template-columns: 2rem 1fr
+        gap: 1rem
+
+
+.aside-link
+    font-size: 1.8rem
+    height: 4.5rem
+    align-items: center
+    padding: 0 1.5rem
+    display: grid
+    grid-template-columns: 2rem 1fr
+    gap: 1rem
+    border-radius: 0.8rem
+    color: $font
+
+    &:visited
+        color: $font
+
+    &:hover
+        padding-left: 2.5rem
+        color: $accent
+
+    &.active
+        background: transparentize($accent, 0.9)
+        color: $accent
+
+
+    &__icon
+        justify-self: center
+        font-size: 1.5rem
+
+    &__text
+
+
+    

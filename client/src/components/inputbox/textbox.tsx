@@ -34,6 +34,7 @@ const Textbox: FC<TextboxProps> = (props) => {
             {props.label}
           </label>
           <input
+            id={props.name}
             onChange={props.onChange}
             ref={inputRef}
             name={props.name}
