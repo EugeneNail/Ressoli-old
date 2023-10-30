@@ -49,7 +49,7 @@ const SignupPage: FC = () => {
   };
 
   return (
-    <div className="guest__form">
+    <form className="guest__form">
       <div className="guest__logo-group">
         <h1 className="guest__header">Регистрация</h1>
       </div>
@@ -104,7 +104,7 @@ const SignupPage: FC = () => {
           Войти
         </a>
       </p>
-    </div>
+    </form>
   );
 };
 

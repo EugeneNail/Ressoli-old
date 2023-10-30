@@ -42,7 +42,7 @@ const LoginPage: FC = () => {
   };
 
   return (
-    <div className="guest__form">
+    <form className="guest__form">
       <h1 className="guest__header">ВХОД</h1>
       <div className="guest__input-group">
         <Textbox
@@ -71,7 +71,7 @@ const LoginPage: FC = () => {
           Зарегистрироваться
         </a>
       </p>
-    </div>
+    </form>
   );
 };
 
