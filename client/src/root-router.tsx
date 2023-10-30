@@ -1,49 +1,40 @@
-import { createBrowserRouter } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import GuestLayout from "./layouts/guest-layout/guest-layout";
 import LoginPage from "./pages/guest/login-page";
 import SignupPage from "./pages/guest/signup-page";
 import DefaultLayout from "./layouts/default-layout/default-layout";
+import { FC, useEffect } from "react";
+import ProtectedRoute from "./protected-route";
 
-const rootRouter = createBrowserRouter([
-  {
-    element: <GuestLayout />,
-    children: [
-      {
-        path: "/login",
-        element: <LoginPage />,
-      },
-      {
-        path: "/signup",
-        element: <SignupPage />,
-      },
-    ],
-  },
-  {
-    path: "/",
-    element: <DefaultLayout />,
-    children: [
-      {
-        path: "/houses",
-        element: null,
-      },
-      {
-        path: "/plots",
-        element: null,
-      },
-      {
-        path: "/apartments",
-        element: null,
-      },
-      {
-        path: "/rooms",
-        element: null,
-      },
-      {
-        path: "/clients",
-        element: null,
-      },
-    ],
-  },
-]);
+const RootRouter: FC = () => {
+  console.log("im here");
+  useEffect(() => {}, []);
 
-export default rootRouter;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route element={<GuestLayout />}>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+        </Route>
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <DefaultLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="" element={<Navigate to={"/houses"} />} />
+          <Route path="/houses" element={null} />
+          <Route path="/plots" element={null} />
+          <Route path="/apartments" element={null} />
+          <Route path="/rooms" element={null} />
+          <Route path="/clients" element={null} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
+};
+
+export default RootRouter;

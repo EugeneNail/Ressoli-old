@@ -1,7 +1,7 @@
 import { FC } from "react";
 import "./button.sass";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { IconDefinition, faEye, faLock } from "@fortawesome/free-solid-svg-icons";
+import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 import { MouseEvent } from "react";
 
 type ButtonProps = {
