@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\PlotController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -26,3 +27,5 @@ Route::post("/signup", [AuthController::class, "signup"]);
 Route::group(["prefix" => "applications", "middleware" => "auth:sanctum"], function () {
     Route::apiResource("plots", PlotController::class);
 });
+
+Route::apiResource("clients", ClientController::class);
