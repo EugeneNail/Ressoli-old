@@ -28,4 +28,4 @@ Route::group(["prefix" => "applications", "middleware" => "auth:sanctum"], funct
     Route::apiResource("plots", PlotController::class);
 });
 
-Route::apiResource("clients", ClientController::class);
+Route::apiResource("clients", ClientController::class)->middleware(["auth:sanctum"]);
