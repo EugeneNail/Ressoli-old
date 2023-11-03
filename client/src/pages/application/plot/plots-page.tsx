@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import Button from "../../../components/button/button";
-import "../application.sass";
+import "../applications-page.sass";
 import { faArrowUpWideShort, faSliders } from "@fortawesome/free-solid-svg-icons";
 import PlotCard from "../../../components/realty-card/plot-card";
 

@@ -22,6 +22,11 @@
         display: grid
         grid-template-columns: repeat(auto-fit, minmax(35rem, 1fr))
 
+.new-application-page
+    display: grid
+    width: 100%
+    min-height: 100%
+
 .realty-card
     font-size: 1.4rem
     color: $subfont
@@ -63,37 +68,3 @@
         margin-top: 2rem
         display: flex
         gap: 2rem
-
-.info
-    display: grid
-    grid-template-columns: 2rem 1fr
-    gap: .5rem
-    align-items: center
-
-    &__icon-container
-        display: grid
-        width: 100%
-        justify-items: center
-
-    &___icon
-        align-self: center
-
-    &__value
-
-.stat
-    color: darken($accent, 40%)
-    display: flex
-    align-items: center
-    gap: 0.6rem
-
-    &__icon-container
-        background: #E9E9ED
-        display: grid
-        place-items: center
-        width: 3.2rem
-        height: 3.2rem
-        border-radius: 1rem
-
-    &__icon
-
-    &__value
