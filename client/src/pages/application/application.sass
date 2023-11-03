@@ -56,37 +56,37 @@
 
     &__price-type
 
-    &__address
+    &__info-group
         margin-top: 1.5rem
-        display: grid
-        grid-template-columns: 2rem 1fr
-        align-items: center
-
-    &___address-icon
-
-    &__address-value
-
-    &__client
-        display: grid
-        grid-template-columns: 2rem 1fr
-        align-items: center
-
-    &__client-icon
-
-    &_client-value
 
     &__stats-group
         margin-top: 2rem
         display: flex
-        gap: 3rem
+        gap: 2rem
 
-    &__stat
-        color: darken($accent, 40%)
-        display: flex
-        align-items: center
-        gap: 0.6rem
+.info
+    display: grid
+    grid-template-columns: 2rem 1fr
+    gap: .5rem
+    align-items: center
 
-    &__stat-icon-container
+    &__icon-container
+        display: grid
+        width: 100%
+        justify-items: center
+
+    &___icon
+        align-self: center
+
+    &__value
+
+.stat
+    color: darken($accent, 40%)
+    display: flex
+    align-items: center
+    gap: 0.6rem
+
+    &__icon-container
         background: #E9E9ED
         display: grid
         place-items: center
@@ -94,6 +94,6 @@
         height: 3.2rem
         border-radius: 1rem
 
-    &__stat-icon
+    &__icon
 
-    &__stat-value
+    &__value

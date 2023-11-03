@@ -6,11 +6,15 @@ import {
   faFireFlameCurved,
   faFireFlameSimple,
   faLocationDot,
+  faPhone,
   faStairs,
   faUser,
+  faWater,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FC } from "react";
+import Stat from "../stat";
+import Info from "../info";
 
 type PlotCardProps = {
   plot: any;
@@ -27,36 +31,16 @@ const PlotCard: FC<PlotCardProps> = ({ plot }) => {
           <span className="realty-card__price-type">/месяц</span>
         </p>
       </div>
-      <div className="realty-card__address">
-        <FontAwesomeIcon className="realty-card__address-icon" icon={faLocationDot} />
-        <p className="realty-card__address-value">ул. Добролюбова, 3А, Батайск</p>
-      </div>
-      <div className="realty-card__client">
-        <FontAwesomeIcon className="realty-card__client-icon" icon={faUser} />
-        <p className="realty-card__client-value">Петрушенко А.В.</p>
+      <div className="realty-card__info-group">
+        <Info icon={faLocationDot} value=" ул. Добролюбова, 3А, Батайск" />
+        <Info icon={faUser} value="Алексей Петрушенко" />
+        <Info icon={faPhone} value="8 (800) 555-35-35" fontSize={12} />
       </div>
       <div className="realty-card__stats-group">
-        <div className="realty-card__stat">
-          <div className="realty-card__stat-icon-container">
-            <FontAwesomeIcon className="realty-card__stat-icon" icon={faExpand} />
-          </div>
-        </div>
-        <div className="realty-card__stat">
-          <div className="realty-card__stat-icon-container">
-            <FontAwesomeIcon className="realty-card__stat-icon" icon={faExpand} />
-          </div>
-        </div>
-        <div className="realty-card__stat">
-          <div className="realty-card__stat-icon-container">
-            <FontAwesomeIcon className="realty-card__stat-icon" icon={faExpand} />
-          </div>
-        </div>
-        <div className="realty-card__stat">
-          <div className="realty-card__stat-icon-container">
-            <FontAwesomeIcon className="realty-card__stat-icon" icon={faExpand} />
-          </div>
-          <p className="realty-card__stat-value">422 квм</p>
-        </div>
+        <Stat icon={faFireFlameCurved} />
+        <Stat icon={faDroplet} />
+        <Stat icon={faBolt} />
+        <Stat icon={faExpand} value={"422.24 квм"} />
       </div>
     </li>
   );
