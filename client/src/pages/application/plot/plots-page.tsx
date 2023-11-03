@@ -1,8 +1,8 @@
 import { FC, useState } from "react";
 import Button from "../../../components/button/button";
-import PlotCard from "./plot-card";
 import "../application.sass";
 import { faArrowUpWideShort, faSliders } from "@fortawesome/free-solid-svg-icons";
+import PlotCard from "../../../components/realty-card/plot-card";
 
 const PlotsPage: FC = () => {
   const [plots, setPlots] = useState<number[]>([1, 2, 3, 4]);

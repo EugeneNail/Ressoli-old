@@ -14,7 +14,7 @@ const Header: FC = () => {
   return (
     <header className="header">
       <a className="header__logo-wrapper">
-        <img src="./img/logo.svg" alt="" className="header__logo" />
+        <img src="/img/logo.svg" alt="" className="header__logo" />
         <p className="header__name">Ressoli</p>
       </a>
       <div className="header__main-wrapper">
@@ -26,7 +26,7 @@ const Header: FC = () => {
           <Button type="light" iconOnly leadingIcon={faBell} action={console.log} />
         </div>
         <div className="header__user">
-          <img src="./img/man-stock.jpg" alt="" className="header__user-img" />
+          <img src="/img/man-stock.jpg" alt="" className="header__user-img" />
         </div>
       </div>
     </header>

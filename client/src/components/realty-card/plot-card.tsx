@@ -1,20 +1,15 @@
 import {
-  faAddressBook,
   faBolt,
   faDroplet,
   faExpand,
   faFireFlameCurved,
-  faFireFlameSimple,
   faLocationDot,
   faPhone,
-  faStairs,
   faUser,
-  faWater,
 } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FC } from "react";
-import Stat from "../stat";
-import Info from "../info";
+import Info from "../info/info";
+import Stat from "../stat/stat";
 
 type PlotCardProps = {
   plot: any;

@@ -1,7 +1,6 @@
 import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FC } from "react";
-import "./application.sass";
 
 type StatProps = {
   icon: IconDefinition;
