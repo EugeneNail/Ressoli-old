@@ -12,7 +12,7 @@ function useMultiStepForm(steps: ReactElement[]) {
   }
 
   function goTo(index: number) {
-    setCurrentStep(index >= 0 && index < steps.length - 1 ? index : 0);
+    setCurrentStep(index >= 0 && index < steps.length ? index : 0);
   }
 
   return {
