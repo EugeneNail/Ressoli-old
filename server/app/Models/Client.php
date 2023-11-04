@@ -15,7 +15,7 @@ class Client extends Model {
         "surname"
     ];
 
-    public function phone_numbers(): MorphOne {
+    public function phone_number(): MorphOne {
         return $this->morphOne(PhoneNumber::class, "numberable");
     }
 
