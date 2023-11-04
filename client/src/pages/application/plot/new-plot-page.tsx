@@ -3,10 +3,12 @@ import "../editable-application-page.sass";
 import ClientForm from "../../../components/form/client-form";
 import FormProgressBar from "../../../components/form-progress-bar/form-progress-bar";
 import useMultiStepForm from "../../../service/use-multi-step-form";
+import AddressForm from "../../../components/form/address-form";
 
 const NewPlotPage: FC = () => {
   const { steps, back, next, currentStep, goTo } = useMultiStepForm([
     <ClientForm back={() => back()} next={() => next()} />,
+    <AddressForm back={() => back()} next={() => next()} />,
     <div>Address</div>,
     <div>Plot</div>,
     <div>Contract</div>,
