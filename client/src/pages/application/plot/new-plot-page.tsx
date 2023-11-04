@@ -7,7 +7,7 @@ import useMultiStepForm from "../../../service/use-multi-step-form";
 
 const NewPlotPage: FC = () => {
   const { steps, back, next, currentStep, goTo } = useMultiStepForm([
-    <div>Client</div>,
+    <ClientForm back={() => back()} next={() => next()} />,
     <div>Address</div>,
     <div>Plot</div>,
     <div>Contract</div>,

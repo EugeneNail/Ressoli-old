@@ -14,10 +14,13 @@ class PhoneNumber extends Model {
     }
 
     protected $fillable = [
+        "id",
         "value",
         "numberable_id",
         "numberable_type"
     ];
 
     public $timestamps = false;
+
+    public $incrementing = false;
 }
