@@ -31,11 +31,18 @@ const ClientForm: FC<ClientFormProps> = (props) => {
 
   const submit = async () => {
     const response = await api.post("/clients", fields);
+<<<<<<< HEAD
+=======
+    console.log(response.data);
+>>>>>>> b98ddb62d688320e807cd4d8b67000cba93caf6b
     if (response.status >= 400) {
       setErrors(response.data.errors);
       return;
     }
+<<<<<<< HEAD
     fields.id = response.data;
+=======
+>>>>>>> b98ddb62d688320e807cd4d8b67000cba93caf6b
     props.next?.();
   };
 
