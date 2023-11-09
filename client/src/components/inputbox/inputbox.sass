@@ -116,6 +116,24 @@ input[type=number]
             color: $accent
             cursor: pointer
 
+    &__trailing-buttons
+        display: grid
+        height: 100%
+        flex-direction: column
+        grid-template-rows: 1fr 1fr
+        grid-area: trailing
+
+    &__trailing-button
+        color: $subfont
+        cursor: pointer
+        user-select: none
+
+        &:hover
+            color: $accent
+
+    &__trailing-button:first-child
+        align-self: end
+
     &__hint
 
     &__errors
