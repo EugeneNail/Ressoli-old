@@ -8,7 +8,7 @@ input:-webkit-autofill,
 select:-webkit-autofill
     -webkit-box-shadow: 0 0 0 30px $input-bg inset !important
 
-input:-webkit-autofill:hover, 
+input:-webkit-autofill:hover,
 select:-webkit-autofill:hover
     -webkit-box-shadow: 0 0 0 30px $input-bg-hover inset !important
 
@@ -16,9 +16,16 @@ input:-webkit-autofill:focus,
 select:-webkit-autofill:focus
     -webkit-box-shadow: 0 0 0 30px $input-bg-focus inset !important
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button
+    -webkit-appearance: none
+    margin: 0
+
+input[type=number]
+    -moz-appearance: textfield
 
 .inputbox
-    
+
     &__outer-wrapper:hover
         background: $input-bg-hover
 
@@ -27,11 +34,10 @@ select:-webkit-autofill:focus
         border: 1px solid $accent
 
     &__outer-wrapper:has(&__input:focus) &__label
-        color: $accent        
-    
-    &__outer-wrapper:has(&__input:focus) &__leading-icon
         color: $accent
 
+    &__outer-wrapper:has(&__input:focus) &__leading-icon
+        color: $accent
 
     &__outer-wrapper
         background: $input-bg
@@ -68,10 +74,36 @@ select:-webkit-autofill:focus
             top: 0.5rem
 
     &__input
+        text-overflow: ellipsis
+        white-space: nowrap
+        overflow: hidden
         width: 100%
         background: none
         font-size: 1.6rem
         padding: 1.8rem 0 .6rem 0
+
+    &__options
+        z-index: 10
+        position: absolute
+        background: white
+        display: flex
+        flex-direction: column
+        max-width: 50rem
+        border: 1px solid $border
+        padding: 1rem
+        border-radius: 0 0 1rem 1rem
+
+    &__option
+        text-overflow: ellipsis
+        white-space: nowrap
+        overflow: hidden
+        border-radius: 0.5rem
+        padding: 1rem
+        cursor: pointer
+
+        &:hover
+            background: transparentize($accent, 0.92)
+            color: $accent
 
     &__trailing-icon
         place-self: center
@@ -86,7 +118,6 @@ select:-webkit-autofill:focus
 
     &__hint
 
-    
     &__errors
         display: flex
         flex-direction: column
@@ -98,3 +129,12 @@ select:-webkit-autofill:focus
         list-style-type: disc
         font-size: 1.2rem
         color: darken(red, 10%)
+
+.selectbox
+
+    &__input
+        cursor: pointer
+
+    &__trailing-icon
+        font-size: 2rem
+        width: 100%
