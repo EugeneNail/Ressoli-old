@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Address extends Model {
     use HasFactory;
@@ -13,11 +13,11 @@ class Address extends Model {
         "city",
         "street",
         "house_number",
-        "apartment_number"
+        "apartment_number",
     ];
 
-    public function application(): BelongsTo {
-        return $this->belongsTo(Application::class);
+    public function application(): HasMany {
+        return $this->hasMany(Application::class);
     }
 
     public $timestamps = false;

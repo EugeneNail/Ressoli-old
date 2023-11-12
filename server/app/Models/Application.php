@@ -37,7 +37,7 @@ class Application extends Model {
         return $this->morphTo();
     }
 
-    public function address(): HasOne {
-        return $this->hasOne(Address::class);
+    public function address(): BelongsTo {
+        return $this->belongsTo(Address::class);
     }
 }

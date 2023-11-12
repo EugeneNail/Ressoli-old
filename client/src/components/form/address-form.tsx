@@ -19,26 +19,16 @@ export class AddressFormErrors {
 }
 
 type AddressFormProps = {
-  next?: () => void;
+  submit?: () => void;
   back?: () => void;
   state: FormState<AddressFormFields, AddressFormErrors>;
 };
 
 const AddressForm: FC<AddressFormProps> = ({
-  next,
+  submit,
   back,
   state: { errors, setField, setErrors, clearFieldErrors },
 }) => {
-  const submit = async () => {
-    // const response = await api.post("/addresses", fields);
-    // if (response.status >= 400) {
-    //   setErrors(response.data.errors);
-    //   return;
-    // }
-    // fields.id = response.data;
-    // props.next?.();
-  };
-
   return (
     <form action="" className="form address-form">
       <h1 className="form__header">Адрес</h1>
@@ -60,8 +50,8 @@ const AddressForm: FC<AddressFormProps> = ({
         />
       </div>
       <div className="form__button-group">
-        <Button type="light" text="Назад" action={() => back?.()} />
-        <Button type="regular" text="Далее" action={submit} />
+        <Button type="light" wide text="Назад" action={() => back?.()} />
+        <Button type="regular" wide text="Далее" action={() => submit?.()} />
       </div>
     </form>
   );

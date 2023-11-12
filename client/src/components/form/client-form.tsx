@@ -19,22 +19,16 @@ export class ClientFormErrors {
 }
 
 type ClientFormProps = {
-  next?: () => void;
+  submit?: () => void;
   back?: () => void;
   state: FormState<ClientFormFields, ClientFormErrors>;
 };
 
-const ClientForm: FC<ClientFormProps> = ({ next, back, state: { errors, setField, setErrors, clearFieldErrors } }) => {
-  const submit = async () => {
-    // const response = await api.post("/clients", fields);
-    // if (response.status >= 400) {
-    //   setErrors(response.data.errors);
-    //   return;
-    // }
-    // fields.id = response.data;
-    // props.next?.();
-  };
-
+const ClientForm: FC<ClientFormProps> = ({
+  submit,
+  back,
+  state: { errors, setField, setErrors, clearFieldErrors },
+}) => {
   return (
     <form action="" className="client-form form">
       <h1 className="form__header">Клиент</h1>
@@ -57,7 +51,7 @@ const ClientForm: FC<ClientFormProps> = ({ next, back, state: { errors, setField
       </div>
       <div className="form__button-group">
         <Button wide type="light" text="Назад" action={() => back?.()} />
-        <Button wide type="regular" text="Далее" action={submit} />
+        <Button wide type="regular" text="Далее" action={() => submit?.()} />
       </div>
     </form>
   );

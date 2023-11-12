@@ -5,14 +5,45 @@ import FormProgressBar from "../../../components/form-progress-bar/form-progress
 import useMultiStepForm from "../../../service/use-multi-step-form";
 import AddressForm, { AddressFormErrors, AddressFormFields } from "../../../components/form/address-form";
 import useFormState from "../../../service/use-form-state";
+import api from "../../../service/api";
 
 const NewPlotPage: FC = () => {
   const client = useFormState(new ClientFormFields(), new ClientFormErrors());
   const address = useFormState(new AddressFormFields(), new AddressFormErrors());
 
+  const confirmClient = async () => {
+    const response = await api.post("/clients/confirm", client.fields);
+    if (response.status >= 400) {
+      client.setErrors(response.data.errors);
+      return;
+    }
+    if (response.status == 200) {
+      client.fields.id = response.data;
+    }
+    if (response.status == 204) {
+      client.fields.id = 0;
+    }
+    next();
+  };
+
+  const confirmAddress = async () => {
+    const response = await api.post("/addresses/confirm", address.fields);
+    if (response.status >= 400) {
+      address.setErrors(response.data.errors);
+      return;
+    }
+    if (response.status == 200) {
+      address.fields.id = response.data;
+    }
+    if (response.status == 204) {
+      address.fields.id = 0;
+    }
+    next();
+  };
+
   const { steps, back, next, currentStep, goTo } = useMultiStepForm([
-    <ClientForm back={() => back()} next={() => next()} state={client} />,
-    <AddressForm back={() => back()} next={() => next()} state={address} />,
+    <ClientForm back={() => back()} submit={confirmClient} state={client} />,
+    <AddressForm back={() => back()} submit={confirmAddress} state={address} />,
     <div>Address</div>,
     <div>Plot</div>,
     <div>Contract</div>,

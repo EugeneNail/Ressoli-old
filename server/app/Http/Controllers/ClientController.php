@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ConfirmClientRequest;
 use App\Http\Requests\StoreClientRequest;
 use App\Models\Application;
 use App\Models\Client;
@@ -13,29 +14,26 @@ use Illuminate\Support\MessageBag;
 use Laravel\Prompts\Output\ConsoleOutput;
 
 class ClientController extends Controller {
+
+    public function confirm(ConfirmClientRequest $request) {
+        $phoneNumber = PhoneNumber::find($request->phoneNumber);
+        if (!$phoneNumber) {
+            return response()->noContent();
+        }
+        $client = $phoneNumber->numberable;
+        $hasConfirmedClient = $client->name === $request->name && $client->surname === $request->surname;
+        if (!$hasConfirmedClient) {
+            return response(["errors" => (new MessageBag())->add("phoneNumber", "Этот номер уже принадлежит другому клиенту.")], Response::HTTP_CONFLICT);
+        }
+        return response($client->id, Response::HTTP_OK);
+    }
+
     public function index() {
         //
     }
 
-    public function store(StoreClientRequest $request) {
-        $phoneNumber = PhoneNumber::with("numberable")->find($request->phoneNumber);
-
-        if (!$phoneNumber) {
-            $newNumber = new PhoneNumber(["id" => $request->phoneNumber]);
-            $client = Client::create($request->only("name", "surname"));
-            $client->phone_number()->save($newNumber);
-            return response($client->id, Response::HTTP_CREATED);
-        }
-
-        $oldClient = $phoneNumber->numberable;
-        $clientExists = $oldClient->name === $request->name && $oldClient->surname === $request->surname;
-
-        if (!$clientExists) {
-            $errors = ["errors" => (new MessageBag())->add("phoneNumber", "Указанный номер уже принадлежит другому клиенту.")];
-            return response($errors, Response::HTTP_CONFLICT);
-        }
-
-        return response($oldClient->id, Response::HTTP_OK);
+    public function store(Request $request) {
+        //
     }
 
     public function show(string $id) {

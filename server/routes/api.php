@@ -31,6 +31,8 @@ Route::group(["middleware" => "auth:sanctum"], function () {
         Route::apiResource("plots", PlotController::class);
     });
     Route::apiResource("clients", ClientController::class);
+    Route::post("/clients/confirm", [ClientController::class, "confirm"]);
 
     Route::post("/addresses", [AddressController::class, "store"]);
+    Route::post("/addresses/confirm", [AddressController::class, "confirm"]);
 });
