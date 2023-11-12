@@ -6,10 +6,12 @@ import useMultiStepForm from "../../../service/use-multi-step-form";
 import AddressForm, { AddressFormErrors, AddressFormFields } from "../../../components/form/address-form";
 import useFormState from "../../../service/use-form-state";
 import api from "../../../service/api";
+import PlotForm, { PlotFormErrors, PlotFormFields } from "../../../components/form/plot-form";
 
 const NewPlotPage: FC = () => {
   const client = useFormState(new ClientFormFields(), new ClientFormErrors());
   const address = useFormState(new AddressFormFields(), new AddressFormErrors());
+  const plot = useFormState(new PlotFormFields(), new PlotFormErrors());
 
   const confirmClient = async () => {
     const response = await api.post("/clients/confirm", client.fields);
@@ -41,10 +43,20 @@ const NewPlotPage: FC = () => {
     next();
   };
 
+  const confirmPlot = async () => {
+    const response = await api.post("/applications/plots/confirm", plot.fields);
+    console.log(response.data);
+    if (response.status >= 400) {
+      plot.setErrors(response.data.errors);
+      return;
+    }
+    next();
+  };
+
   const { steps, back, next, currentStep, goTo } = useMultiStepForm([
     <ClientForm back={() => back()} submit={confirmClient} state={client} />,
     <AddressForm back={() => back()} submit={confirmAddress} state={address} />,
-    <div>Address</div>,
+    <PlotForm back={() => back()} submit={confirmPlot} state={plot} />,
     <div>Plot</div>,
     <div>Contract</div>,
   ]);

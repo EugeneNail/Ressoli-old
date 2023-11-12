@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ConfirmPlotRequest;
+use App\Models\NonORM\PlotOptions;
 use App\Models\Plot;
-use App\Http\Requests\UpdatePlotRequest;
-use Illuminate\Http\Client\Request;
+use Illuminate\Http\Request;
 
 class PlotController extends Controller {
+
+    public function confirm(ConfirmPlotRequest $request) {
+        return response()->noContent();
+    }
     /**
      * Display a listing of the resource.
      */

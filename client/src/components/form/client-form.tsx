@@ -2,7 +2,6 @@ import { FC } from "react";
 import Textbox from "../inputbox/textbox";
 import Button from "../button/button";
 import "./form.sass";
-import api from "../../service/api";
 import { FormState } from "../../model/form-state";
 
 export class ClientFormFields {
@@ -24,11 +23,7 @@ type ClientFormProps = {
   state: FormState<ClientFormFields, ClientFormErrors>;
 };
 
-const ClientForm: FC<ClientFormProps> = ({
-  submit,
-  back,
-  state: { errors, setField, setErrors, clearFieldErrors },
-}) => {
+const ClientForm: FC<ClientFormProps> = ({ submit, back, state: { errors, setField, clearFieldErrors } }) => {
   return (
     <form action="" className="client-form form">
       <h1 className="form__header">Клиент</h1>

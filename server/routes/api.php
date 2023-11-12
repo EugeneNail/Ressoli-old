@@ -29,6 +29,7 @@ Route::group(["middleware" => "auth:sanctum"], function () {
 
     Route::group(["prefix" => "applications"], function () {
         Route::apiResource("plots", PlotController::class);
+        Route::post("/plots/confirm", [PlotController::class, "confirm"]);
     });
     Route::apiResource("clients", ClientController::class);
     Route::post("/clients/confirm", [ClientController::class, "confirm"]);

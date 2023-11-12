@@ -1,8 +1,6 @@
 import { FC } from "react";
-import useFormState from "../../service/use-form-state";
 import Button from "../button/button";
 import Textbox from "../inputbox/textbox";
-import api from "../../service/api";
 import { FormState } from "../../model/form-state";
 
 export class AddressFormFields {
@@ -24,11 +22,7 @@ type AddressFormProps = {
   state: FormState<AddressFormFields, AddressFormErrors>;
 };
 
-const AddressForm: FC<AddressFormProps> = ({
-  submit,
-  back,
-  state: { errors, setField, setErrors, clearFieldErrors },
-}) => {
+const AddressForm: FC<AddressFormProps> = ({ submit, back, state: { errors, setField, clearFieldErrors } }) => {
   return (
     <form action="" className="form address-form">
       <h1 className="form__header">Адрес</h1>
