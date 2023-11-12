@@ -1,42 +1,38 @@
 import { FC } from "react";
 import Textbox from "../inputbox/textbox";
-import useFormState from "../../service/useFormState";
 import Button from "../button/button";
 import "./form.sass";
 import api from "../../service/api";
+import { FormState } from "../../model/form-state";
 
-class ClientFormFields {
+export class ClientFormFields {
   id: number = 0;
   name: string = "";
   surname: string = "";
   phoneNumber: string = "";
 }
 
-class ClientFormErrors {
-  name: string = "";
-  surname: string = "";
-  phoneNumber: string = "";
+export class ClientFormErrors {
+  name: string[] = [];
+  surname: string[] = [];
+  phoneNumber: string[] = [];
 }
 
 type ClientFormProps = {
   next?: () => void;
   back?: () => void;
+  state: FormState<ClientFormFields, ClientFormErrors>;
 };
 
-const ClientForm: FC<ClientFormProps> = (props) => {
-  const [fields, errors, { setField, setErrors, clearFieldErrors }] = useFormState(
-    new ClientFormFields(),
-    new ClientFormErrors()
-  );
-
+const ClientForm: FC<ClientFormProps> = ({ next, back, state: { errors, setField, setErrors, clearFieldErrors } }) => {
   const submit = async () => {
-    const response = await api.post("/clients", fields);
-    if (response.status >= 400) {
-      setErrors(response.data.errors);
-      return;
-    }
-    fields.id = response.data;
-    props.next?.();
+    // const response = await api.post("/clients", fields);
+    // if (response.status >= 400) {
+    //   setErrors(response.data.errors);
+    //   return;
+    // }
+    // fields.id = response.data;
+    // props.next?.();
   };
 
   return (
@@ -60,7 +56,7 @@ const ClientForm: FC<ClientFormProps> = (props) => {
         />
       </div>
       <div className="form__button-group">
-        <Button wide type="light" text="Назад" action={() => props.back?.()} />
+        <Button wide type="light" text="Назад" action={() => back?.()} />
         <Button wide type="regular" text="Далее" action={submit} />
       </div>
     </form>

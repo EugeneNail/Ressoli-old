@@ -4,7 +4,7 @@ import Passwordbox from "../../components/inputbox/passwordbox";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons/faEnvelope";
 import { faKey } from "@fortawesome/free-solid-svg-icons/faKey";
 import { faUser } from "@fortawesome/free-solid-svg-icons/faUser";
-import useFormState from "../../service/useFormState";
+import useFormState from "../../service/use-form-state";
 import api from "../../service/api";
 import { useNavigate } from "react-router";
 
@@ -26,7 +26,7 @@ class SignupFormErrors {
 
 const SignupPage: FC = () => {
   const navigate = useNavigate();
-  const [fields, errors, { setField, setErrors, clearFieldErrors }] = useFormState(
+  const { fields, errors, setField, setErrors, clearFieldErrors } = useFormState(
     new SignupFormFields(),
     new SignupFormErrors()
   );

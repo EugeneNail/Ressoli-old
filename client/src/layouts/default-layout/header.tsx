@@ -2,14 +2,14 @@ import { FC } from "react";
 import Button from "../../components/button/button";
 import Textbox from "../../components/inputbox/textbox";
 import { faBell, faComment, faSearch } from "@fortawesome/free-solid-svg-icons";
-import useFormState from "../../service/useFormState";
+import useFormState from "../../service/use-form-state";
 
 class SearchFormFields {
   search: string = "";
 }
 
 const Header: FC = () => {
-  const [fields, { setField }] = useFormState(new SearchFormFields(), {});
+  const { fields, setField } = useFormState(new SearchFormFields(), {});
 
   return (
     <header className="header">

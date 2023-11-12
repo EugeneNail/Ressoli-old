@@ -1,17 +1,7 @@
 import { ChangeEvent, useState } from "react";
+import { FormState } from "../model/form-state";
 
-const useFormState = <D, E>(
-  initialData: D,
-  initialErrors: any
-): [
-  D,
-  any,
-  {
-    setField: (event: ChangeEvent<HTMLInputElement>) => void;
-    setErrors: (newErrors: E) => void;
-    clearFieldErrors: (name: string) => void;
-  }
-] => {
+const useFormState = <D, E>(initialData: D, initialErrors: E): FormState<D, E> => {
   const [data, setData] = useState(initialData);
   let [errors, _setErrors] = useState(initialErrors);
 
@@ -28,7 +18,15 @@ const useFormState = <D, E>(
     _setErrors({ ...errors, [name]: [] });
   };
 
-  return [data, errors, { setField, setErrors, clearFieldErrors }];
+  const formState: FormState<D, E> = {
+    fields: data,
+    errors,
+    setField,
+    setErrors,
+    clearFieldErrors,
+  };
+
+  return formState;
 };
 
 export default useFormState;
