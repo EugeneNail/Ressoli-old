@@ -27,6 +27,10 @@ const Aside: FC = () => {
 
   return (
     <aside className="aside">
+      <div className="aside__logo" onClick={() => navigate("/")}>
+        <img src="/img/logo.svg" alt="" className="aside__image" />
+        <p className="aside__name">Ressoli</p>
+      </div>
       <nav className="aside__navigation">
         <AsideLink icon={faHouse} route="/houses" text="Дома" />
         <AsideLink icon={faMap} route="/plots" text="Участки" />

@@ -1,6 +1,5 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import "./form-progress-bar.sass";
-import { width } from "@fortawesome/free-solid-svg-icons/faEnvelope";
 type FormProgressBarProps = {
   steps: number;
   currentStep: number;

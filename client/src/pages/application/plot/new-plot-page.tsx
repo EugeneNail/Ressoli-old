@@ -45,7 +45,6 @@ const NewPlotPage: FC = () => {
 
   const confirmPlot = async () => {
     const response = await api.post("/applications/plots/confirm", plot.fields);
-    console.log(response.data);
     if (response.status >= 400) {
       plot.setErrors(response.data.errors);
       return;

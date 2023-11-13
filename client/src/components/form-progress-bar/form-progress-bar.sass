@@ -21,12 +21,13 @@
 
     &__bottom-track
         width: 100%
-        background: $border
+        background: #ccc
         z-index: 1
 
     &__step
-        background: white
-        border: 3px solid $accent
+        background: $work-area-bg
+        border: 3px dotted $accent
+        color: $font
         width: 4rem
         height: 4rem
         cursor: pointer
@@ -35,7 +36,7 @@
         place-items: center
         font-weight: bold
         z-index: 3
-        outline: 1.5rem solid white
+        outline: 1.5rem solid $work-area-bg
 
         &_completed
             color: white

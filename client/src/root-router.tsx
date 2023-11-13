@@ -5,7 +5,6 @@ import SignupPage from "./pages/guest/signup-page";
 import DefaultLayout from "./layouts/default-layout/default-layout";
 import { FC, useEffect } from "react";
 import ProtectedRoute from "./protected-route";
-import PlotsPage from "./pages/application/plot/plots-page";
 import NewPlotPage from "./pages/application/plot/new-plot-page";
 
 const RootRouter: FC = () => {
@@ -30,7 +29,6 @@ const RootRouter: FC = () => {
           <Route path="" element={<Navigate to={"/houses"} />} />
           <Route path="/houses" element={null} />
           <Route path="/plots">
-            <Route path="/plots" element={<PlotsPage />} />
             <Route path="/plots/new" element={<NewPlotPage />} />
           </Route>
           <Route path="/apartments" element={null} />

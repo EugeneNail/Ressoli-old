@@ -2,72 +2,10 @@
 
 .default-layout
     display: grid
-    grid-template-rows: 7rem 1fr
     grid-template-columns: 20rem 1fr
-    grid-template-areas: "header header" "aside main"
+    grid-template-areas: "aside main"
     width: 100vw
     height: 100vh
-
-.header
-    grid-area: header
-    display: grid
-    grid-template-columns: 20rem 1fr
-    border-bottom: 1px solid $border
-
-    &__logo-wrapper
-        gap: 1rem
-        padding: 0 1.6rem
-        border-right: 1px solid $border
-        cursor: pointer
-        display: flex
-        place-items: center
-
-    &__logo
-        height: 4rem
-
-    &__name
-        font-size: 3rem
-        font-weight: 600
-        color: $accent
-
-    &__main-wrapper
-        display: grid
-        grid-template-columns: 1fr auto auto
-        grid-template-areas: "search interaction user"
-        padding: 0 3rem
-        align-items: center
-
-    &__search
-        grid-area: search
-
-    & .inputbox
-        max-width: 60rem
-
-    &__interaction-group
-        padding: 0 2rem
-        display: flex
-        gap: 1.2rem
-        grid-area: interaction
-        border-right: 1px solid $border
-
-    &__user
-        width: 4.5rem
-        height: 4.5rem
-        margin-left: 2rem
-        box-shadow: $shadow
-        border-radius: 50%
-        grid-area: user
-        position: relative
-        overflow: hidden
-        cursor: pointer
-
-        &:hover
-            box-shadow: $shadow-hover
-
-    &__user-img
-        object-fit: cover
-        width: 100%
-        height: 100%
 
 .main
     overflow-x: hidden
@@ -75,12 +13,29 @@
     grid-area: main
 
 .aside
+    background: white
     grid-area: aside
-    border-right: 1px solid $border
-    padding: 1.6rem
     display: grid
-    grid-template-rows: auto 1fr
+    grid-template-rows: auto auto 1fr
     flex-direction: column
+
+    &__logo
+        cursor: pointer
+        padding-left: 1.3rem
+        width: 100%
+        display: flex
+        align-items: center
+        gap: 1rem
+        margin-top: 1.4rem
+        margin-bottom: 4rem
+
+    &__image
+        width: 4.5rem
+        height: 4.5rem
+
+    &__name
+        font-size: 2.2rem
+        font-weight: bold
 
     &__navigation
         flex-direction: column
@@ -92,41 +47,40 @@
         cursor: pointer
         user-select: none
         color: darken(red, 10%)
-        font-size: 1.8rem
-        height: 4.5rem
+        font-size: 1.6rem
+        height: 5rem
         align-items: center
-        padding: 0 1.5rem
+        padding: 0 2.5rem
         display: grid
         grid-template-columns: 2rem 1fr
-        gap: 1rem
+        gap: 1.6rem
+
+        & *
+            transition: .3s
 
 .aside-link
     font-size: 1.6rem
-    height: 4.5rem
+    height: 5rem
     align-items: center
-    padding: 0 1.5rem
+    padding: 0 2.5rem
     display: grid
     grid-template-columns: 2rem 1fr
-    gap: 1rem
+    gap: 2.2rem
     color: $subfont
-
-    &:visited
-        color: $subfont
+    transition: .3s
 
     &:hover
-        padding-left: 2.5rem
-        color: $accent
+        padding-left: 3rem
 
     &.active
+        font-weight: 900
         color: $font
-        border-left: 7px solid $accent
+        background: transparentize($accent, 0.85)
+        border-right: 4px solid $accent
 
-        &:hover
-            padding-left: 1.5rem
-            color: $accent
+    .active &__text
+        font-weight: 1000 !important
 
     &__icon
         justify-self: center
-        font-size: 1.5rem
-
-    &__text
+        font-size: 2rem

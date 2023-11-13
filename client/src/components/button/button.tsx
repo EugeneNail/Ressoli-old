@@ -6,7 +6,7 @@ import { MouseEvent } from "react";
 
 type ButtonProps = {
   text?: string;
-  type: "regular" | "light";
+  style: "filled" | "dotted";
   iconOnly?: boolean;
   wide?: boolean;
   leadingIcon?: IconDefinition;
@@ -15,7 +15,7 @@ type ButtonProps = {
 };
 
 const Button: FC<ButtonProps> = (props) => {
-  let style = "button" + " button_" + props.type;
+  let style = "button" + " button_" + props.style;
   if (props.iconOnly) style += " button_icon-only";
   if (props.wide) style += " button_wide";
 

@@ -22,8 +22,8 @@ export class PlotFormErrors {
 }
 
 type PlotFormProps = {
-  submit?: () => void;
-  back?: () => void;
+  submit: () => void;
+  back: () => void;
   state: FormState<PlotFormFields, PlotFormErrors>;
 };
 
@@ -78,8 +78,8 @@ const PlotForm: FC<PlotFormProps> = ({ back, submit, state: { errors, setField, 
         />
       </div>
       <div className="form__button-group">
-        <Button wide type="light" text="Назад" action={() => back?.()} />
-        <Button wide type="regular" text="Далее" action={() => submit?.()} />
+        <Button wide style="dotted" text="Назад" action={() => back()} />
+        <Button wide style="filled" text="Далее" action={() => submit()} />
       </div>
     </form>
   );

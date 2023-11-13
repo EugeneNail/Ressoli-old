@@ -17,8 +17,8 @@ export class AddressFormErrors {
 }
 
 type AddressFormProps = {
-  submit?: () => void;
-  back?: () => void;
+  submit: () => void;
+  back: () => void;
   state: FormState<AddressFormFields, AddressFormErrors>;
 };
 
@@ -44,8 +44,8 @@ const AddressForm: FC<AddressFormProps> = ({ submit, back, state: { errors, setF
         />
       </div>
       <div className="form__button-group">
-        <Button type="light" wide text="Назад" action={() => back?.()} />
-        <Button type="regular" wide text="Далее" action={() => submit?.()} />
+        <Button wide text="Назад" style="dotted" action={() => back()} />
+        <Button wide text="Далее" style="filled" action={() => submit()} />
       </div>
     </form>
   );
