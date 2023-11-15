@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import "../editable-application-page.sass";
 import ClientForm, { ClientFormErrors, ClientFormFields } from "../../../components/form/client-form";
 import FormProgressBar from "../../../components/form-progress-bar/form-progress-bar";
@@ -7,11 +7,13 @@ import AddressForm, { AddressFormErrors, AddressFormFields } from "../../../comp
 import useFormState from "../../../service/use-form-state";
 import api from "../../../service/api";
 import PlotForm, { PlotFormErrors, PlotFormFields } from "../../../components/form/plot-form";
+import PhotoForm from "../../../components/form/photo-form";
 
 const NewPlotPage: FC = () => {
   const client = useFormState(new ClientFormFields(), new ClientFormErrors());
   const address = useFormState(new AddressFormFields(), new AddressFormErrors());
   const plot = useFormState(new PlotFormFields(), new PlotFormErrors());
+  const [photoUrls, setPhotoUrls] = useState<string[]>([]);
 
   const confirmClient = async () => {
     const response = await api.post("/clients/confirm", client.fields);
@@ -56,7 +58,7 @@ const NewPlotPage: FC = () => {
     <ClientForm back={() => back()} submit={confirmClient} state={client} />,
     <AddressForm back={() => back()} submit={confirmAddress} state={address} />,
     <PlotForm back={() => back()} submit={confirmPlot} state={plot} />,
-    <div>Plot</div>,
+    <PhotoForm back={() => back()} submit={confirmPlot} photoUrls={photoUrls} setPhotoUrls={setPhotoUrls} />,
     <div>Contract</div>,
   ]);
 

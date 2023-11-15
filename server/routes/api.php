@@ -3,6 +3,7 @@
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\PlotController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -36,4 +37,6 @@ Route::group(["middleware" => "auth:sanctum"], function () {
 
     Route::post("/addresses", [AddressController::class, "store"]);
     Route::post("/addresses/confirm", [AddressController::class, "confirm"]);
+
+    Route::post("/upload-temp-images", [FileController::class, "uploadTempImages"]);
 });
