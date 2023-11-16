@@ -1,9 +1,10 @@
 import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { ChangeEvent, FC, useRef, useState, FocusEvent } from "react";
+import { ChangeEvent, FC, useRef, useState } from "react";
 
 type SelectBoxProps = {
+  value: string;
   options?: string[];
   label: string;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -17,11 +18,11 @@ type SelectBoxProps = {
 
 const SelectBox: FC<SelectBoxProps> = (props) => {
   const inputRef = useRef<HTMLInputElement>(null);
-  const [isActive, setActive] = useState(false);
+  const [isActive, setActive] = useState(props.value.length > 0);
   const [isListDisplayed, setListDisplayed] = useState(false);
 
-  const handleBlur = (event: FocusEvent<HTMLInputElement>) => {
-    if (event.target.value.length === 0) {
+  const handleBlur = () => {
+    if (props.value.length === 0) {
       setActive(false);
     }
     props.clearErrors?.(props.name);
@@ -64,6 +65,8 @@ const SelectBox: FC<SelectBoxProps> = (props) => {
             {props.label}
           </label>
           <input
+            onInput={() => setActive(true)}
+            value={props.value}
             readOnly={true}
             name={props.name}
             id={props.name}

@@ -22,13 +22,21 @@ type AddressFormProps = {
   state: FormState<AddressFormFields, AddressFormErrors>;
 };
 
-const AddressForm: FC<AddressFormProps> = ({ submit, back, state: { errors, setField, clearFieldErrors } }) => {
+const AddressForm: FC<AddressFormProps> = ({ submit, back, state: { fields, errors, setField, clearFieldErrors } }) => {
   return (
     <form action="" className="form address-form">
       <h1 className="form__header">Адрес</h1>
       <div className="form__input-group">
-        <Textbox label="Город" onChange={setField} name="city" clearErrors={clearFieldErrors} errors={errors.city} />
         <Textbox
+          value={fields.city}
+          label="Город"
+          onChange={setField}
+          name="city"
+          clearErrors={clearFieldErrors}
+          errors={errors.city}
+        />
+        <Textbox
+          value={fields.street}
           label="Улица"
           onChange={setField}
           name="street"
@@ -36,6 +44,7 @@ const AddressForm: FC<AddressFormProps> = ({ submit, back, state: { errors, setF
           errors={errors.street}
         />
         <Textbox
+          value={fields.houseNumber}
           label="Номер дома"
           onChange={setField}
           name="houseNumber"
@@ -44,8 +53,8 @@ const AddressForm: FC<AddressFormProps> = ({ submit, back, state: { errors, setF
         />
       </div>
       <div className="form__button-group">
-        <Button wide text="Назад" style="dotted" action={() => back()} />
-        <Button wide text="Далее" style="filled" action={() => submit()} />
+        <Button wide text="Назад" style="dotted" action={back} />
+        <Button wide text="Далее" style="filled" action={submit} />
       </div>
     </form>
   );

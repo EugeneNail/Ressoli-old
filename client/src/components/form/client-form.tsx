@@ -9,6 +9,7 @@ export class ClientFormFields {
   name: string = "";
   surname: string = "";
   phoneNumber: string = "";
+  test: boolean = false;
 }
 
 export class ClientFormErrors {
@@ -19,17 +20,24 @@ export class ClientFormErrors {
 
 type ClientFormProps = {
   submit: () => void;
-  back: () => void;
   state: FormState<ClientFormFields, ClientFormErrors>;
 };
 
-const ClientForm: FC<ClientFormProps> = ({ submit, back, state: { errors, setField, clearFieldErrors } }) => {
+const ClientForm: FC<ClientFormProps> = ({ submit, state: { fields, errors, setField, clearFieldErrors } }) => {
   return (
     <form action="" className="client-form form">
       <h1 className="form__header">Клиент</h1>
       <div className="form__input-group">
-        <Textbox name="name" label="Имя" onChange={setField} errors={errors.name} clearErrors={clearFieldErrors} />
         <Textbox
+          name="name"
+          label="Имя"
+          value={fields.name}
+          onChange={setField}
+          errors={errors.name}
+          clearErrors={clearFieldErrors}
+        />
+        <Textbox
+          value={fields.surname}
           name="surname"
           label="Фамилия"
           onChange={setField}
@@ -37,6 +45,7 @@ const ClientForm: FC<ClientFormProps> = ({ submit, back, state: { errors, setFie
           clearErrors={clearFieldErrors}
         />
         <Textbox
+          value={fields.phoneNumber}
           name="phoneNumber"
           label="Номер телефона"
           onChange={setField}
@@ -45,8 +54,7 @@ const ClientForm: FC<ClientFormProps> = ({ submit, back, state: { errors, setFie
         />
       </div>
       <div className="form__button-group">
-        <Button wide style="dotted" text="Назад" action={() => back()} />
-        <Button wide style="filled" text="Далее" action={() => submit()} />
+        <Button wide style="filled" text="Далее" action={submit} />
       </div>
     </form>
   );

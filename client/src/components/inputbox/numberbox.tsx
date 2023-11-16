@@ -1,9 +1,10 @@
-import { ChangeEvent, FocusEvent, KeyboardEvent, FC, useState, useRef } from "react";
+import { ChangeEvent, KeyboardEvent, FC, useState, useRef } from "react";
 import "./inputbox.sass";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconDefinition, faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
 
 interface NumberboxProps {
+  value: number;
   label: string;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   hint?: string;
@@ -18,13 +19,13 @@ interface NumberboxProps {
 }
 
 const Numberbox: FC<NumberboxProps> = (props) => {
-  const [isActive, setActive] = useState(false);
+  const [isActive, setActive] = useState(props.value != 0);
   const inputRef = useRef<HTMLInputElement>(null);
   const intervalRef = useRef(0);
   const timeoutRef = useRef(0);
 
-  const handleBlur = (event: FocusEvent<HTMLInputElement>) => {
-    if (event.target.value.length === 0) {
+  const handleBlur = () => {
+    if (props.value.toString().length === 0 || inputRef.current?.value.length === 0) {
       setActive(false);
     }
     props.clearErrors?.(props.name);
@@ -110,6 +111,8 @@ const Numberbox: FC<NumberboxProps> = (props) => {
             {props.label}
           </label>
           <input
+            value={props.value == 0 ? "" : props.value}
+            onInput={() => setActive(true)}
             id={props.name}
             onChange={handleChange}
             ref={inputRef}

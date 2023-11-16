@@ -27,7 +27,7 @@ type PlotFormProps = {
   state: FormState<PlotFormFields, PlotFormErrors>;
 };
 
-const PlotForm: FC<PlotFormProps> = ({ back, submit, state: { errors, setField, clearFieldErrors } }) => {
+const PlotForm: FC<PlotFormProps> = ({ back, submit, state: { fields, errors, setField, clearFieldErrors } }) => {
   const { water, gas, electricity, sewer } = new PlotOptions();
 
   return (
@@ -35,6 +35,7 @@ const PlotForm: FC<PlotFormProps> = ({ back, submit, state: { errors, setField, 
       <h1 className="form__header">Участок</h1>
       <div className="form__input-group">
         <SelectBox
+          value={fields.water}
           label="Вода"
           name="water"
           options={water}
@@ -43,6 +44,7 @@ const PlotForm: FC<PlotFormProps> = ({ back, submit, state: { errors, setField, 
           clearErrors={clearFieldErrors}
         />
         <SelectBox
+          value={fields.gas}
           label="Газ"
           name="gas"
           options={gas}
@@ -51,6 +53,7 @@ const PlotForm: FC<PlotFormProps> = ({ back, submit, state: { errors, setField, 
           clearErrors={clearFieldErrors}
         />
         <SelectBox
+          value={fields.sewer}
           label="Канализация"
           name="sewer"
           options={sewer}
@@ -59,6 +62,7 @@ const PlotForm: FC<PlotFormProps> = ({ back, submit, state: { errors, setField, 
           clearErrors={clearFieldErrors}
         />
         <SelectBox
+          value={fields.electricity}
           label="Электричество"
           name="electricity"
           options={electricity}
@@ -67,6 +71,7 @@ const PlotForm: FC<PlotFormProps> = ({ back, submit, state: { errors, setField, 
           clearErrors={clearFieldErrors}
         />
         <Numberbox
+          value={fields.area}
           label="Площадь"
           name="area"
           onChange={setField}

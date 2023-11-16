@@ -1,9 +1,10 @@
-import { ChangeEvent, FocusEvent, FC, useState, useRef } from "react";
+import { ChangeEvent, FC, useState, useRef } from "react";
 import "./inputbox.sass";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 
 interface TextboxProps {
+  value: string;
   label: string;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   hint?: string;
@@ -15,11 +16,11 @@ interface TextboxProps {
 }
 
 const Textbox: FC<TextboxProps> = (props) => {
-  const [isActive, setActive] = useState(false);
+  const [isActive, setActive] = useState(props.value.length > 0);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleBlur = (event: FocusEvent<HTMLInputElement>) => {
-    if (event.target.value.length === 0) {
+  const handleBlur = () => {
+    if (props.value.length === 0) {
       setActive(false);
     }
     props.clearErrors?.(props.name);
@@ -34,6 +35,8 @@ const Textbox: FC<TextboxProps> = (props) => {
             {props.label}
           </label>
           <input
+            onInput={() => setActive(true)}
+            value={props.value}
             id={props.name}
             onChange={props.onChange}
             ref={inputRef}

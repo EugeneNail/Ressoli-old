@@ -20,12 +20,13 @@ type LoginFormProps = {
   state: FormState<LoginFormFields, LoginFormErrors>;
 };
 
-const LoginForm: FC<LoginFormProps> = ({ submit, state: { errors, setField, clearFieldErrors } }) => {
+const LoginForm: FC<LoginFormProps> = ({ submit, state: { fields, errors, setField, clearFieldErrors } }) => {
   return (
     <form action="" className="form">
       <h1 className="form__header">Вход</h1>
       <div className="form__input-group">
         <Textbox
+          value={fields.email}
           label="Электронная почта"
           name="email"
           onChange={setField}
@@ -34,6 +35,7 @@ const LoginForm: FC<LoginFormProps> = ({ submit, state: { errors, setField, clea
           clearErrors={clearFieldErrors}
         />
         <Passwordbox
+          value={fields.password}
           label="Пароль"
           name="password"
           onChange={setField}

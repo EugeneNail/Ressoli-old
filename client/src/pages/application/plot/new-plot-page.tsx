@@ -55,7 +55,7 @@ const NewPlotPage: FC = () => {
   };
 
   const { steps, back, next, currentStep, goTo } = useMultiStepForm([
-    <ClientForm back={() => back()} submit={confirmClient} state={client} />,
+    <ClientForm submit={confirmClient} state={client} />,
     <AddressForm back={() => back()} submit={confirmAddress} state={address} />,
     <PlotForm back={() => back()} submit={confirmPlot} state={plot} />,
     <PhotoForm back={() => back()} submit={confirmPlot} photoUrls={photoUrls} setPhotoUrls={setPhotoUrls} />,

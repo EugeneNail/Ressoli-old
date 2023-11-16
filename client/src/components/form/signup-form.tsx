@@ -26,12 +26,13 @@ type SignupFormProps = {
   state: FormState<SignupFormFields, SignupFormErrors>;
 };
 
-const SignupForm: FC<SignupFormProps> = ({ submit, state: { errors, setField, clearFieldErrors } }) => {
+const SignupForm: FC<SignupFormProps> = ({ submit, state: { fields, errors, setField, clearFieldErrors } }) => {
   return (
     <form action="" className="form">
       <h1 className="form__header">Регистрация</h1>
       <div className="form__input-group">
         <Textbox
+          value={fields.name}
           label="Имя"
           name="name"
           onChange={setField}
@@ -40,6 +41,7 @@ const SignupForm: FC<SignupFormProps> = ({ submit, state: { errors, setField, cl
           clearErrors={clearFieldErrors}
         />
         <Textbox
+          value={fields.surname}
           label="Фамилия"
           name="surname"
           onChange={setField}
@@ -48,6 +50,7 @@ const SignupForm: FC<SignupFormProps> = ({ submit, state: { errors, setField, cl
           clearErrors={clearFieldErrors}
         />
         <Textbox
+          value={fields.email}
           label="Электронная почта"
           name="email"
           onChange={setField}
@@ -56,6 +59,7 @@ const SignupForm: FC<SignupFormProps> = ({ submit, state: { errors, setField, cl
           clearErrors={clearFieldErrors}
         />
         <Passwordbox
+          value={fields.password}
           label="Пароль"
           name="password"
           onChange={setField}
@@ -64,6 +68,7 @@ const SignupForm: FC<SignupFormProps> = ({ submit, state: { errors, setField, cl
           clearErrors={clearFieldErrors}
         />
         <Passwordbox
+          value={fields.password_confirmation}
           label="Повторите пароль"
           name="password_confirmation"
           onChange={setField}
