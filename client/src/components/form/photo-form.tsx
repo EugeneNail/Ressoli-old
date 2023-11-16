@@ -69,8 +69,8 @@ const PhotoForm: FC<PhotoFormProps> = ({ back, submit, photoUrls, setPhotoUrls }
       <div className="form__button-group">
         {!isLoading && (
           <>
-            <Button style="dotted" wide text="Назад" action={() => back()} />
-            <Button style="filled" wide text="Далее" action={() => submit()} />
+            <Button style="dotted" wide text="Назад" action={back} />
+            <Button style="filled" wide text="Далее" action={submit} />
           </>
         )}
       </div>

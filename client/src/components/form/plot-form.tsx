@@ -83,8 +83,8 @@ const PlotForm: FC<PlotFormProps> = ({ back, submit, state: { fields, errors, se
         />
       </div>
       <div className="form__button-group">
-        <Button wide style="dotted" text="Назад" action={() => back()} />
-        <Button wide style="filled" text="Далее" action={() => submit()} />
+        <Button wide style="dotted" text="Назад" action={back} />
+        <Button wide style="filled" text="Далее" action={submit} />
       </div>
     </form>
   );

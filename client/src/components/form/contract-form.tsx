@@ -56,8 +56,8 @@ const ContractForm: FC<ContractFormProps> = ({
         />
       </div>
       <div className="form__button-group">
-        <Button style="dotted" wide text="Назад" action={() => back()} />
-        <Button style="filled" wide text="Создать заявку" action={() => submit()} />
+        <Button style="dotted" wide text="Назад" action={back} />
+        <Button style="filled" wide text="Создать заявку" action={submit} />
       </div>
     </form>
   );
