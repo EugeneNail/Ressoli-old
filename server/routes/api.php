@@ -28,15 +28,11 @@ Route::group(["middleware" => "auth:sanctum"], function () {
     Route::post("/authenticate", [AuthController::class, "authenticate"])->middleware("auth:sanctum");
     Route::post("/logout", [AuthController::class, "logout"])->middleware("auth:sanctum");
 
-    Route::group(["prefix" => "applications"], function () {
-        Route::apiResource("plots", PlotController::class);
-        Route::post("/plots/confirm", [PlotController::class, "confirm"]);
-    });
-    Route::apiResource("clients", ClientController::class);
-    Route::post("/clients/confirm", [ClientController::class, "confirm"]);
+    Route::post("/clients", [ClientController::class, "store"]);
 
     Route::post("/addresses", [AddressController::class, "store"]);
-    Route::post("/addresses/confirm", [AddressController::class, "confirm"]);
+
+    Route::post("/plots", [PlotController::class, "store"]);
 
     Route::post("/upload-temp-images", [FileController::class, "uploadTempImages"]);
 });

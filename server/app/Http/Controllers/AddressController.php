@@ -8,40 +8,25 @@ use App\Models\Address;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
+
 class AddressController extends Controller {
 
-    public function confirm(ConfirmAddressRequest $request) {
+    public function store(StoreAddressRequest $request) {
         $address = Address::where("city", $request->city)
             ->where("street", $request->street)
             ->where("house_number", $request->houseNumber)
-            ->where("apartment_number", $request->apartmentNumber)
             ->first();
 
-        if ($address) {
+        if (isset($address)) {
             return response($address->id, Response::HTTP_OK);
         }
 
-        if (!$address) {
-            return response()->noContent();
-        }
-    }
-
-    public function store(StoreAddressRequest $request) {
-        $existingAddress = Address
-            ::where("city", $request->city)
-            ->where("street", $request->street)
-            ->where("house_number", $request->houseNumber)
-            ->first();
-
-        if ($existingAddress) {
-            return response($existingAddress->id, Response::HTTP_OK);
-        }
-
-        $newAddress = Address::create([
+        $address = Address::create([
             "city" => $request->city,
             "street" => $request->street,
             "house_number" => $request->houseNumber
         ]);
-        return response($newAddress->id, Response::HTTP_CREATED);
+
+        return response($address->id, Response::HTTP_CREATED);
     }
 }

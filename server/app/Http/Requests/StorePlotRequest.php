@@ -7,7 +7,7 @@ use App\Rules\WordsRule;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class ConfirmPlotRequest extends FormRequest {
+class StorePlotRequest extends FormRequest {
     /**
      * Determine if the user is authorized to make this request.
      */

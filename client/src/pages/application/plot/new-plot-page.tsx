@@ -16,41 +16,47 @@ const NewPlotPage: FC = () => {
   const [photoUrls, setPhotoUrls] = useState<string[]>([]);
 
   const confirmClient = async () => {
-    const response = await api.post("/clients/confirm", client.fields);
-    if (response.status >= 400) {
+    const response = await api.post("/clients", client.fields);
+
+    if (response.status === 400 || response.status === 409) {
       client.setErrors(response.data.errors);
       return;
     }
-    if (response.status == 200) {
+
+    if (response.status === 200 || response.status === 201) {
       client.fields.id = response.data;
     }
-    if (response.status == 204) {
-      client.fields.id = 0;
-    }
+
     next();
   };
 
   const confirmAddress = async () => {
-    const response = await api.post("/addresses/confirm", address.fields);
-    if (response.status >= 400) {
+    const response = await api.post("/addresses", address.fields);
+
+    if (response.status === 422) {
       address.setErrors(response.data.errors);
       return;
     }
-    if (response.status == 200) {
+
+    if (response.status == 200 || response.status == 201) {
       address.fields.id = response.data;
     }
-    if (response.status == 204) {
-      address.fields.id = 0;
-    }
+
     next();
   };
 
   const confirmPlot = async () => {
-    const response = await api.post("/applications/plots/confirm", plot.fields);
+    const response = await api.post("/plots", plot.fields);
+
     if (response.status >= 400) {
       plot.setErrors(response.data.errors);
       return;
     }
+
+    if (response.status == 201) {
+      plot.fields.id = response.data;
+    }
+
     next();
   };
 

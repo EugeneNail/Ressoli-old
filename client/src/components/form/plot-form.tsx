@@ -6,6 +6,7 @@ import Numberbox from "../inputbox/numberbox";
 import { PlotOptions } from "../../model/plot-options";
 
 export class PlotFormFields {
+  id: number = 0;
   water: string = "";
   gas: string = "";
   electricity: string = "";
