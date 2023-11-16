@@ -199,3 +199,41 @@ input[type=number]
         display: none
 
     &__button-text
+
+.checkbox
+    display: flex
+    align-items: center
+    gap: .8rem
+    cursor: pointer
+    position: relative
+    border: 1px solid $input-bd
+    width: fit-content
+    background: $input-bg
+    border-radius: 100rem
+    padding: .6rem
+    padding-right: 2rem
+
+    &:hover
+        background: $input-bg-hover
+
+    &:has(input:checked) &__icon
+        background: $accent
+        color: white
+
+    &__icon
+        aspect-ratio: 1 / 1
+        color: transparent
+        pointer-events: none
+        background: $input-bg
+        border: 1px solid darken($input-bd, 20%)
+        border-radius: 10rem
+        padding: .5rem
+        font-size: 1.5rem
+
+    &__input
+        position: absolute
+        opacity: 0
+
+    &__text
+        color: $subfont
+        user-select: none
