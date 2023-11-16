@@ -20,15 +20,16 @@ type PhotoFormProps = {
   setPhotoUrls: Dispatch<SetStateAction<string[]>>;
 };
 
-const PhotoForm: FC<PhotoFormProps> = ({ back, submit, photoUrls: photoUrls, setPhotoUrls }) => {
+const PhotoForm: FC<PhotoFormProps> = ({ back, submit, photoUrls, setPhotoUrls }) => {
   const [isLoading, setLoading] = useState(false);
-  const allowedFiles = 15;
+  const maximumAmountOfFiles = 15;
 
   const uploadToServer = async (files: FileList) => {
     setLoading(true);
     const data = new FormData();
 
-    for (let i = 0, remaining = allowedFiles - photoUrls.length; i < remaining; i++) {
+    const allowedAmountOfFiles = Math.min(maximumAmountOfFiles - photoUrls.length, files.length);
+    for (let i = 0; i < allowedAmountOfFiles; i++) {
       data.append("images[]", files[i]);
     }
 
@@ -37,6 +38,9 @@ const PhotoForm: FC<PhotoFormProps> = ({ back, submit, photoUrls: photoUrls, set
     if (response.status === 200) {
       const newUrls = Array.from(response.data).map((path) => "http://localhost:8000/storage/" + path);
       setPhotoUrls([...photoUrls, ...newUrls]);
+    } else {
+      //TODO заменить по добавлении адекватной системы оповещений
+      alert("Не удалось загрузить изображения");
     }
 
     setLoading(false);
@@ -49,7 +53,7 @@ const PhotoForm: FC<PhotoFormProps> = ({ back, submit, photoUrls: photoUrls, set
   return (
     <form className="form form_photo">
       <h1 className="form__header">Фотографии</h1>
-      <p className="form__subtext">Загрузите до {allowedFiles} фотографий</p>
+      <p className="form__subtext">Загрузите до {maximumAmountOfFiles} фотографий</p>
       <div className="form__photos">
         {photoUrls.length > 0 &&
           photoUrls.map((image, index) => (
@@ -63,8 +67,12 @@ const PhotoForm: FC<PhotoFormProps> = ({ back, submit, photoUrls: photoUrls, set
         </div>
       </div>
       <div className="form__button-group">
-        <Button style="dotted" wide text="Назад" action={() => back()} />
-        <Button style="filled" wide text="Далее" action={() => submit()} />
+        {!isLoading && (
+          <>
+            <Button style="dotted" wide text="Назад" action={() => back()} />
+            <Button style="filled" wide text="Далее" action={() => submit()} />
+          </>
+        )}
       </div>
     </form>
   );

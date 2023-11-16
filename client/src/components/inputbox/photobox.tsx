@@ -1,5 +1,5 @@
 import { ChangeEvent, FC, useState, DragEvent } from "react";
-import "./photobox.sass";
+import "./inputbox.sass";
 import { faSpinner, faFileArrowUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -62,7 +62,7 @@ const Photobox: FC<PhotoboxProps> = ({ isLoading, action }) => {
             type="file"
             id="photoInput"
             className="photobox__input"
-            accept="image/*"
+            // accept=".jpg,.jpeg,.png,.bmp"
           />
           <p className="photobox__button-text">Выберите файлы</p>
         </label>
