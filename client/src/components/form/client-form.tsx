@@ -9,7 +9,6 @@ export class ClientFormFields {
   name: string = "";
   surname: string = "";
   phoneNumber: string = "";
-  test: boolean = false;
 }
 
 export class ClientFormErrors {

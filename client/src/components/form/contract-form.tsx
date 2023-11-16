@@ -23,7 +23,7 @@ type ContractFormProps = {
 const ContractForm: FC<ContractFormProps> = ({
   back,
   submit,
-  state: { fields, errors, setField, setErrors, clearFieldErrors },
+  state: { fields, errors, setField, clearFieldErrors },
 }) => {
   return (
     <form action="" className="form">
@@ -32,7 +32,7 @@ const ContractForm: FC<ContractFormProps> = ({
         <Numberbox
           value={fields.price}
           label="Стоимость"
-          name="Price"
+          name="price"
           onChange={setField}
           errors={errors.price}
           min={0}
