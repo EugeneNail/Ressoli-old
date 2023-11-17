@@ -8,12 +8,16 @@ import useFormState from "../../../service/use-form-state";
 import api from "../../../service/api";
 import PlotForm, { PlotFormErrors, PlotFormFields } from "../../../components/form/plot-form";
 import PhotoForm from "../../../components/form/photo-form";
+import ContractForm, { ContractFormErrors, ContractFormFields } from "../../../components/form/contract-form";
+import { Photo } from "../../../model/photo";
+import ApplicationPayload from "../../../model/application-payload";
 
 const NewPlotPage: FC = () => {
   const client = useFormState(new ClientFormFields(), new ClientFormErrors());
   const address = useFormState(new AddressFormFields(), new AddressFormErrors());
   const plot = useFormState(new PlotFormFields(), new PlotFormErrors());
-  const [photoUrls, setPhotoUrls] = useState<string[]>([]);
+  const [photos, setPhotos] = useState<Photo[]>([]);
+  const contract = useFormState(new ContractFormFields(), new ContractFormErrors());
 
   const confirmClient = async () => {
     const response = await api.post("/clients", client.fields);
@@ -60,12 +64,30 @@ const NewPlotPage: FC = () => {
     next();
   };
 
+  const createPlotApplication = async () => {
+    const payload = new ApplicationPayload(
+      client.fields.id,
+      address.fields.id,
+      plot.fields.id,
+      photos.map((photo) => photo.id),
+      contract.fields
+    );
+    const response = await api.post("/applications/plots", payload);
+
+    if (response.status == 201) {
+    }
+
+    if (response.status >= 400) {
+      contract.setErrors(response.data.errors);
+    }
+  };
+
   const { steps, back, next, currentStep, goTo } = useMultiStepForm([
     <ClientForm submit={confirmClient} state={client} />,
     <AddressForm back={() => back()} submit={confirmAddress} state={address} />,
     <PlotForm back={() => back()} submit={confirmPlot} state={plot} />,
-    <PhotoForm back={() => back()} submit={confirmPlot} photoUrls={photoUrls} setPhotoUrls={setPhotoUrls} />,
-    <div>Contract</div>,
+    <PhotoForm back={() => back()} submit={() => next()} state={[photos, setPhotos]} />,
+    <ContractForm back={() => back()} submit={createPlotApplication} state={contract} />,
   ]);
 
   return (

@@ -1,9 +1,10 @@
 <?php
 
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientController;
-use App\Http\Controllers\FileController;
+use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\PlotController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -34,5 +35,10 @@ Route::group(["middleware" => "auth:sanctum"], function () {
 
     Route::post("/plots", [PlotController::class, "store"]);
 
-    Route::post("/upload-temp-images", [FileController::class, "uploadTempImages"]);
+    Route::post("applications/plots", [ApplicationController::class, "storePlotApplication"]);
+
+    Route::group(["prefix" => "photos"], function () {
+        Route::post("/upload-temp", [PhotoController::class, "uploadTemp"]);
+        Route::delete("/{id}", [PhotoController::class, "delete"]);
+    });
 });

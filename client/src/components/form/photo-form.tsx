@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import api from "../../service/api";
 import Photobox from "../inputbox/photobox";
+import { Photo } from "../../model/photo";
 
 export class PhotoFormFields {
   photoUrls: string[] = [];
@@ -16,28 +17,27 @@ export class PhotoFormErrors {
 type PhotoFormProps = {
   back: () => void;
   submit: () => void;
-  photoUrls: string[];
-  setPhotoUrls: Dispatch<SetStateAction<string[]>>;
+  state: [Photo[], Dispatch<SetStateAction<Photo[]>>];
 };
 
-const PhotoForm: FC<PhotoFormProps> = ({ back, submit, photoUrls, setPhotoUrls }) => {
+const PhotoForm: FC<PhotoFormProps> = ({ back, submit, state: [photos, setPhotos] }) => {
   const [isLoading, setLoading] = useState(false);
   const maximumAmountOfFiles = 15;
 
   const uploadToServer = async (files: FileList) => {
     setLoading(true);
     const data = new FormData();
+    const allowedAmountOfFiles = Math.min(maximumAmountOfFiles - photos.length, files.length);
 
-    const allowedAmountOfFiles = Math.min(maximumAmountOfFiles - photoUrls.length, files.length);
     for (let i = 0; i < allowedAmountOfFiles; i++) {
       data.append("images[]", files[i]);
     }
 
-    const response = await api.post("/upload-temp-images", data);
+    const response = await api.post<Photo[]>("/photos/upload-temp", data);
 
     if (response.status === 200) {
-      const newUrls = Array.from(response.data).map((path) => "http://localhost:8000/storage/" + path);
-      setPhotoUrls([...photoUrls, ...newUrls]);
+      const newPhotos = response.data;
+      setPhotos([...photos, ...newPhotos]);
     } else {
       //TODO заменить по добавлении адекватной системы оповещений
       alert("Не удалось загрузить изображения");
@@ -46,8 +46,12 @@ const PhotoForm: FC<PhotoFormProps> = ({ back, submit, photoUrls, setPhotoUrls }
     setLoading(false);
   };
 
-  const removeImage = (indexToRemove: number) => {
-    setPhotoUrls(photoUrls.filter((_, index) => index != indexToRemove));
+  const removePhoto = async (id: number) => {
+    const response = await api.delete("/photos/" + id);
+    console.log(response);
+    if (response.status === 204) {
+      setPhotos(photos.filter((photo) => photo.id != id));
+    }
   };
 
   return (
@@ -55,11 +59,11 @@ const PhotoForm: FC<PhotoFormProps> = ({ back, submit, photoUrls, setPhotoUrls }
       <h1 className="form__header">Фотографии</h1>
       <p className="form__subtext">Загрузите до {maximumAmountOfFiles} фотографий</p>
       <div className="form__photos">
-        {photoUrls.length > 0 &&
-          photoUrls.map((image, index) => (
-            <div className="form__photo-container">
-              <img key={index} src={image} className="form__photo" />
-              <FontAwesomeIcon className="form__photo-icon" onClick={() => removeImage(index)} icon={faTrash} />
+        {photos.length > 0 &&
+          photos.map((photo) => (
+            <div key={photo.id} className="form__photo-container">
+              <img src={"http://localhost:8000/storage/" + photo.path} className="form__photo" />
+              <FontAwesomeIcon className="form__photo-icon" onClick={() => removePhoto(photo.id)} icon={faTrash} />
             </div>
           ))}
         <div className="form__photo-container">

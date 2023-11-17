@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use App\Models\Photo;
+use App\Models\Plot;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\DB;
@@ -15,6 +17,10 @@ class Kernel extends ConsoleKernel {
         $schedule->call(function () {
             $public = Storage::disk("public");
             $public->delete($public->allFiles("temp"));
+            Photo::where("application_id")->delete();
+
+            $ids = DB::table("applications")->select("applicable_id")->distinct()->pluck("applicable_id");
+            Plot::whereNotIn($ids)->delete();
         })->dailyAt("03:00");
     }
 

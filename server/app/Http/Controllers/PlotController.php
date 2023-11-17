@@ -11,7 +11,6 @@ class PlotController extends Controller {
 
     public function store(StorePlotRequest $request) {
         $plot = Plot::create($request->all());
-
-        return response($plot->id, Response::HTTP_OK);
+        return response($plot->id, Response::HTTP_CREATED);
     }
 }
