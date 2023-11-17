@@ -8,6 +8,7 @@ export default class ApplicationPayload {
   readonly price: number = 0;
   readonly hasVat: boolean = false;
   readonly hasMortgage: boolean = false;
+  readonly contract: string = "";
 
   constructor(
     clientId: number,
@@ -23,5 +24,6 @@ export default class ApplicationPayload {
     this.price = contract.price;
     this.hasMortgage = contract.hasMortgage;
     this.hasVat = contract.hasVat;
+    this.contract = contract.contract;
   }
 }

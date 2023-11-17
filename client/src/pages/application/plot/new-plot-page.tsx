@@ -75,6 +75,7 @@ const NewPlotPage: FC = () => {
     const response = await api.post("/applications/plots", payload);
 
     if (response.status == 201) {
+      alert("Created");
     }
 
     if (response.status >= 400) {

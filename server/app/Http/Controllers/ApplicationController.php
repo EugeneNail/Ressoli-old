@@ -18,6 +18,7 @@ class ApplicationController extends Controller {
 
     public function storePlotApplication(StorePlotApplicationRequest $request) {
         $application = new Application([
+            "contract" => $request->contract,
             "price" => $request->price,
             "has_vat" => $request->hasVat,
             "has_mortgage" => $request->hasMortgage,

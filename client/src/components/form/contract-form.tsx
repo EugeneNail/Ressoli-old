@@ -3,15 +3,19 @@ import { FormState } from "../../model/form-state";
 import Button from "../button/button";
 import Numberbox from "../inputbox/numberbox";
 import Checkbox from "../inputbox/checkbox";
+import SelectBox from "../inputbox/selectbox";
+import ApplicationOptions from "../../model/application-options";
 
 export class ContractFormFields {
   price: number = 0;
   hasMortgage: boolean = false;
   hasVat: boolean = false;
+  contract: string = "";
 }
 
 export class ContractFormErrors {
   price: string[] = [];
+  contract: string[] = [];
 }
 
 type ContractFormProps = {
@@ -25,10 +29,22 @@ const ContractForm: FC<ContractFormProps> = ({
   submit,
   state: { fields, errors, setField, clearFieldErrors },
 }) => {
+  const { contract } = new ApplicationOptions();
+
   return (
     <form action="" className="form">
       <h1 className="form__header">Ценовые условия</h1>
       <div className="form__input-group">
+        <SelectBox
+          value={fields.contract}
+          label="Форма договора"
+          name="contract"
+          readOnly
+          options={contract}
+          onChange={setField}
+          errors={errors.contract}
+          clearErrors={clearFieldErrors}
+        />
         <Numberbox
           value={fields.price}
           label="Стоимость"
