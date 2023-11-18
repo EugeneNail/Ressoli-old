@@ -1,0 +1,95 @@
+@import ../../../_variables
+
+.application-card
+    position: relative
+    display: grid
+    grid-template-columns: auto 1fr
+    background: white
+    padding: 1rem
+    border-radius: .75rem
+    gap: 2rem
+
+    &__preview-container
+        height: 100%
+
+    &__preview
+        overflow: hidden
+        border-radius: .5rem
+        aspect-ratio: 1 / 1
+        width: 100%
+        max-width: 100%
+        max-height: 100%
+        object-fit: cover
+
+    &__info-container
+        display: grid
+        grid-template-rows: auto auto 1fr auto
+        grid-template-areas: "header" "infos" "..." "inner"
+
+    &__title
+        margin-top: 0.2rem
+        padding-left: 0.3rem
+        font-weight: 800
+        color: $font-strong
+        text-transform: uppercase
+        margin-bottom: 1rem
+
+    &__infos
+        display: flex
+        flex-direction: column
+        gap: .2rem
+        height: fit-content
+
+    &__inner-grid
+        margin-top: 1rem
+        grid-area: inner
+        display: grid
+        grid-template-rows: 1fr 1uto
+        grid-template-columns: 1fr auto
+        grid-template-areas: "stats button" "date button"
+        gap: 1.5rem
+
+    &__stats-container
+        display: flex
+        grid-area: stats
+        gap: 1rem
+
+    &__date
+        padding-left: 0.3rem
+        grid-area: date
+        font-size: 1.2rem
+        height: fit-content
+        align-self: end
+        color: $font-weak
+
+    &__button
+        grid-area: button
+
+.application-info
+    width: fit-content
+    display: grid
+    grid-template-columns: 1.8rem 1fr
+    grid-template-rows: auto 1fr
+    grid-template-areas: "icon text" "...text"
+    column-gap: .5rem
+
+    &__icon-container
+        height: 1.4rem
+        justify-self: center
+        grid-area: icon
+
+    &__icon
+        height: 100%
+        color: $accent
+
+    &__text
+        grid-area: text
+        color: $font-medium
+
+    &__value
+
+        &_bold
+            font-weight: 800
+
+    &__unit
+        color: $font-weak

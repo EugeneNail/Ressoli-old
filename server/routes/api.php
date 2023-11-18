@@ -36,6 +36,7 @@ Route::group(["middleware" => "auth:sanctum"], function () {
     Route::post("/plots", [PlotController::class, "store"]);
 
     Route::post("applications/plots", [ApplicationController::class, "storePlotApplication"]);
+    Route::get("applications/plots", [ApplicationController::class, "indexShort"]);
 
     Route::group(["prefix" => "photos"], function () {
         Route::post("/upload-temp", [PhotoController::class, "uploadTemp"]);

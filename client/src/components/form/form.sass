@@ -10,12 +10,13 @@
         width: calc(100vw - 260px)
 
     &__header
+        color: $font-strong
         text-transform: uppercase
         font-weight: 900
 
     &__subtext
         margin-top: 1rem
-        color: $subfont
+        color: $font-weak
         font-size: 1.6rem
 
     &__input-group
@@ -28,6 +29,7 @@
         // Костыль, чтобы в хроме не лагало во время скролла галереи
         backface-visibility: hidden
         transform: translate3d(0,0,0)
+        //----------------------------------------------------------
         margin-top: 5rem
         width: 100%
         display: grid

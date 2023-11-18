@@ -12,12 +12,14 @@ type ButtonProps = {
   leadingIcon?: IconDefinition;
   trailingIcon?: IconDefinition;
   action: () => void;
+  className?: string;
 };
 
 const Button: FC<ButtonProps> = (props) => {
   let style = "button" + " button_" + props.style;
   if (props.iconOnly) style += " button_icon-only";
   if (props.wide) style += " button_wide";
+  if (props.className) style += " " + props.className;
 
   const handleClick = (event: MouseEvent) => {
     event.preventDefault();
