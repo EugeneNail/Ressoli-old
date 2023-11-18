@@ -1,6 +1,7 @@
 import Button from "../button/button";
 import Textbox from "../inputbox/textbox";
 import { FormState } from "../../model/form-state";
+import { faCity, faMap, faRoad } from "@fortawesome/free-solid-svg-icons";
 
 export class AddressFormFields {
   id: number = 0;
@@ -29,6 +30,7 @@ function AddressForm({ submit, back, state: { fields, errors, setField, clearFie
         <Textbox
           value={fields.city}
           label="Город"
+          icon={faCity}
           onChange={setField}
           name="city"
           clearErrors={clearFieldErrors}
@@ -37,6 +39,7 @@ function AddressForm({ submit, back, state: { fields, errors, setField, clearFie
         <Textbox
           value={fields.street}
           label="Улица"
+          icon={faRoad}
           onChange={setField}
           name="street"
           clearErrors={clearFieldErrors}
@@ -44,7 +47,8 @@ function AddressForm({ submit, back, state: { fields, errors, setField, clearFie
         />
         <Textbox
           value={fields.houseNumber}
-          label="Номер дома"
+          label="Номер участка"
+          icon={faMap}
           onChange={setField}
           name="houseNumber"
           clearErrors={clearFieldErrors}

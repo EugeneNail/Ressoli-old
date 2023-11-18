@@ -1,9 +1,9 @@
-import { FC } from "react";
 import { FormState } from "../../model/form-state";
 import Button from "../button/button";
 import SelectBox from "../inputbox/selectbox";
 import Numberbox from "../inputbox/numberbox";
 import { PlotOptions } from "../../model/plot-options";
+import { faBolt, faDroplet, faFire, faMaximize, faToilet } from "@fortawesome/free-solid-svg-icons";
 
 export class PlotFormFields {
   id: number = 0;
@@ -39,6 +39,7 @@ function PlotForm({ back, submit, state: { fields, errors, setField, clearFieldE
           value={fields.water}
           label="Вода"
           name="water"
+          icon={faDroplet}
           options={water}
           onChange={setField}
           errors={errors.water}
@@ -48,6 +49,7 @@ function PlotForm({ back, submit, state: { fields, errors, setField, clearFieldE
           value={fields.gas}
           label="Газ"
           name="gas"
+          icon={faFire}
           options={gas}
           onChange={setField}
           errors={errors.gas}
@@ -57,6 +59,7 @@ function PlotForm({ back, submit, state: { fields, errors, setField, clearFieldE
           value={fields.sewer}
           label="Канализация"
           name="sewer"
+          icon={faToilet}
           options={sewer}
           onChange={setField}
           errors={errors.sewer}
@@ -66,6 +69,7 @@ function PlotForm({ back, submit, state: { fields, errors, setField, clearFieldE
           value={fields.electricity}
           label="Электричество"
           name="electricity"
+          icon={faBolt}
           options={electricity}
           onChange={setField}
           errors={errors.electricity}
@@ -75,6 +79,7 @@ function PlotForm({ back, submit, state: { fields, errors, setField, clearFieldE
           value={fields.area}
           label="Площадь"
           name="area"
+          icon={faMaximize}
           onChange={setField}
           errors={errors.area}
           clearErrors={clearFieldErrors}

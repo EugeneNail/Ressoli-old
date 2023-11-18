@@ -1,4 +1,3 @@
-import { FC } from "react";
 import "./default-layout.sass";
 import { Outlet } from "react-router";
 import Aside from "./aside";

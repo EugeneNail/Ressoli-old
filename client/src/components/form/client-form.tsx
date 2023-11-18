@@ -2,6 +2,7 @@ import Textbox from "../inputbox/textbox";
 import Button from "../button/button";
 import "./form.sass";
 import { FormState } from "../../model/form-state";
+import { faPhone, faUser } from "@fortawesome/free-solid-svg-icons";
 
 export class ClientFormFields {
   id: number = 0;
@@ -29,6 +30,7 @@ function ClientForm({ submit, state: { fields, errors, setField, clearFieldError
         <Textbox
           name="name"
           label="Имя"
+          icon={faUser}
           value={fields.name}
           onChange={setField}
           errors={errors.name}
@@ -38,6 +40,7 @@ function ClientForm({ submit, state: { fields, errors, setField, clearFieldError
           value={fields.surname}
           name="surname"
           label="Фамилия"
+          icon={faUser}
           onChange={setField}
           errors={errors.surname}
           clearErrors={clearFieldErrors}
@@ -46,6 +49,7 @@ function ClientForm({ submit, state: { fields, errors, setField, clearFieldError
           value={fields.phoneNumber}
           name="phoneNumber"
           label="Номер телефона"
+          icon={faPhone}
           onChange={setField}
           errors={errors.phoneNumber}
           clearErrors={clearFieldErrors}

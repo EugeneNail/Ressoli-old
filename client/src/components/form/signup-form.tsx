@@ -1,4 +1,3 @@
-import { FC } from "react";
 import { FormState } from "../../model/form-state";
 import { faUser, faEnvelope, faKey } from "@fortawesome/free-solid-svg-icons";
 import Passwordbox from "../inputbox/passwordbox";

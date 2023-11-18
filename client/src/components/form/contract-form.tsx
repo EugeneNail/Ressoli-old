@@ -1,10 +1,10 @@
-import { FC } from "react";
 import { FormState } from "../../model/form-state";
 import Button from "../button/button";
 import Numberbox from "../inputbox/numberbox";
 import Checkbox from "../inputbox/checkbox";
 import SelectBox from "../inputbox/selectbox";
 import ApplicationOptions from "../../model/application-options";
+import { faFileSignature, faRuble } from "@fortawesome/free-solid-svg-icons";
 
 export class ContractFormFields {
   price: number = 0;
@@ -35,7 +35,7 @@ function ContractForm({ back, submit, state: { fields, errors, setField, clearFi
           value={fields.contract}
           label="Форма договора"
           name="contract"
-          readOnly
+          icon={faFileSignature}
           options={contract}
           onChange={setField}
           errors={errors.contract}
@@ -45,6 +45,7 @@ function ContractForm({ back, submit, state: { fields, errors, setField, clearFi
           value={fields.price}
           label="Стоимость"
           name="price"
+          icon={faRuble}
           onChange={setField}
           errors={errors.price}
           min={0}
