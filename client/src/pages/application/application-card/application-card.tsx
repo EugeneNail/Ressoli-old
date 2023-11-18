@@ -1,4 +1,3 @@
-import { FC } from "react";
 import "./application-card.sass";
 import Button from "../../../components/button/button";
 import ApplicationInfo from "./application-info";
@@ -10,22 +9,22 @@ type ApplicationCardProps = {
   application: ShortApplication;
 };
 
-const ApplicationCard: FC<ApplicationCardProps> = ({ application }) => {
-  const buildTitle = (): string => {
+function ApplicationCard({ application }: ApplicationCardProps) {
+  function buildTitle(): string {
     return "Участок " + (application.contract === "Продажа" ? "на продажу" : "под аренду");
-  };
+  }
 
-  const buildAddress = (): string => {
+  function buildAddress(): string {
     return "г. " + application.city + ", ул. " + application.street + ", д. " + application.houseNumber;
-  };
+  }
 
-  const buildPrice = (): string => {
+  function buildPrice(): string {
     return "руб" + (application.contract === "Аренда" ? "/мес" : "");
-  };
+  }
 
-  const openInNewTab = () => {
+  function openInNewTab() {
     window.open(window.location.host + "/plots/" + application.id);
-  };
+  }
 
   return (
     <div className="application-card">
@@ -49,6 +48,6 @@ const ApplicationCard: FC<ApplicationCardProps> = ({ application }) => {
       </div>
     </div>
   );
-};
+}
 
 export default ApplicationCard;

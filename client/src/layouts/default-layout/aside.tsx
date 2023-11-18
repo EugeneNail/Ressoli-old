@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { useState } from "react";
 import AsideLink from "./aside-link";
 import {
   faBed,
@@ -13,17 +13,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "../../service/api";
 import { useNavigate } from "react-router";
 
-const Aside: FC = () => {
+function Aside() {
   const [logoutIcon, setLogoutIcon] = useState(faRightToBracket);
   const navigate = useNavigate();
 
-  const logout = async () => {
+  async function logout() {
     const response = await api.post("/logout");
+
     if (response.status === 204) {
       localStorage.removeItem("access_token");
       navigate("/login");
     }
-  };
+  }
 
   return (
     <aside className="aside">
@@ -49,6 +50,6 @@ const Aside: FC = () => {
       </a>
     </aside>
   );
-};
+}
 
 export default Aside;

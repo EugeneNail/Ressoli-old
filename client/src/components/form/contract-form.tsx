@@ -24,11 +24,7 @@ type ContractFormProps = {
   state: FormState<ContractFormFields, ContractFormErrors>;
 };
 
-const ContractForm: FC<ContractFormProps> = ({
-  back,
-  submit,
-  state: { fields, errors, setField, clearFieldErrors },
-}) => {
+function ContractForm({ back, submit, state: { fields, errors, setField, clearFieldErrors } }: ContractFormProps) {
   const { contract } = new ApplicationOptions();
 
   return (
@@ -77,6 +73,6 @@ const ContractForm: FC<ContractFormProps> = ({
       </div>
     </form>
   );
-};
+}
 
 export default ContractForm;

@@ -1,16 +1,16 @@
-import { FC, useEffect } from "react";
+import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router";
 import "./guest-layout.sass";
 import api from "../../service/api";
 
-const GuestLayout: FC = () => {
+function GuestLayout() {
   const navigate = useNavigate();
 
-  const redirectIfLogged = async () => {
+  async function redirectIfLogged() {
     if ((await api.post("/authenticate")).status === 204) {
       navigate("/");
     }
-  };
+  }
 
   useEffect(() => {
     redirectIfLogged();
@@ -21,6 +21,6 @@ const GuestLayout: FC = () => {
       <Outlet />
     </div>
   );
-};
+}
 
 export default GuestLayout;

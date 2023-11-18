@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { useState } from "react";
 import "../editable-application-page.sass";
 import ClientForm, { ClientFormErrors, ClientFormFields } from "../../../components/form/client-form";
 import FormProgressBar from "../../../components/form-progress-bar/form-progress-bar";
@@ -12,14 +12,14 @@ import ContractForm, { ContractFormErrors, ContractFormFields } from "../../../c
 import { Photo } from "../../../model/photo";
 import ApplicationPayload from "../../../model/application-payload";
 
-const NewPlotPage: FC = () => {
+function NewPlotPage() {
   const client = useFormState(new ClientFormFields(), new ClientFormErrors());
   const address = useFormState(new AddressFormFields(), new AddressFormErrors());
   const plot = useFormState(new PlotFormFields(), new PlotFormErrors());
   const [photos, setPhotos] = useState<Photo[]>([]);
   const contract = useFormState(new ContractFormFields(), new ContractFormErrors());
 
-  const confirmClient = async () => {
+  async function confirmClient() {
     const response = await api.post("/clients", client.fields);
 
     if (response.status === 400 || response.status === 409) {
@@ -32,9 +32,9 @@ const NewPlotPage: FC = () => {
     }
 
     next();
-  };
+  }
 
-  const confirmAddress = async () => {
+  async function confirmAddress() {
     const response = await api.post("/addresses", address.fields);
 
     if (response.status === 422) {
@@ -47,9 +47,9 @@ const NewPlotPage: FC = () => {
     }
 
     next();
-  };
+  }
 
-  const confirmPlot = async () => {
+  async function confirmPlot() {
     const response = await api.post("/plots", plot.fields);
 
     if (response.status >= 400) {
@@ -62,9 +62,9 @@ const NewPlotPage: FC = () => {
     }
 
     next();
-  };
+  }
 
-  const createPlotApplication = async () => {
+  async function createPlotApplication() {
     const payload = new ApplicationPayload(
       client.fields.id,
       address.fields.id,
@@ -81,7 +81,7 @@ const NewPlotPage: FC = () => {
     if (response.status >= 400) {
       contract.setErrors(response.data.errors);
     }
-  };
+  }
 
   const { steps, back, next, currentStep, goTo } = useMultiStepForm([
     <ClientForm submit={confirmClient} state={client} />,
@@ -104,6 +104,6 @@ const NewPlotPage: FC = () => {
       </div>
     </div>
   );
-};
+}
 
 export default NewPlotPage;

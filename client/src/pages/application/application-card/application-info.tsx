@@ -1,6 +1,5 @@
 import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { FC, useEffect } from "react";
 import "./application-card.sass";
 
 type ApplicationInfoProps = {
@@ -10,7 +9,7 @@ type ApplicationInfoProps = {
   bold?: boolean;
 };
 
-const ApplicationInfo: FC<ApplicationInfoProps> = ({ icon, value, unit, bold }) => {
+function ApplicationInfo({ icon, value, unit, bold }: ApplicationInfoProps) {
   return (
     <div className="application-info">
       <div className="application-info__icon-container">
@@ -24,6 +23,6 @@ const ApplicationInfo: FC<ApplicationInfoProps> = ({ icon, value, unit, bold }) 
       )}
     </div>
   );
-};
+}
 
 export default ApplicationInfo;

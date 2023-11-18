@@ -20,11 +20,11 @@ type PhotoFormProps = {
   state: [Photo[], Dispatch<SetStateAction<Photo[]>>];
 };
 
-const PhotoForm: FC<PhotoFormProps> = ({ back, submit, state: [photos, setPhotos] }) => {
+function PhotoForm({ back, submit, state: [photos, setPhotos] }: PhotoFormProps) {
   const [isLoading, setLoading] = useState(false);
   const maximumAmountOfFiles = 15;
 
-  const uploadToServer = async (files: FileList) => {
+  async function uploadToServer(files: FileList) {
     setLoading(true);
     const data = new FormData();
     const allowedAmountOfFiles = Math.min(maximumAmountOfFiles - photos.length, files.length);
@@ -44,15 +44,15 @@ const PhotoForm: FC<PhotoFormProps> = ({ back, submit, state: [photos, setPhotos
     }
 
     setLoading(false);
-  };
+  }
 
-  const removePhoto = async (id: number) => {
+  async function removePhoto(id: number) {
     const response = await api.delete("/photos/" + id);
     console.log(response);
     if (response.status === 204) {
       setPhotos(photos.filter((photo) => photo.id != id));
     }
-  };
+  }
 
   return (
     <form className="form form_photo">
@@ -80,6 +80,6 @@ const PhotoForm: FC<PhotoFormProps> = ({ back, submit, state: [photos, setPhotos
       </div>
     </form>
   );
-};
+}
 
 export default PhotoForm;

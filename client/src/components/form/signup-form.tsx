@@ -26,7 +26,7 @@ type SignupFormProps = {
   state: FormState<SignupFormFields, SignupFormErrors>;
 };
 
-const SignupForm: FC<SignupFormProps> = ({ submit, state: { fields, errors, setField, clearFieldErrors } }) => {
+function SignupForm({ submit, state: { fields, errors, setField, clearFieldErrors } }: SignupFormProps) {
   return (
     <form action="" className="form">
       <h1 className="form__header">Регистрация</h1>
@@ -88,6 +88,6 @@ const SignupForm: FC<SignupFormProps> = ({ submit, state: { fields, errors, setF
       </p>
     </form>
   );
-};
+}
 
 export default SignupForm;

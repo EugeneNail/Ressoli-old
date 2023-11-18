@@ -3,13 +3,12 @@ import GuestLayout from "./layouts/guest-layout/guest-layout";
 import LoginPage from "./pages/guest/login-page";
 import SignupPage from "./pages/guest/signup-page";
 import DefaultLayout from "./layouts/default-layout/default-layout";
-import { FC, useEffect } from "react";
+import { useEffect } from "react";
 import ProtectedRoute from "./protected-route";
 import NewPlotPage from "./pages/application/plot/new-plot-page";
 import PlotsPage from "./pages/application/plot/plots-page";
 
-const RootRouter: FC = () => {
-  console.log("im here");
+function RootRouter() {
   useEffect(() => {}, []);
 
   return (
@@ -40,6 +39,6 @@ const RootRouter: FC = () => {
       </Routes>
     </BrowserRouter>
   );
-};
+}
 
 export default RootRouter;

@@ -1,7 +1,7 @@
 import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { ChangeEvent, FC, useRef, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 
 type SelectBoxProps = {
   value: string;
@@ -16,24 +16,24 @@ type SelectBoxProps = {
   readOnly?: boolean;
 };
 
-const SelectBox: FC<SelectBoxProps> = (props) => {
+function SelectBox({ value, options, label, onChange, hint, name, leadingIcon, errors, clearErrors }: SelectBoxProps) {
   const inputRef = useRef<HTMLInputElement>(null);
-  const [isActive, setActive] = useState(props.value.length > 0);
+  const [isActive, setActive] = useState(value.length > 0);
   const [isListDisplayed, setListDisplayed] = useState(false);
 
-  const handleBlur = () => {
-    if (props.value.length === 0) {
+  function handleBlur() {
+    if (value.length === 0) {
       setActive(false);
     }
-    props.clearErrors?.(props.name);
+    clearErrors?.(name);
     // Потеря фокуса срабатывает раньше регистрации клика по опции
     // работают значения >100 мс
     setTimeout(() => {
       setListDisplayed(false);
     }, 100);
-  };
+  }
 
-  const selectOption = (value: string) => {
+  function selectOption(value: string) {
     const input = inputRef.current;
 
     if (input == null) {
@@ -46,32 +46,32 @@ const SelectBox: FC<SelectBoxProps> = (props) => {
     input.dispatchEvent(new Event("input", { bubbles: true }));
     setActive(true);
     setListDisplayed(false);
-  };
+  }
 
-  const handleFocus = () => {
+  function handleFocus() {
     setActive(true);
     setListDisplayed(true);
     if (inputRef.current) {
       inputRef.current.focus();
     }
-  };
+  }
 
   return (
     <div className="inputbox selectbox">
       <div className="inputbox__outer-wrapper">
-        {props.leadingIcon && <FontAwesomeIcon icon={props.leadingIcon} className="inputbox__leading-icon" />}
+        {leadingIcon && <FontAwesomeIcon icon={leadingIcon} className="inputbox__leading-icon" />}
         <div className="inputbox__inner-wrapper">
-          <label htmlFor={props.name} className={"inputbox__label" + (isActive ? " inputbox__label_active" : "")}>
-            {props.label}
+          <label htmlFor={name} className={"inputbox__label" + (isActive ? " inputbox__label_active" : "")}>
+            {label}
           </label>
           <input
             onInput={() => setActive(true)}
-            value={props.value}
+            value={value}
             readOnly={true}
-            name={props.name}
-            id={props.name}
+            name={name}
+            id={name}
             className="inputbox__input selectbox__input"
-            onChange={props.onChange}
+            onChange={onChange}
             ref={inputRef}
             onFocus={handleFocus}
             onBlur={handleBlur}
@@ -83,19 +83,19 @@ const SelectBox: FC<SelectBoxProps> = (props) => {
           onClick={handleFocus}
         />
       </div>
-      {props.options && props.options.length > 0 && (
+      {options && options.length > 0 && (
         <ul className="inputbox__options" style={{ display: isListDisplayed ? "flex" : "none" }}>
-          {props.options.map((option, index) => (
+          {options.map((option, index) => (
             <li key={index} className="inputbox__option" onClick={() => selectOption(option)}>
               {option}
             </li>
           ))}
         </ul>
       )}
-      <p className="inputbox__hint">{props.hint}</p>
-      {props.errors && props.errors?.length > 0 && (
+      <p className="inputbox__hint">{hint}</p>
+      {errors && errors?.length > 0 && (
         <ul className="inputbox__errors">
-          {props.errors.map((error, index) => (
+          {errors.map((error, index) => (
             <li key={index} className="inputbox__error">
               {error}
             </li>
@@ -104,6 +104,6 @@ const SelectBox: FC<SelectBoxProps> = (props) => {
       )}
     </div>
   );
-};
+}
 
 export default SelectBox;

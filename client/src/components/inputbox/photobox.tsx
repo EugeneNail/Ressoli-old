@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useState, DragEvent } from "react";
+import { ChangeEvent, useState, DragEvent } from "react";
 import "./inputbox.sass";
 import { faSpinner, faFileArrowUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,15 +8,15 @@ type PhotoboxProps = {
   action: (files: FileList) => void;
 };
 
-const Photobox: FC<PhotoboxProps> = ({ isLoading, action }) => {
+function Photobox({ isLoading, action }: PhotoboxProps) {
   const [isDragged, setDragged] = useState(false);
 
-  const handleDragOver = (event: DragEvent<HTMLDivElement>) => {
+  function handleDragOver(event: DragEvent<HTMLDivElement>) {
     event.preventDefault();
     setDragged(true);
-  };
+  }
 
-  const handleDrop = async (event: DragEvent<HTMLDivElement>) => {
+  async function handleDrop(event: DragEvent<HTMLDivElement>) {
     event.preventDefault();
     const files = event.dataTransfer.files as FileList;
 
@@ -26,9 +26,9 @@ const Photobox: FC<PhotoboxProps> = ({ isLoading, action }) => {
 
     setDragged(false);
     action(files);
-  };
+  }
 
-  const handleChange = async (event: ChangeEvent<HTMLInputElement>) => {
+  async function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const files = event.target.files as FileList;
 
     if (!files || !files.length) {
@@ -36,7 +36,7 @@ const Photobox: FC<PhotoboxProps> = ({ isLoading, action }) => {
     }
 
     action(files);
-  };
+  }
 
   return (
     <div className="photobox" onDrop={handleDrop} onDragOver={handleDragOver} onDragLeave={() => setDragged(false)}>
@@ -69,6 +69,6 @@ const Photobox: FC<PhotoboxProps> = ({ isLoading, action }) => {
       )}
     </div>
   );
-};
+}
 
 export default Photobox;

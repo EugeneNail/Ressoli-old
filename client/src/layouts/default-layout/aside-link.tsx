@@ -9,13 +9,13 @@ type AsideLinkProps = {
   icon: IconDefinition;
 };
 
-const AsideLink: FC<AsideLinkProps> = (props) => {
+function AsideLink({ text, route, icon }: AsideLinkProps) {
   return (
-    <NavLink to={props.route} className="aside-link">
-      <FontAwesomeIcon className="aside-link__icon" icon={props.icon} />
-      <p className="aside-link__text">{props.text}</p>
+    <NavLink to={route} className="aside-link">
+      <FontAwesomeIcon className="aside-link__icon" icon={icon} />
+      <p className="aside-link__text">{text}</p>
     </NavLink>
   );
-};
+}
 
 export default AsideLink;

@@ -1,5 +1,5 @@
-import { FC } from "react";
 import "./form-progress-bar.sass";
+
 type FormProgressBarProps = {
   steps: number;
   currentStep: number;
@@ -7,30 +7,30 @@ type FormProgressBarProps = {
   className?: string;
 };
 
-const FormProgressBar: FC<FormProgressBarProps> = (props) => {
-  const difference = 100 / props.steps;
+function FormProgressBar({ steps, currentStep, goTo, className }: FormProgressBarProps) {
+  const difference = 100 / steps;
   const width = 100 - difference;
   const left = difference / 2 + "%";
-  const widthStep = 100 / props.steps;
+  const widthStep = 100 / steps;
   const style = {
-    width: widthStep * props.currentStep + "%",
+    width: widthStep * currentStep + "%",
     left: left,
   };
 
   return (
-    <div className={"form-progress-bar" + " " + props.className}>
+    <div className={"form-progress-bar" + " " + className}>
       <div className="form-progress-bar__top-track" style={style} />
       <div className="form-progress-bar__bottom-track" style={{ width: width + "%", left: left }} />
-      {[...Array(props.steps).keys()].map((number, index) => {
-        const completedStyle = number <= props.currentStep ? " form-progress-bar__step_completed" : "";
+      {[...Array(steps).keys()].map((number, index) => {
+        const completedStyle = number <= currentStep ? " form-progress-bar__step_completed" : "";
         return (
-          <div key={index} onClick={() => props.goTo(number)} className={"form-progress-bar__step" + completedStyle}>
+          <div key={index} onClick={() => goTo(number)} className={"form-progress-bar__step" + completedStyle}>
             {number + 1}
           </div>
         );
       })}
     </div>
   );
-};
+}
 
 export default FormProgressBar;

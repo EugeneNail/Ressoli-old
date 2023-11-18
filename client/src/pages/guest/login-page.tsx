@@ -1,4 +1,3 @@
-import { FC } from "react";
 import api from "../../service/api";
 import useFormState from "../../service/use-form-state";
 import { useNavigate } from "react-router";
@@ -14,11 +13,11 @@ class LoginFormErrors {
   password: string[] = [];
 }
 
-const LoginPage: FC = () => {
+function LoginPage() {
   const navigate = useNavigate();
   const login = useFormState(new LoginFormFields(), new LoginFormErrors());
 
-  const submit = async () => {
+  async function submit() {
     const response = await api.post("/login", login.fields);
     const data = response.data;
 
@@ -32,9 +31,9 @@ const LoginPage: FC = () => {
     localStorage.setItem("user_name", data.username);
     localStorage.setItem("image_url", data.imageUrl);
     navigate("/");
-  };
+  }
 
   return <LoginForm submit={submit} state={login} />;
-};
+}
 
 export default LoginPage;

@@ -1,11 +1,10 @@
-import { FC, useEffect, useState } from "react";
-import Button from "../../../components/button/button";
+import { useEffect, useState } from "react";
 import api from "../../../service/api";
 import "../applications-page.sass";
 import ApplicationCard from "../application-card/application-card";
 import { ShortApplication } from "../../../model/short-application";
 
-const PlotsPage: FC = () => {
+function PlotsPage() {
   const [plots, setPlots] = useState<ShortApplication[]>();
 
   useEffect(() => {
@@ -13,11 +12,8 @@ const PlotsPage: FC = () => {
       .get<{ data: ShortApplication[] }>("/applications/plots")
       .then((response) => {
         setPlots(response.data.data);
-        console.log(1, response);
       })
-      .catch((response) => {
-        console.log(2, response);
-      });
+      .catch((response) => {});
   }, []);
 
   return (
@@ -30,6 +26,6 @@ const PlotsPage: FC = () => {
       </div>
     </div>
   );
-};
+}
 
 export default PlotsPage;

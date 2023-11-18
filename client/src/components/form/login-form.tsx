@@ -1,4 +1,3 @@
-import { FC } from "react";
 import Button from "../button/button";
 import { FormState } from "../../model/form-state";
 import { faEnvelope, faKey } from "@fortawesome/free-solid-svg-icons";
@@ -20,7 +19,7 @@ type LoginFormProps = {
   state: FormState<LoginFormFields, LoginFormErrors>;
 };
 
-const LoginForm: FC<LoginFormProps> = ({ submit, state: { fields, errors, setField, clearFieldErrors } }) => {
+function LoginForm({ submit, state: { fields, errors, setField, clearFieldErrors } }: LoginFormProps) {
   return (
     <form action="" className="form">
       <h1 className="form__header">Вход</h1>
@@ -55,6 +54,6 @@ const LoginForm: FC<LoginFormProps> = ({ submit, state: { fields, errors, setFie
       </p>
     </form>
   );
-};
+}
 
 export default LoginForm;

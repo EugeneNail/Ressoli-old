@@ -1,4 +1,3 @@
-import { FC } from "react";
 import Button from "../button/button";
 import Textbox from "../inputbox/textbox";
 import { FormState } from "../../model/form-state";
@@ -22,7 +21,7 @@ type AddressFormProps = {
   state: FormState<AddressFormFields, AddressFormErrors>;
 };
 
-const AddressForm: FC<AddressFormProps> = ({ submit, back, state: { fields, errors, setField, clearFieldErrors } }) => {
+function AddressForm({ submit, back, state: { fields, errors, setField, clearFieldErrors } }: AddressFormProps) {
   return (
     <form action="" className="form address-form">
       <h1 className="form__header">Адрес</h1>
@@ -58,6 +57,6 @@ const AddressForm: FC<AddressFormProps> = ({ submit, back, state: { fields, erro
       </div>
     </form>
   );
-};
+}
 
 export default AddressForm;

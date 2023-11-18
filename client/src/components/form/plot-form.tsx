@@ -28,7 +28,7 @@ type PlotFormProps = {
   state: FormState<PlotFormFields, PlotFormErrors>;
 };
 
-const PlotForm: FC<PlotFormProps> = ({ back, submit, state: { fields, errors, setField, clearFieldErrors } }) => {
+function PlotForm({ back, submit, state: { fields, errors, setField, clearFieldErrors } }: PlotFormProps) {
   const { water, gas, electricity, sewer } = new PlotOptions();
 
   return (
@@ -89,6 +89,6 @@ const PlotForm: FC<PlotFormProps> = ({ back, submit, state: { fields, errors, se
       </div>
     </form>
   );
-};
+}
 
 export default PlotForm;

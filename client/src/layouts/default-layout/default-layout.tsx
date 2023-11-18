@@ -3,7 +3,7 @@ import "./default-layout.sass";
 import { Outlet } from "react-router";
 import Aside from "./aside";
 
-const DefaultLayout: FC = () => {
+function DefaultLayout() {
   return (
     <div className="default-layout">
       <Aside />
@@ -12,6 +12,6 @@ const DefaultLayout: FC = () => {
       </main>
     </div>
   );
-};
+}
 
 export default DefaultLayout;

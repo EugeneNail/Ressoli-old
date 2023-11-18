@@ -1,4 +1,3 @@
-import { FC } from "react";
 import useFormState from "../../service/use-form-state";
 import api from "../../service/api";
 import { useNavigate } from "react-router";
@@ -20,11 +19,11 @@ class SignupFormErrors {
   password_confirmation: string[] = [];
 }
 
-const SignupPage: FC = () => {
+function SignupPage() {
   const navigate = useNavigate();
   const signup = useFormState(new SignupFormFields(), new SignupFormErrors());
 
-  const submit = async () => {
+  async function submit() {
     const response = await api.post("/signup", signup.fields);
     const data = response.data;
 
@@ -38,9 +37,9 @@ const SignupPage: FC = () => {
     localStorage.setItem("user_name", data.username);
     localStorage.setItem("image_url", data.imageUrl);
     navigate("/");
-  };
+  }
 
   return <SignupForm state={signup} submit={submit} />;
-};
+}
 
 export default SignupPage;
