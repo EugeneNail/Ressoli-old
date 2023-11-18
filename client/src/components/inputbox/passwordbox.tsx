@@ -15,7 +15,7 @@ interface PasswordboxProps {
   clearErrors?: (name: string) => void;
 }
 
-function Passwordbox({ value, label, onChange, hint, name, leadingIcon, errors, clearErrors }: PasswordboxProps) {
+function Passwordbox({ value, label, onChange, name, leadingIcon, errors, clearErrors }: PasswordboxProps) {
   const [isActive, setActive] = useState(value.length > 0);
   const [isVisible, setVisible] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -28,10 +28,10 @@ function Passwordbox({ value, label, onChange, hint, name, leadingIcon, errors, 
   }
 
   return (
-    <div className="inputbox">
-      <div className="inputbox__outer-wrapper">
+    <div className="inputbox passwordbox">
+      <div className="inputbox__body">
         {leadingIcon && <FontAwesomeIcon icon={leadingIcon} className="inputbox__leading-icon" />}
-        <div className="inputbox__inner-wrapper">
+        <div className="inputbox__main">
           <label htmlFor={name} className={"inputbox__label" + (isActive ? " inputbox__label_active" : "")}>
             {label}
           </label>
@@ -50,12 +50,10 @@ function Passwordbox({ value, label, onChange, hint, name, leadingIcon, errors, 
         </div>
         <FontAwesomeIcon
           icon={isVisible ? faEyeSlash : faEye}
-          className="inputbox__trailing-icon"
+          className="passwordbox__trailing-icon"
           onClick={() => setVisible(!isVisible)}
         />
       </div>
-
-      <p className="inputbox__hint">{hint}</p>
       {errors && errors?.length > 0 && (
         <ul className="inputbox__errors">
           {errors.map((error, index) => (

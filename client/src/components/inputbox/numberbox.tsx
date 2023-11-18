@@ -30,7 +30,6 @@ function Numberbox({
   min,
   max,
   precision,
-  hint,
 }: NumberboxProps) {
   const [isActive, setActive] = useState(value != 0);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -117,9 +116,9 @@ function Numberbox({
 
   return (
     <div className="inputbox">
-      <div className="inputbox__outer-wrapper">
+      <div className="inputbox__body">
         {leadingIcon && <FontAwesomeIcon icon={leadingIcon} className="inputbox__leading-icon" />}
-        <div className="inputbox__inner-wrapper">
+        <div className="inputbox__main">
           <label htmlFor={name} className={"inputbox__label" + (isActive ? " inputbox__label_active" : "")}>
             {label}
           </label>
@@ -137,18 +136,20 @@ function Numberbox({
             className="inputbox__input"
           />
         </div>
-        <div className="inputbox__trailing-buttons">
+        <div className="numberbox__trailing-buttons">
           <FontAwesomeIcon
+            aria-hidden={true}
             fixedWidth
-            className="inputbox__trailing-button"
+            className="numberbox__trailing-button"
             icon={faCaretUp}
             onClick={() => changeByStep(1)}
             onMouseDown={() => repeatedlyChangeByStep(1)}
             onMouseUp={stopRepeating}
           />
           <FontAwesomeIcon
+            aria-hidden
             fixedWidth
-            className="inputbox__trailing-button"
+            className="numberbox__trailing-button"
             icon={faCaretDown}
             onClick={() => changeByStep(-1)}
             onMouseDown={() => repeatedlyChangeByStep(-1)}
@@ -156,7 +157,6 @@ function Numberbox({
           />
         </div>
       </div>
-      <p className="inputbox__hint">{hint}</p>
       {errors && errors?.length > 0 && (
         <ul className="inputbox__errors">
           {errors.map((error, index) => (

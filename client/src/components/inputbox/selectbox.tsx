@@ -13,10 +13,9 @@ type SelectBoxProps = {
   leadingIcon?: IconDefinition;
   errors?: string[];
   clearErrors?: (name: string) => void;
-  readOnly?: boolean;
 };
 
-function SelectBox({ value, options, label, onChange, hint, name, leadingIcon, errors, clearErrors }: SelectBoxProps) {
+function SelectBox({ value, options, label, onChange, name, leadingIcon, errors, clearErrors }: SelectBoxProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [isActive, setActive] = useState(value.length > 0);
   const [isListDisplayed, setListDisplayed] = useState(false);
@@ -58,9 +57,9 @@ function SelectBox({ value, options, label, onChange, hint, name, leadingIcon, e
 
   return (
     <div className="inputbox selectbox">
-      <div className="inputbox__outer-wrapper">
+      <div className="inputbox__body">
         {leadingIcon && <FontAwesomeIcon icon={leadingIcon} className="inputbox__leading-icon" />}
-        <div className="inputbox__inner-wrapper">
+        <div className="inputbox__main">
           <label htmlFor={name} className={"inputbox__label" + (isActive ? " inputbox__label_active" : "")}>
             {label}
           </label>
@@ -92,7 +91,6 @@ function SelectBox({ value, options, label, onChange, hint, name, leadingIcon, e
           ))}
         </ul>
       )}
-      <p className="inputbox__hint">{hint}</p>
       {errors && errors?.length > 0 && (
         <ul className="inputbox__errors">
           {errors.map((error, index) => (
