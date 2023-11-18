@@ -16,15 +16,8 @@ function Checkbox({ value, name, label, onChange }: CheckboxProps) {
   return (
     <label htmlFor={name} className="checkbox">
       <FontAwesomeIcon className="checkbox__icon" icon={faCheck} />
-      <input
-        id={name}
-        value={value.toString()}
-        name={name}
-        type="checkbox"
-        className="checkbox__input"
-        onChange={onChange}
-      />
-      <p className="checkbox__text">{label}</p>
+      <input id={name} checked={value} name={name} type="checkbox" className="checkbox__input" onChange={onChange} />
+      <p className={"checkbox__text" + (value ? " checkbox__text_checked" : "")}>{label}</p>
     </label>
   );
 }
