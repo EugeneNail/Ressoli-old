@@ -36,7 +36,7 @@ function SignupForm({ submit, state: { fields, errors, setField, clearFieldError
           label="Имя"
           name="name"
           onChange={setField}
-          leadingIcon={faUser}
+          icon={faUser}
           errors={errors.name}
           clearErrors={clearFieldErrors}
         />
@@ -45,7 +45,7 @@ function SignupForm({ submit, state: { fields, errors, setField, clearFieldError
           label="Фамилия"
           name="surname"
           onChange={setField}
-          leadingIcon={faUser}
+          icon={faUser}
           errors={errors.surname}
           clearErrors={clearFieldErrors}
         />
@@ -54,7 +54,7 @@ function SignupForm({ submit, state: { fields, errors, setField, clearFieldError
           label="Электронная почта"
           name="email"
           onChange={setField}
-          leadingIcon={faEnvelope}
+          icon={faEnvelope}
           errors={errors.email}
           clearErrors={clearFieldErrors}
         />
@@ -63,7 +63,7 @@ function SignupForm({ submit, state: { fields, errors, setField, clearFieldError
           label="Пароль"
           name="password"
           onChange={setField}
-          leadingIcon={faKey}
+          icon={faKey}
           errors={errors.password}
           clearErrors={clearFieldErrors}
         />
@@ -72,7 +72,7 @@ function SignupForm({ submit, state: { fields, errors, setField, clearFieldError
           label="Повторите пароль"
           name="password_confirmation"
           onChange={setField}
-          leadingIcon={faKey}
+          icon={faKey}
           errors={errors.password_confirmation}
           clearErrors={clearFieldErrors}
         />

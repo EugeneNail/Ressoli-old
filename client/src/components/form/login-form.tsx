@@ -29,7 +29,7 @@ function LoginForm({ submit, state: { fields, errors, setField, clearFieldErrors
           label="Электронная почта"
           name="email"
           onChange={setField}
-          leadingIcon={faEnvelope}
+          icon={faEnvelope}
           errors={errors.email}
           clearErrors={clearFieldErrors}
         />
@@ -38,7 +38,7 @@ function LoginForm({ submit, state: { fields, errors, setField, clearFieldErrors
           label="Пароль"
           name="password"
           onChange={setField}
-          leadingIcon={faKey}
+          icon={faKey}
           errors={errors.password}
           clearErrors={clearFieldErrors}
         />

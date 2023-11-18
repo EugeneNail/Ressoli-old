@@ -26,20 +26,20 @@ input[type=number]
 
 .inputbox
 
-    &__outer-wrapper:hover
+    &__body:hover
         background: $input-bg-hover
 
-    &__outer-wrapper:has(&__input:focus)
+    &__body:has(&__input:focus)
         background: $input-bg-focus
         border: 1px solid $accent
 
-    &__outer-wrapper:has(&__input:focus) &__label
+    &__body:has(&__input:focus) &__label
         color: $accent
 
-    &__outer-wrapper:has(&__input:focus) &__leading-icon
+    &__body:has(&__input:focus) &__leading-icon
         color: $accent
 
-    &__outer-wrapper
+    &__body
         background: $input-bg
         border-radius: 0.8rem
         border: 1px solid $input-bd
@@ -48,7 +48,7 @@ input[type=number]
         grid-template-areas: "leading input trailing"
         padding: 0 1.5rem
 
-    &__inner-wrapper
+    &__main
         grid-area: input
         position: relative
 
@@ -105,6 +105,20 @@ input[type=number]
             background: transparentize($accent, 0.92)
             color: $accent
 
+    &__errors
+        display: flex
+        flex-direction: column
+        margin-top: 0.4rem
+        padding-left: 2rem
+
+    &__error
+        display: list-item
+        list-style-type: disc
+        font-size: 1.2rem
+        color: darken(red, 10%)
+
+.passwordbox
+
     &__trailing-icon
         place-self: center
         grid-area: trailing
@@ -115,6 +129,22 @@ input[type=number]
         &:hover
             color: $accent
             cursor: pointer
+
+.selectbox
+
+    &__input
+        cursor: pointer
+
+    &__trailing-icon
+        place-self: center
+        grid-area: trailing
+        color: $font-weak
+        user-select: none
+        margin-left: 1rem
+        font-size: 2rem
+        width: 100%
+
+.numberbox
 
     &__trailing-buttons
         display: grid
@@ -133,29 +163,6 @@ input[type=number]
 
     &__trailing-button:first-child
         align-self: end
-
-    &__hint
-
-    &__errors
-        display: flex
-        flex-direction: column
-        margin-top: 0.4rem
-        padding-left: 2rem
-
-    &__error
-        display: list-item
-        list-style-type: disc
-        font-size: 1.2rem
-        color: darken(red, 10%)
-
-.selectbox
-
-    &__input
-        cursor: pointer
-
-    &__trailing-icon
-        font-size: 2rem
-        width: 100%
 
 .photobox
     width: 100%
