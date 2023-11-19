@@ -1,0 +1,55 @@
+@import ../../_variables
+
+.carousel
+    position: relative
+
+    &__photo-container
+        height: 500px
+        border-radius: 1rem
+        transform: translate3d(0,0,0)
+        display: flex
+        gap: 2rem
+        overflow-x: hidden
+
+    &__photo
+        border: 5px solid $border
+        border-radius: 1rem
+        max-height: 100%
+
+    &__button-container
+        margin-top: 2rem
+        width: 100%
+        display: flex
+        justify-content: center
+        flex-wrap: wrap
+        gap: 1rem
+
+    &__button
+        user-select: none
+        aspect-ratio: 1 / 1
+        border-radius: 50%
+        border: 2px dotted $accent
+        background: none
+        height: 3rem
+        cursor: pointer
+
+        &:hover
+            border: 2px solid $accent
+
+        &.active
+            background: $accent
+
+        &_side
+            border: none !important
+            background: $accent
+            display: grid
+            place-items: center
+
+            &:hover
+                background: darken($accent, 10%)
+
+    &__button-icon
+        pointer-events: none
+        font-size: 1.8rem
+        color: white
+        place-self: center
