@@ -3,8 +3,8 @@ import Button from "../button/button";
 import ApplicationCardInfo from "./application-card-info";
 import { faBolt, faDroplet, faFire, faLocationDot, faMaximize, faRuble } from "@fortawesome/free-solid-svg-icons";
 import { ShortApplication } from "../../model/short-application";
-import { Timestamp } from "../../service/timestamp";
 import { env } from "../../env";
+import { Converter } from "../../service/converter";
 
 type ApplicationCardProps = {
   application: ShortApplication;
@@ -43,7 +43,7 @@ function ApplicationCard({ application }: ApplicationCardProps) {
             <ApplicationCardInfo icon={faBolt} />
             <ApplicationCardInfo icon={faFire} />
           </div>
-          <p className="application-card__date">{new Timestamp(application.date).getTraditionalDate()}</p>
+          <p className="application-card__date">{Converter.dateToFull(application.date)}</p>
           <Button className="application-card__button" style="dotted" action={openInNewTab} text="Подробнее" />
         </div>
       </div>

@@ -3,13 +3,7 @@ import Button from "../button/button";
 import "./form.sass";
 import { FormState } from "../../model/form-state";
 import { faPhone, faUser } from "@fortawesome/free-solid-svg-icons";
-
-export class ClientFormFields {
-  id: number = 0;
-  name: string = "";
-  surname: string = "";
-  phoneNumber: string = "";
-}
+import { Client } from "../../model/client";
 
 export class ClientFormErrors {
   name: string[] = [];
@@ -19,7 +13,7 @@ export class ClientFormErrors {
 
 type ClientFormProps = {
   submit: () => void;
-  state: FormState<ClientFormFields, ClientFormErrors>;
+  state: FormState<Client, ClientFormErrors>;
 };
 
 function ClientForm({ submit, state: { fields, errors, setField, clearFieldErrors } }: ClientFormProps) {

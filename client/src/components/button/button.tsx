@@ -18,7 +18,7 @@ type ButtonProps = {
 function Button({ text, style, iconOnly, wide, leadingIcon, trailingIcon, action, className }: ButtonProps) {
   const classList = classNames(
     "button",
-    "button" + style,
+    "button_" + style,
     { "button_icon-only": iconOnly },
     { button_wide: wide },
     className

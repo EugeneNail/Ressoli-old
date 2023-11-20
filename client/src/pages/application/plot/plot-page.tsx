@@ -22,73 +22,102 @@ import Button from "../../../components/button/button";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { env } from "../../../env";
+import { Application } from "../../../model/application";
+import api from "../../../service/api";
+import { Converter } from "../../../service/converter";
+import { useParams } from "react-router";
 
 function PlotPage() {
-  const urls: string[] = [];
-  const [position, setPosition] = useState([47.119647, 39.742708]);
+  const { id } = useParams<{ id: string }>();
+  const [geoObjectText, setGeoObjectText] = useState("");
+  const [position, setPosition] = useState([0, 0]);
+  const [{ user, client, address, applicable, photos, date, contract }, setApplication] = useState(new Application());
 
   useEffect(() => {
-    axios
-      .get(`https://geocode-maps.yandex.ru/1.x/?apikey=${env.YANDEX_API_KEY}&format=json&geocode=Ростов-на-Дону`)
-      .then((response) => {
-        const coords = response.data.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos
-          .split(" ")
-          .reverse()
-          .map(parseFloat);
-        setPosition(coords);
-      });
+    api.get<{ data: Application }>("/applications/plots/" + id).then((response) => {
+      setApplication(response.data.data);
+
+      axios
+        .get("https://geocode-maps.yandex.ru/1.x/?apikey=" + env.YANDEX_API_KEY, {
+          params: {
+            format: "json",
+            geocode: Converter.addressToStraight(response.data.data.address),
+          },
+        })
+
+        .then((response) => {
+          const geoObject = response.data.response.GeoObjectCollection.featureMember[0].GeoObject;
+          setGeoObjectText(geoObject.metaDataProperty.GeocoderMetaData.text);
+          const position = geoObject.Point.pos.split(" ").reverse().map(parseFloat);
+          setPosition(position);
+        });
+    });
   }, []);
-
-  function renderMap() {
-    const properties = {
-      balloonContentBody: "г. Ростов-на-Дону, ул. Добролюбова, д. 3А",
-      hintContent: "г. Ростов-на-Дону, ул. Добролюбова, д. 3А",
-    };
-
-    return (
-      <YMaps query={{ apikey: env.YANDEX_API_KEY }}>
-        <Map
-          className="application-page__map"
-          defaultState={{ center: position, zoom: 15, behaviors: ["drag"] }}
-          modules={["geoObject.addon.balloon", "geoObject.addon.hint"]}
-        >
-          <Placemark defaultGeometry={position} properties={properties} />
-          <ZoomControl options={{ position: { right: 10, top: 10 } }} />
-        </Map>
-      </YMaps>
-    );
-  }
 
   return (
     <div className="application-page">
-      <h1 className="application-page__header">Заявка #264 о земельном участке</h1>
+      <h1 className="application-page__header">Заявка #{id} о земельном участке</h1>
       <h2 className="application-page__subheader">Заявка</h2>
-      <div className="application-page__info-group">
-        <ApplicationInfo icon={faUserTie} label="Агент" value="Ирина Гринь" />
-        <ApplicationInfo icon={faFileSignature} label="Форма договора" value="Продажа" />
-        <ApplicationInfo icon={faBuildingUser} label="Клиент" value={`Владимир Дробышевский\n8 (800) 555-35-35`} />
-        <ApplicationInfo icon={faCalendarDays} label="Дата размещения" value="23 ноября 2023г" />
-        <ApplicationInfo icon={faMaximize} label="Площадь" value="300 квм" />
-        <ApplicationInfo icon={faRuble} label="Стоимость" value="30 000 000 с ДНС" />
-        <ApplicationInfo icon={faCreditCard} label="Ипотека" value="Отсутствует" />
-      </div>
+      <section className="application-page__info-group">
+        <ApplicationInfo icon={faUserTie} label="Агент" value={`${user.name} ${user.surname}`} />
+        <ApplicationInfo icon={faFileSignature} label="Форма договора" value={contract.contract} />
+        <ApplicationInfo
+          icon={faBuildingUser}
+          label="Клиент"
+          value={`${client.name} ${client.surname}\n${client.phoneNumber}`}
+        />
+        <ApplicationInfo icon={faCalendarDays} label="Дата размещения" value={Converter.dateToFull(date)} />
+        <ApplicationInfo icon={faMaximize} label="Площадь" value={`${applicable.area} квм`} />
+        <ApplicationInfo
+          icon={faRuble}
+          label="Стоимость"
+          value={`${contract.price} ${contract.hasVat ? "с учетом НДС" : ""}`}
+        />
+        <ApplicationInfo
+          icon={faCreditCard}
+          label="Ипотека"
+          value={contract.hasMortgage ? "Присутствует" : "Отсутствует"}
+        />
+      </section>
+
       <h2 className="application-page__subheader">Адрес</h2>
-      <div className="application-page__info-group">
-        <ApplicationInfo icon={faCity} label="Город" value="Батайск" />
-        <ApplicationInfo icon={faRoad} label="Улица" value="50 Лет Октября" />
-        <ApplicationInfo icon={faMap} label="Номер участка" value="38" />
-        <div className="application-page__map-container">{renderMap()}</div>
-      </div>
+      <section className="application-page__info-group">
+        <ApplicationInfo icon={faCity} label="Город" value={address.city} />
+        <ApplicationInfo icon={faRoad} label="Улица" value={address.street} />
+        <ApplicationInfo icon={faMap} label="Номер участка" value={address.houseNumber} />
+        <div className="application-page__map-container">
+          <YMaps>
+            <Map
+              className="application-page__map"
+              state={{ center: position, zoom: 15, behaviors: ["drag"] }}
+              modules={["geoObject.addon.balloon", "geoObject.addon.hint"]}
+            >
+              <Placemark
+                geometry={position}
+                properties={{
+                  balloonContentBody: geoObjectText,
+                  hintContent: geoObjectText,
+                }}
+              />
+              <ZoomControl options={{ position: { right: 10, top: 10 } }} />
+            </Map>
+          </YMaps>
+        </div>
+      </section>
+
       <h2 className="application-page__subheader">Участок</h2>
-      <div className="application-page__info-group">
-        <ApplicationInfo icon={faDroplet} label="Вода" value="Скважина" />
-        <ApplicationInfo icon={faFire} label="Газ" value="Газгольдер" />
-        <ApplicationInfo icon={faToilet} label="Канализация" value="Локальная очистная станция" />
-        <ApplicationInfo icon={faBolt} label="Электричество" value="По воздуху" />
-      </div>
-      <div className="application-page__info-group">
-        <Carousel className="application-page__carousel" photoUrls={urls} />
-      </div>
+      <section className="application-page__info-group">
+        <ApplicationInfo icon={faDroplet} label="Вода" value={applicable.water} />
+        <ApplicationInfo icon={faFire} label="Газ" value={applicable.gas} />
+        <ApplicationInfo icon={faToilet} label="Канализация" value={applicable.sewer} />
+        <ApplicationInfo icon={faBolt} label="Электричество" value={applicable.electricity} />
+      </section>
+
+      {photos.length > 0 && (
+        <div className="application-page__info-group">
+          <Carousel className="application-page__carousel" photoUrls={photos} />
+        </div>
+      )}
 
       <div className="application-page__button-group">
         <Button style="filled" text="В архив" action={() => {}} />

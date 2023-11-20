@@ -4,15 +4,7 @@ import SelectBox from "../inputbox/selectbox";
 import Numberbox from "../inputbox/numberbox";
 import { PlotOptions } from "../../model/plot-options";
 import { faBolt, faDroplet, faFire, faMaximize, faToilet } from "@fortawesome/free-solid-svg-icons";
-
-export class PlotFormFields {
-  id: number = 0;
-  water: string = "";
-  gas: string = "";
-  electricity: string = "";
-  sewer: string = "";
-  area: number = 0;
-}
+import { Plot } from "../../model/plot";
 
 export class PlotFormErrors {
   water: string[] = [];
@@ -25,7 +17,7 @@ export class PlotFormErrors {
 type PlotFormProps = {
   submit: () => void;
   back: () => void;
-  state: FormState<PlotFormFields, PlotFormErrors>;
+  state: FormState<Plot, PlotFormErrors>;
 };
 
 function PlotForm({ back, submit, state: { fields, errors, setField, clearFieldErrors } }: PlotFormProps) {

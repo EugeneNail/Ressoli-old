@@ -2,13 +2,7 @@ import Button from "../button/button";
 import Textbox from "../inputbox/textbox";
 import { FormState } from "../../model/form-state";
 import { faCity, faMap, faRoad } from "@fortawesome/free-solid-svg-icons";
-
-export class AddressFormFields {
-  id: number = 0;
-  street: string = "";
-  city: string = "";
-  houseNumber: string = "";
-}
+import { Address } from "../../model/address";
 
 export class AddressFormErrors {
   street: string[] = [];
@@ -19,7 +13,7 @@ export class AddressFormErrors {
 type AddressFormProps = {
   submit: () => void;
   back: () => void;
-  state: FormState<AddressFormFields, AddressFormErrors>;
+  state: FormState<Address, AddressFormErrors>;
 };
 
 function AddressForm({ submit, back, state: { fields, errors, setField, clearFieldErrors } }: AddressFormProps) {

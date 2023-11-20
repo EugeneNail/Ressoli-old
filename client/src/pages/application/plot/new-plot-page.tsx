@@ -1,23 +1,27 @@
 import { useState } from "react";
 import "../editable-application-page.sass";
-import ClientForm, { ClientFormErrors, ClientFormFields } from "../../../components/form/client-form";
+import ClientForm, { ClientFormErrors } from "../../../components/form/client-form";
 import FormProgressBar from "../../../components/form-progress-bar/form-progress-bar";
 import useMultiStepForm from "../../../service/use-multi-step-form";
-import AddressForm, { AddressFormErrors, AddressFormFields } from "../../../components/form/address-form";
+import AddressForm, { AddressFormErrors } from "../../../components/form/address-form";
+import { Address } from "../../../model/address";
 import useFormState from "../../../service/use-form-state";
 import api from "../../../service/api";
-import PlotForm, { PlotFormErrors, PlotFormFields } from "../../../components/form/plot-form";
+import PlotForm, { PlotFormErrors } from "../../../components/form/plot-form";
+import { Plot } from "../../../model/plot";
 import PhotoForm from "../../../components/form/photo-form";
-import ContractForm, { ContractFormErrors, ContractFormFields } from "../../../components/form/contract-form";
+import ContractForm, { ContractFormErrors } from "../../../components/form/contract-form";
 import { Photo } from "../../../model/photo";
 import ApplicationPayload from "../../../model/application-payload";
+import { Contract } from "../../../model/contract";
+import { Client } from "../../../model/client";
 
 function NewPlotPage() {
-  const client = useFormState(new ClientFormFields(), new ClientFormErrors());
-  const address = useFormState(new AddressFormFields(), new AddressFormErrors());
-  const plot = useFormState(new PlotFormFields(), new PlotFormErrors());
+  const client = useFormState(new Client(), new ClientFormErrors());
+  const address = useFormState(new Address(), new AddressFormErrors());
+  const plot = useFormState(new Plot(), new PlotFormErrors());
   const [photos, setPhotos] = useState<Photo[]>([]);
-  const contract = useFormState(new ContractFormFields(), new ContractFormErrors());
+  const contract = useFormState(new Contract(), new ContractFormErrors());
 
   async function confirmClient() {
     const response = await api.post("/clients", client.fields);

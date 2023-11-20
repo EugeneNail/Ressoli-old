@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePlotApplicationRequest;
 use App\Http\Requests\ValidateContractRequest;
+use App\Http\Resources\ApplicationResource;
 use App\Http\Resources\ShortApplicationResource;
 use App\Models\Address;
 use App\Models\Application;
@@ -16,6 +17,11 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class ApplicationController extends Controller {
+
+    public function get(Request $request, int $id) {
+        $application = Application::find($id);
+        return new ApplicationResource($application);
+    }
 
     public function indexShort(Request $request) {
         return ShortApplicationResource::collection(Application::all());

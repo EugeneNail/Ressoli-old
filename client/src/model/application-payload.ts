@@ -1,4 +1,4 @@
-import { ContractFormFields } from "../components/form/contract-form";
+import { Contract } from "./contract";
 
 export default class ApplicationPayload {
   readonly clientId: number = 0;
@@ -10,13 +10,7 @@ export default class ApplicationPayload {
   readonly hasMortgage: boolean = false;
   readonly contract: string = "";
 
-  constructor(
-    clientId: number,
-    addressId: number,
-    applicableId: number,
-    photoIds: number[],
-    contract: ContractFormFields
-  ) {
+  constructor(clientId: number, addressId: number, applicableId: number, photoIds: number[], contract: Contract) {
     this.clientId = clientId;
     this.addressId = addressId;
     this.applicableId = applicableId;

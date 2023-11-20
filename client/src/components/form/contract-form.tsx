@@ -5,13 +5,7 @@ import Checkbox from "../inputbox/checkbox";
 import SelectBox from "../inputbox/selectbox";
 import ApplicationOptions from "../../model/application-options";
 import { faFileSignature, faRuble } from "@fortawesome/free-solid-svg-icons";
-
-export class ContractFormFields {
-  price: number = 0;
-  hasMortgage: boolean = false;
-  hasVat: boolean = false;
-  contract: string = "";
-}
+import { Contract } from "../../model/contract";
 
 export class ContractFormErrors {
   price: string[] = [];
@@ -21,7 +15,7 @@ export class ContractFormErrors {
 type ContractFormProps = {
   back: () => void;
   submit: () => void;
-  state: FormState<ContractFormFields, ContractFormErrors>;
+  state: FormState<Contract, ContractFormErrors>;
 };
 
 function ContractForm({ back, submit, state: { fields, errors, setField, clearFieldErrors } }: ContractFormProps) {
