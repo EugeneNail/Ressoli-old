@@ -2,6 +2,7 @@ import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ChangeEvent, useRef, useState } from "react";
+import classNames from "classnames";
 
 type SelectBoxProps = {
   value: string;
@@ -60,7 +61,7 @@ function SelectBox({ value, options, label, onChange, name, icon: leadingIcon, e
       <div className="inputbox__body">
         {leadingIcon && <FontAwesomeIcon icon={leadingIcon} className="inputbox__leading-icon" />}
         <div className="inputbox__main">
-          <label htmlFor={name} className={"inputbox__label" + (isActive ? " inputbox__label_active" : "")}>
+          <label htmlFor={name} className={classNames("inputbox__label", { inputbox__label_active: isActive })}>
             {label}
           </label>
           <input

@@ -1,10 +1,11 @@
-import { Dispatch, FC, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import Button from "../button/button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import api from "../../service/api";
 import Photobox from "../inputbox/photobox";
 import { Photo } from "../../model/photo";
+import { env } from "../../env";
 
 export class PhotoFormFields {
   photoUrls: string[] = [];
@@ -62,7 +63,7 @@ function PhotoForm({ back, submit, state: [photos, setPhotos] }: PhotoFormProps)
         {photos.length > 0 &&
           photos.map((photo) => (
             <div key={photo.id} className="form__photo-container">
-              <img src={"http://localhost:8000/storage/" + photo.path} className="form__photo" />
+              <img src={`${env.PHORO_URL}}/${photo.path}`} className="form__photo" />
               <FontAwesomeIcon className="form__photo-icon" onClick={() => removePhoto(photo.id)} icon={faTrash} />
             </div>
           ))}

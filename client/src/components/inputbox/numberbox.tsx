@@ -2,6 +2,7 @@ import { ChangeEvent, KeyboardEvent, useState, useRef } from "react";
 import "./inputbox.sass";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconDefinition, faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
+import classNames from "classnames";
 
 interface NumberboxProps {
   value: number;
@@ -119,7 +120,7 @@ function Numberbox({
       <div className="inputbox__body">
         {leadingIcon && <FontAwesomeIcon icon={leadingIcon} className="inputbox__leading-icon" />}
         <div className="inputbox__main">
-          <label htmlFor={name} className={"inputbox__label" + (isActive ? " inputbox__label_active" : "")}>
+          <label htmlFor={name} className={classNames("inputbox__label", { inputbox__label_active: isActive })}>
             {label}
           </label>
           <input

@@ -18,13 +18,16 @@ function FormProgressBar({ steps, currentStep, goTo, className }: FormProgressBa
   };
 
   return (
-    <div className={"form-progress-bar" + " " + className}>
+    <div className={`form-progress-bar ${className}`}>
       <div className="form-progress-bar__top-track" style={style} />
       <div className="form-progress-bar__bottom-track" style={{ width: width + "%", left: left }} />
       {[...Array(steps).keys()].map((number, index) => {
-        const completedStyle = number <= currentStep ? " form-progress-bar__step_completed" : "";
         return (
-          <div key={index} onClick={() => goTo(number)} className={"form-progress-bar__step" + completedStyle}>
+          <div
+            key={index}
+            onClick={() => goTo(number)}
+            className={`form-progress-bar__step ${number <= currentStep ? " form-progress-bar__step_completed" : ""}`}
+          >
             {number + 1}
           </div>
         );

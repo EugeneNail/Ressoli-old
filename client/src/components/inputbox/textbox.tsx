@@ -30,7 +30,7 @@ function Textbox({ value, label, onChange, name, icon: leadingIcon, errors, clea
       <div className="inputbox__body">
         {leadingIcon && <FontAwesomeIcon icon={leadingIcon} className="inputbox__leading-icon" />}
         <div className="inputbox__main">
-          <label htmlFor={name} className={"inputbox__label" + (isActive ? " inputbox__label_active" : "")}>
+          <label htmlFor={name} className={`inputbox__label ${isActive && "inputbox__label_active"}`}>
             {label}
           </label>
           <input

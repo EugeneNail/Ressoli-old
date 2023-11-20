@@ -1,8 +1,8 @@
 import { ChangeEvent, useState, useRef } from "react";
 import "./inputbox.sass";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconDefinition, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import classNames from "classnames";
 
 interface PasswordboxProps {
   value: string;
@@ -32,7 +32,7 @@ function Passwordbox({ value, label, onChange, name, icon: leadingIcon, errors, 
       <div className="inputbox__body">
         {leadingIcon && <FontAwesomeIcon icon={leadingIcon} className="inputbox__leading-icon" />}
         <div className="inputbox__main">
-          <label htmlFor={name} className={"inputbox__label" + (isActive ? " inputbox__label_active" : "")}>
+          <label htmlFor={name} className={classNames("inputbox__label", { inputbox__label_active: isActive })}>
             {label}
           </label>
           <input

@@ -2,6 +2,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./carousel.sass";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
+import { env } from "../../env";
+import classNames from "classnames";
 
 type CarouselProps = {
   photoUrls: string[];
@@ -28,7 +30,7 @@ function Carousel({ photoUrls, className }: CarouselProps) {
     <div className={`carousel ${className}`}>
       <div className="carousel__photo-container">
         {photoUrls.map((url, index) => (
-          <img key={index} src={"http://localhost:8000/storage/" + url} alt="" className="carousel__photo" />
+          <img key={index} src={`${env.PHORO_URL}/${url}`} alt="" className="carousel__photo" />
         ))}
       </div>
       <div className="carousel__button-container">
@@ -38,7 +40,7 @@ function Carousel({ photoUrls, className }: CarouselProps) {
         {photoUrls.map((_, index) => (
           <button
             key={index}
-            className={`carousel__button ${currentIndex === index ? "active" : ""}`}
+            className={classNames("carousel__button", { active: currentIndex === index })}
             onClick={() => goTo(index)}
           />
         ))}
