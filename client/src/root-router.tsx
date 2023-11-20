@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import ProtectedRoute from "./protected-route";
 import NewPlotPage from "./pages/application/plot/new-plot-page";
 import PlotsPage from "./pages/application/plot/plots-page";
+import PlotPage from "./pages/application/plot/plot-page";
 
 function RootRouter() {
   useEffect(() => {}, []);
@@ -31,6 +32,7 @@ function RootRouter() {
           <Route path="/plots">
             <Route path="/plots" element={<PlotsPage />} />
             <Route path="/plots/new" element={<NewPlotPage />} />
+            <Route path="/plots/:id" element={<PlotPage />} />
           </Route>
           <Route path="/apartments" element={null} />
           <Route path="/rooms" element={null} />

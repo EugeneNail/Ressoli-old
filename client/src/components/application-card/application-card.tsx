@@ -1,9 +1,9 @@
 import "./application-card.sass";
-import Button from "../../../components/button/button";
-import ApplicationInfo from "./application-info";
+import Button from "../button/button";
+import ApplicationCardInfo from "./application-card-info";
 import { faBolt, faDroplet, faFire, faLocationDot, faMaximize, faRuble } from "@fortawesome/free-solid-svg-icons";
-import { ShortApplication } from "../../../model/short-application";
-import { Timestamp } from "../../../service/timestamp";
+import { ShortApplication } from "../../model/short-application";
+import { Timestamp } from "../../service/timestamp";
 
 type ApplicationCardProps = {
   application: ShortApplication;
@@ -32,15 +32,15 @@ function ApplicationCard({ application }: ApplicationCardProps) {
       <div className="application-card__info-container">
         <h3 className="application-card__title">{buildTitle()}</h3>
         <div className="application-card__infos">
-          <ApplicationInfo icon={faLocationDot} value={buildAddress()} />
-          <ApplicationInfo icon={faRuble} bold value={"3000000"} unit={buildPrice()} />
-          <ApplicationInfo icon={faMaximize} value="300" unit="квм" />
+          <ApplicationCardInfo icon={faLocationDot} value={buildAddress()} />
+          <ApplicationCardInfo icon={faRuble} bold value={"3000000"} unit={buildPrice()} />
+          <ApplicationCardInfo icon={faMaximize} value="300" unit="квм" />
         </div>
         <div className="application-card__inner-grid">
           <div className="application-card__stats-container">
-            <ApplicationInfo icon={faDroplet} />
-            <ApplicationInfo icon={faBolt} />
-            <ApplicationInfo icon={faFire} />
+            <ApplicationCardInfo icon={faDroplet} />
+            <ApplicationCardInfo icon={faBolt} />
+            <ApplicationCardInfo icon={faFire} />
           </div>
           <p className="application-card__date">{new Timestamp(application.date).getTraditionalDate()}</p>
           <Button className="application-card__button" style="dotted" action={openInNewTab} text="Подробнее" />

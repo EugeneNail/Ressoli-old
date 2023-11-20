@@ -27,8 +27,8 @@ function Carousel({ photoUrls, className }: CarouselProps) {
   return (
     <div className={`carousel ${className}`}>
       <div className="carousel__photo-container">
-        {photoUrls.map((url) => (
-          <img src={"http://localhost:8000/storage/" + url} alt="" className="carousel__photo" />
+        {photoUrls.map((url, index) => (
+          <img key={index} src={"http://localhost:8000/storage/" + url} alt="" className="carousel__photo" />
         ))}
       </div>
       <div className="carousel__button-container">
@@ -37,6 +37,7 @@ function Carousel({ photoUrls, className }: CarouselProps) {
         </div>
         {photoUrls.map((_, index) => (
           <button
+            key={index}
             className={`carousel__button ${currentIndex === index ? "active" : ""}`}
             onClick={() => goTo(index)}
           />
