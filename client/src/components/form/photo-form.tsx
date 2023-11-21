@@ -63,7 +63,7 @@ function PhotoForm({ back, submit, state: [photos, setPhotos] }: PhotoFormProps)
         {photos.length > 0 &&
           photos.map((photo) => (
             <div key={photo.id} className="form__photo-container">
-              <img src={`${env.PHORO_URL}}/${photo.path}`} className="form__photo" />
+              <img src={`${env.PHORO_URL}/${photo.path}`} className="form__photo" />
               <FontAwesomeIcon className="form__photo-icon" onClick={() => removePhoto(photo.id)} icon={faTrash} />
             </div>
           ))}
