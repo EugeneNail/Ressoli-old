@@ -87,3 +87,19 @@
 
         &:hover
             text-decoration: underline
+
+.form-container:has(.address-form)
+    width: calc(20rem + 25%)
+
+.address-form
+    width: 100%
+
+    &__city-group
+        display: grid
+        grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr))
+        gap: 1rem
+
+    &__street-group
+        display: grid
+        grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr))
+        gap: 1rem

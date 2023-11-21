@@ -41,7 +41,7 @@ function PlotPage() {
         .get("https://geocode-maps.yandex.ru/1.x/?apikey=" + env.YANDEX_API_KEY, {
           params: {
             format: "json",
-            geocode: Converter.addressToStraight(response.data.data.address),
+            geocode: Converter.addressToSearchable(response.data.data.address),
           },
         })
 
@@ -82,8 +82,8 @@ function PlotPage() {
 
       <h2 className="application-page__subheader">Адрес</h2>
       <section className="application-page__info-group">
-        <ApplicationInfo icon={faCity} label="Город" value={address.city} />
-        <ApplicationInfo icon={faRoad} label="Улица" value={address.street} />
+        <ApplicationInfo icon={faCity} label={address.typeOfCity} value={address.city} />
+        <ApplicationInfo icon={faRoad} label={address.typeOfStreet} value={address.street} />
         <ApplicationInfo icon={faMap} label="Номер участка" value={address.houseNumber} />
         <div className="application-page__map-container">
           <YMaps>

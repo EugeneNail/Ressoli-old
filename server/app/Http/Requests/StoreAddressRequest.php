@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Rules\AddressNumberRule;
 use App\Rules\StreetRule;
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreAddressRequest extends FormRequest {
@@ -24,6 +25,8 @@ class StoreAddressRequest extends FormRequest {
             "city" => "required|alpha",
             "street" => ["required", new StreetRule()],
             "houseNumber" => ["required", new AddressNumberRule()],
+            "typeOfCity" => ["required", Rule::in(["Город", "Село", "Хутор", "ПГТ"])],
+            "typeOfStreet" => ["required", Rule::in(["Бульвар", "Проезд", "Переулок", "Улица", "Проспект"])]
         ];
     }
 }

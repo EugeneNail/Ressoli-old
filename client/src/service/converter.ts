@@ -20,11 +20,11 @@ export class Converter {
     return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}г`;
   }
 
-  static addressToStraight(address: Address): string {
-    return `${address.city}, ${address.street}, ${address.houseNumber}`;
+  static addressToSearchable(address: Address): string {
+    return `${address.city}, ${address.typeOfStreet} ${address.street}, ${address.houseNumber}`;
   }
 
-  static addressToFull(address: Address): string {
-    return `г. ${address.city}, ул. ${address.street}, д. ${address.houseNumber}`;
+  static addressToString(address: Address): string {
+    return `${address.city}, ${address.street}, ${address.houseNumber}`;
   }
 }
