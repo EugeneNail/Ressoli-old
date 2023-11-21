@@ -18,7 +18,11 @@ import { Client } from "../../../model/client";
 import { PlotOptions } from "../../../model/options/plot-options";
 import { ApplicationOptions } from "../../../model/options/application-options";
 
-function NewPlotPage() {
+type EditablePlotPageProps = {
+  isNew: boolean;
+};
+
+function EditablePlotPage({ isNew }: EditablePlotPageProps) {
   const client = useFormState(new Client(), new ClientFormErrors());
   const address = useFormState(new Address(), new AddressFormErrors());
   const plot = useFormState(new Plot(), new PlotFormErrors());
@@ -30,7 +34,7 @@ function NewPlotPage() {
     api.get("/options/application").then((response) => setOptions(response.data));
   }, []);
 
-  async function confirmClient() {
+  async function submitClient() {
     const response = await api.post("/clients", client.fields);
 
     if (response.status === 400 || response.status === 409) {
@@ -45,7 +49,7 @@ function NewPlotPage() {
     next();
   }
 
-  async function confirmAddress() {
+  async function submitAddress() {
     const response = await api.post("/addresses", address.fields);
 
     if (response.status === 422) {
@@ -60,7 +64,7 @@ function NewPlotPage() {
     next();
   }
 
-  async function confirmPlot() {
+  async function submitPlot() {
     const response = await api.post("/plots", plot.fields);
 
     if (response.status >= 400) {
@@ -75,7 +79,18 @@ function NewPlotPage() {
     next();
   }
 
-  async function createPlotApplication() {
+  async function submitContract() {
+    const response = await api.post("/applications/contract", contract.fields);
+
+    if (response.status >= 400) {
+      contract.setErrors(response.data.errors);
+      return;
+    }
+
+    submitPlotApplication();
+  }
+
+  async function submitPlotApplication() {
     const payload = new ApplicationPayload(
       client.fields.id,
       address.fields.id,
@@ -83,23 +98,35 @@ function NewPlotPage() {
       photos.map((photo) => photo.id),
       contract.fields
     );
-    const response = await api.post("/applications/plots", payload);
+    let response = null;
+
+    if (isNew) {
+      response = await api.post("/applications/plots", payload);
+    } else {
+      response = await api.post(`/applications/plots/${123}`, payload);
+    }
+
+    if (response.status >= 400) {
+      //TODO заменить системой оповещений
+      alert(400);
+      return;
+    }
 
     if (response.status == 201) {
       alert("Created");
     }
 
-    if (response.status >= 400) {
-      contract.setErrors(response.data.errors);
+    if (response.status == 204) {
+      alert("Edited");
     }
   }
 
   const { steps, back, next, currentStep, goTo } = useMultiStepForm([
-    <ClientForm submit={confirmClient} state={client} />,
-    <AddressForm options={options.address} back={() => back()} submit={confirmAddress} state={address} />,
-    <PlotForm options={options.applicable} back={() => back()} submit={confirmPlot} state={plot} />,
+    <ClientForm submit={submitClient} state={client} />,
+    <AddressForm options={options.address} back={() => back()} submit={submitAddress} state={address} />,
+    <PlotForm options={options.applicable} back={() => back()} submit={submitPlot} state={plot} />,
     <PhotoForm back={() => back()} submit={() => next()} state={[photos, setPhotos]} />,
-    <ContractForm options={options.contract} back={() => back()} submit={createPlotApplication} state={contract} />,
+    <ContractForm options={options.contract} back={() => back()} submit={submitContract} state={contract} />,
   ]);
 
   return (
@@ -117,4 +144,4 @@ function NewPlotPage() {
   );
 }
 
-export default NewPlotPage;
+export default EditablePlotPage;

@@ -5,9 +5,9 @@ import SignupPage from "./pages/guest/signup-page";
 import DefaultLayout from "./layouts/default-layout/default-layout";
 import { useEffect } from "react";
 import ProtectedRoute from "./protected-route";
-import NewPlotPage from "./pages/application/plot/new-plot-page";
 import PlotsPage from "./pages/application/plot/plots-page";
 import PlotPage from "./pages/application/plot/plot-page";
+import EditablePlotPage from "./pages/application/plot/editable-plot-page";
 
 function RootRouter() {
   useEffect(() => {}, []);
@@ -31,8 +31,9 @@ function RootRouter() {
           <Route path="/houses" element={null} />
           <Route path="/plots">
             <Route path="/plots" element={<PlotsPage />} />
-            <Route path="/plots/new" element={<NewPlotPage />} />
+            <Route path="/plots/new" element={<EditablePlotPage isNew />} />
             <Route path="/plots/:id" element={<PlotPage />} />
+            <Route path="/plots/:id/edit" element={<EditablePlotPage isNew={false} />} />
           </Route>
           <Route path="/apartments" element={null} />
           <Route path="/rooms" element={null} />

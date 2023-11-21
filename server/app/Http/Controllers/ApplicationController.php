@@ -18,6 +18,10 @@ use Illuminate\Support\Facades\Storage;
 
 class ApplicationController extends Controller {
 
+    public function validateContract(ValidateContractRequest $request) {
+        return response()->noContent();
+    }
+
     public function get(Request $request, int $id) {
         $application = Application::find($id);
         return new ApplicationResource($application);

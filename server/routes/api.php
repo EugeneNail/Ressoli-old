@@ -40,6 +40,7 @@ Route::group(["middleware" => "auth:sanctum"], function () {
     Route::post("applications/plots", [ApplicationController::class, "storePlotApplication"]);
     Route::get("applications/plots", [ApplicationController::class, "indexShort"]);
     Route::get("applications/plots/{id}", [ApplicationController::class, "get"]);
+    Route::post("applications/contract", [ApplicationController::class, "validateContract"]);
 
     Route::get("/options/application", [DropOptionController::class, "getForApplication"]);
 
