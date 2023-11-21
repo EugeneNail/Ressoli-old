@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Models\Support\PlotOptions;
 use App\Rules\WordsRule;
+use App\Services\DropOptionsService;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -20,12 +21,14 @@ class StorePlotRequest extends FormRequest {
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(PlotOptions $options, WordsRule $wordsRule): array {
+    public function rules(DropOptionsService $dropOptionsService, WordsRule $wordsRule): array {
+        $options = $dropOptionsService->collectPlot();
+
         return [
-            "water" => ["required", "string", $wordsRule, Rule::in($options->water)],
-            "sewer" => ["required", "string", $wordsRule, Rule::in($options->sewer)],
-            "electricity" => ["required", "string", $wordsRule, Rule::in($options->electricity)],
-            "gas" => ["required", "string", $wordsRule, Rule::in($options->gas)],
+            "water" => ["required", "string", $wordsRule, Rule::in($options["water"])],
+            "sewer" => ["required", "string", $wordsRule, Rule::in($options["sewer"])],
+            "electricity" => ["required", "string", $wordsRule, Rule::in($options["electricity"])],
+            "gas" => ["required", "string", $wordsRule, Rule::in($options["gas"])],
             "area" => ["required", "numeric", "min:1", "max:10000", "decimal:0,2"],
         ];
     }

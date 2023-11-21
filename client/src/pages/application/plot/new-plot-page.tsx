@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../editable-application-page.sass";
 import ClientForm, { ClientFormErrors } from "../../../components/form/client-form";
 import FormProgressBar from "../../../components/form-progress-bar/form-progress-bar";
@@ -15,6 +15,8 @@ import { Photo } from "../../../model/photo";
 import ApplicationPayload from "../../../model/application-payload";
 import { Contract } from "../../../model/contract";
 import { Client } from "../../../model/client";
+import { PlotOptions } from "../../../model/options/plot-options";
+import { ApplicationOptions } from "../../../model/options/application-options";
 
 function NewPlotPage() {
   const client = useFormState(new Client(), new ClientFormErrors());
@@ -22,6 +24,11 @@ function NewPlotPage() {
   const plot = useFormState(new Plot(), new PlotFormErrors());
   const [photos, setPhotos] = useState<Photo[]>([]);
   const contract = useFormState(new Contract(), new ContractFormErrors());
+  const [options, setOptions] = useState(new ApplicationOptions<PlotOptions>());
+
+  useEffect(() => {
+    api.get("/options/application").then((response) => setOptions(response.data));
+  }, []);
 
   async function confirmClient() {
     const response = await api.post("/clients", client.fields);
@@ -89,10 +96,10 @@ function NewPlotPage() {
 
   const { steps, back, next, currentStep, goTo } = useMultiStepForm([
     <ClientForm submit={confirmClient} state={client} />,
-    <AddressForm back={() => back()} submit={confirmAddress} state={address} />,
-    <PlotForm back={() => back()} submit={confirmPlot} state={plot} />,
+    <AddressForm options={options.address} back={() => back()} submit={confirmAddress} state={address} />,
+    <PlotForm options={options.applicable} back={() => back()} submit={confirmPlot} state={plot} />,
     <PhotoForm back={() => back()} submit={() => next()} state={[photos, setPhotos]} />,
-    <ContractForm back={() => back()} submit={createPlotApplication} state={contract} />,
+    <ContractForm options={options.contract} back={() => back()} submit={createPlotApplication} state={contract} />,
   ]);
 
   return (

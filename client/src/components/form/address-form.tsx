@@ -4,7 +4,7 @@ import { FormState } from "../../model/form-state";
 import { faCity, faMap, faRoad } from "@fortawesome/free-solid-svg-icons";
 import { Address } from "../../model/address";
 import SelectBox from "../inputbox/selectbox";
-import { AddressOptions } from "../../model/address-options";
+import { AddressOptions } from "../../model/options/address-options";
 
 export class AddressFormErrors {
   typeOfCity: string[] = [];
@@ -17,12 +17,16 @@ export class AddressFormErrors {
 type AddressFormProps = {
   submit: () => void;
   back: () => void;
+  options: AddressOptions;
   state: FormState<Address, AddressFormErrors>;
 };
 
-function AddressForm({ submit, back, state: { fields, errors, setField, clearFieldErrors } }: AddressFormProps) {
-  const addressOptions = new AddressOptions();
-
+function AddressForm({
+  submit,
+  back,
+  options,
+  state: { fields, errors, setField, clearFieldErrors },
+}: AddressFormProps) {
   return (
     <form action="" className="form address-form">
       <h1 className="form__header">Адрес</h1>
@@ -33,7 +37,7 @@ function AddressForm({ submit, back, state: { fields, errors, setField, clearFie
             name="typeOfCity"
             value={fields.typeOfCity}
             icon={faCity}
-            options={addressOptions.typesOfCity}
+            options={options.city}
             onChange={setField}
             clearErrors={clearFieldErrors}
             errors={errors.typeOfCity}
@@ -53,7 +57,7 @@ function AddressForm({ submit, back, state: { fields, errors, setField, clearFie
             name="typeOfStreet"
             icon={faRoad}
             value={fields.typeOfStreet}
-            options={addressOptions.typesOfStreet}
+            options={options.street}
             onChange={setField}
             clearErrors={clearFieldErrors}
             errors={errors.typeOfStreet}
