@@ -19,9 +19,7 @@ import "../application-page.sass";
 import Carousel from "../../../components/carousel/carousel";
 import { Map, Placemark, YMaps, ZoomControl } from "@pbe/react-yandex-maps";
 import Button from "../../../components/button/button";
-import axios from "axios";
 import { useEffect, useState } from "react";
-import { env } from "../../../env";
 import { Application } from "../../../model/application";
 import api from "../../../service/api";
 import { Converter } from "../../../service/converter";
@@ -29,28 +27,11 @@ import { useParams } from "react-router";
 
 function PlotPage() {
   const { id } = useParams<{ id: string }>();
-  const [geoObjectText, setGeoObjectText] = useState("");
-  const [position, setPosition] = useState([0, 0]);
   const [{ user, client, address, applicable, photos, date, contract }, setApplication] = useState(new Application());
 
   useEffect(() => {
     api.get<{ data: Application }>("/applications/plots/" + id).then((response) => {
       setApplication(response.data.data);
-
-      axios
-        .get("https://geocode-maps.yandex.ru/1.x/?apikey=" + env.YANDEX_API_KEY, {
-          params: {
-            format: "json",
-            geocode: Converter.addressToSearchable(response.data.data.address),
-          },
-        })
-
-        .then((response) => {
-          const geoObject = response.data.response.GeoObjectCollection.featureMember[0].GeoObject;
-          setGeoObjectText(geoObject.metaDataProperty.GeocoderMetaData.text);
-          const position = geoObject.Point.pos.split(" ").reverse().map(parseFloat);
-          setPosition(position);
-        });
     });
   }, []);
 
@@ -89,14 +70,14 @@ function PlotPage() {
           <YMaps>
             <Map
               className="application-page__map"
-              state={{ center: position, zoom: 15, behaviors: ["drag"] }}
+              state={{ center: Converter.positionToReadable(address.position), zoom: 15, behaviors: ["drag"] }}
               modules={["geoObject.addon.balloon", "geoObject.addon.hint"]}
             >
               <Placemark
-                geometry={position}
+                geometry={Converter.positionToReadable(address.position)}
                 properties={{
-                  balloonContentBody: geoObjectText,
-                  hintContent: geoObjectText,
+                  balloonContentBody: address.label,
+                  hintContent: address.label,
                 }}
               />
               <ZoomControl options={{ position: { right: 10, top: 10 } }} />

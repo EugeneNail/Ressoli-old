@@ -27,4 +27,8 @@ export class Converter {
   static addressToString(address: Address): string {
     return `${address.city}, ${address.street}, ${address.houseNumber}`;
   }
+
+  static positionToReadable(position: string): number[] {
+    return position.split(" ").map(parseFloat);
+  }
 }

@@ -25,9 +25,13 @@ class ApplicationResource extends JsonResource {
                 "phoneNumber" => $this->client->phone_number->id,
             ],
             "address" => [
+                "typeOfCity" => $this->address->typeOfCity,
                 "city" => $this->address->city,
+                "typeOfStreet" => $this->address->typeOfStreet,
                 "street" => $this->address->street,
                 "houseNumber" => $this->address->house_number,
+                "label" => $this->address->label,
+                "position" => $this->address->position
             ],
             "applicable" => [
                 "gas" => $this->applicable->gas,
