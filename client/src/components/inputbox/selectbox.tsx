@@ -1,7 +1,7 @@
 import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import classNames from "classnames";
 
 type SelectBoxProps = {
@@ -20,6 +20,10 @@ function SelectBox({ value, options, label, onChange, name, icon: leadingIcon, e
   const inputRef = useRef<HTMLInputElement>(null);
   const [isActive, setActive] = useState(value.length > 0);
   const [isListDisplayed, setListDisplayed] = useState(false);
+
+  useEffect(() => {
+    setActive(value.length > 0);
+  }, [value]);
 
   function handleBlur() {
     if (value.length === 0) {

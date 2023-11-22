@@ -1,6 +1,7 @@
 import { Contract } from "./contract";
 
 export default class ApplicationPayload {
+  readonly id: number = 0;
   readonly clientId: number = 0;
   readonly addressId: number = 0;
   readonly applicableId: number = 0;
@@ -10,7 +11,15 @@ export default class ApplicationPayload {
   readonly hasMortgage: boolean = false;
   readonly contract: string = "";
 
-  constructor(clientId: number, addressId: number, applicableId: number, photoIds: number[], contract: Contract) {
+  constructor(
+    id: number,
+    clientId: number,
+    addressId: number,
+    applicableId: number,
+    photoIds: number[],
+    contract: Contract
+  ) {
+    this.id = id;
     this.clientId = clientId;
     this.addressId = addressId;
     this.applicableId = applicableId;

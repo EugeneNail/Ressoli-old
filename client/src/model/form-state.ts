@@ -1,4 +1,4 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, Dispatch, SetStateAction } from "react";
 
 export type FormState<D, E> = {
   fields: D;
@@ -6,4 +6,5 @@ export type FormState<D, E> = {
   setField: (event: ChangeEvent<HTMLInputElement>) => void;
   setErrors: (newErrors: E) => void;
   clearFieldErrors: (name: string) => void;
+  setData: Dispatch<SetStateAction<D>>;
 };

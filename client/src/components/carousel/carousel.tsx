@@ -4,13 +4,14 @@ import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons
 import { useState } from "react";
 import { env } from "../../env";
 import classNames from "classnames";
+import { Photo } from "../../model/photo";
 
 type CarouselProps = {
-  photoUrls: string[];
+  photos: Photo[];
   className?: string;
 };
 
-function Carousel({ photoUrls, className }: CarouselProps) {
+function Carousel({ photos, className }: CarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   async function goTo(index: number) {
@@ -29,15 +30,15 @@ function Carousel({ photoUrls, className }: CarouselProps) {
   return (
     <div className={`carousel ${className}`}>
       <div className="carousel__photo-container">
-        {photoUrls.map((url, index) => (
-          <img key={index} src={`${env.PHORO_URL}/${url}`} alt="" className="carousel__photo" />
+        {photos.map((photo) => (
+          <img key={photo.id} src={`${env.PHORO_URL}/${photo.path}`} alt="" className="carousel__photo" />
         ))}
       </div>
       <div className="carousel__button-container">
         <div className="carousel__button carousel__button_side" onClick={() => goTo(currentIndex - 1)}>
           <FontAwesomeIcon className="carousel__button-icon" icon={faChevronLeft} />
         </div>
-        {photoUrls.map((_, index) => (
+        {photos.map((_, index) => (
           <button
             key={index}
             className={classNames("carousel__button", { active: currentIndex === index })}

@@ -15,6 +15,7 @@ type ContractFormProps = {
   back: () => void;
   submit: () => void;
   options: string[];
+  willCreate?: boolean;
   state: FormState<Contract, ContractFormErrors>;
 };
 
@@ -22,6 +23,7 @@ function ContractForm({
   back,
   submit,
   options,
+  willCreate,
   state: { fields, errors, setField, clearFieldErrors },
 }: ContractFormProps) {
   return (
@@ -67,7 +69,7 @@ function ContractForm({
       </div>
       <div className="form__button-group">
         <Button style="dotted" wide text="Назад" action={back} />
-        <Button style="filled" wide text="Создать заявку" action={submit} />
+        <Button style="filled" wide text={willCreate ? "Создать заявку" : "Отредактировать"} action={submit} />
       </div>
     </form>
   );

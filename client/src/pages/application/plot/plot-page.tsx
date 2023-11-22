@@ -96,7 +96,7 @@ function PlotPage() {
 
       {photos.length > 0 && (
         <div className="application-page__info-group">
-          <Carousel className="application-page__carousel" photoUrls={photos} />
+          <Carousel className="application-page__carousel" photos={photos} />
         </div>
       )}
 

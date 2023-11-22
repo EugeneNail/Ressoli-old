@@ -17,20 +17,37 @@ import { Contract } from "../../../model/contract";
 import { Client } from "../../../model/client";
 import { PlotOptions } from "../../../model/options/plot-options";
 import { ApplicationOptions } from "../../../model/options/application-options";
+import { useParams } from "react-router";
+import { Application } from "../../../model/application";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 type EditablePlotPageProps = {
-  isNew: boolean;
+  willCreate?: boolean;
 };
 
-function EditablePlotPage({ isNew }: EditablePlotPageProps) {
+function EditablePlotPage({ willCreate }: EditablePlotPageProps) {
+  const { id } = useParams<{ id: string }>();
   const client = useFormState(new Client(), new ClientFormErrors());
   const address = useFormState(new Address(), new AddressFormErrors());
   const plot = useFormState(new Plot(), new PlotFormErrors());
   const [photos, setPhotos] = useState<Photo[]>([]);
   const contract = useFormState(new Contract(), new ContractFormErrors());
   const [options, setOptions] = useState(new ApplicationOptions<PlotOptions>());
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
+    if (!willCreate) {
+      setLoading(true);
+      api.get<{ data: Application }>(`/applications/plots/${id}/edit`).then(({ data: { data } }) => {
+        client.setData(data.client);
+        address.setData(data.address);
+        plot.setData(data.applicable);
+        setPhotos(data.photos);
+        contract.setData(data.contract);
+        setLoading(false);
+      });
+    }
     api.get("/options/application").then((response) => setOptions(response.data));
   }, []);
 
@@ -92,6 +109,7 @@ function EditablePlotPage({ isNew }: EditablePlotPageProps) {
 
   async function submitPlotApplication() {
     const payload = new ApplicationPayload(
+      parseFloat(id || "0"),
       client.fields.id,
       address.fields.id,
       plot.fields.id,
@@ -100,10 +118,10 @@ function EditablePlotPage({ isNew }: EditablePlotPageProps) {
     );
     let response = null;
 
-    if (isNew) {
+    if (willCreate) {
       response = await api.post("/applications/plots", payload);
     } else {
-      response = await api.post(`/applications/plots/${123}`, payload);
+      response = await api.post("/applications/plots", payload);
     }
 
     if (response.status >= 400) {
@@ -126,20 +144,30 @@ function EditablePlotPage({ isNew }: EditablePlotPageProps) {
     <AddressForm options={options.address} back={() => back()} submit={submitAddress} state={address} />,
     <PlotForm options={options.applicable} back={() => back()} submit={submitPlot} state={plot} />,
     <PhotoForm back={() => back()} submit={() => next()} state={[photos, setPhotos]} />,
-    <ContractForm options={options.contract} back={() => back()} submit={submitContract} state={contract} />,
+    <ContractForm options={options.contract} back={() => back()} submit={submitContract} willCreate state={contract} />,
   ]);
 
   return (
     <div className="editable-application-page">
-      <FormProgressBar
-        className="editable-application-page__progress-bar"
-        steps={steps.length}
-        currentStep={currentStep}
-        goTo={goTo}
-      />
-      <div className="form-container">
-        <div className="container">{steps[currentStep]}</div>
-      </div>
+      {isLoading && (
+        <div className="editable-application-page__load-container">
+          <FontAwesomeIcon className="editable-application-page__load-icon" icon={faSpinner} pulse />
+          <p className="editable-application-page__load-text">Загрузка...</p>
+        </div>
+      )}
+      {!isLoading && (
+        <>
+          <FormProgressBar
+            className="editable-application-page__progress-bar"
+            steps={steps.length}
+            currentStep={currentStep}
+            goTo={goTo}
+          />
+          <div className="form-container">
+            <div className="container">{steps[currentStep]}</div>
+          </div>
+        </>
+      )}
     </div>
   );
 }

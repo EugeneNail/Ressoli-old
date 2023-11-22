@@ -24,6 +24,7 @@ function useFormState<D, E>(initialData: D, initialErrors: E): FormState<D, E> {
     setField,
     setErrors,
     clearFieldErrors,
+    setData,
   };
 
   return formState;

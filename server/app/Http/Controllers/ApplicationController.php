@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePlotApplicationRequest;
 use App\Http\Requests\ValidateContractRequest;
 use App\Http\Resources\ApplicationResource;
+use App\Http\Resources\EditableApplicationResource;
 use App\Http\Resources\ShortApplicationResource;
 use App\Models\Address;
 use App\Models\Application;
@@ -27,12 +28,25 @@ class ApplicationController extends Controller {
         return new ApplicationResource($application);
     }
 
+    public function getForEdit(Request $request, int $id) {
+        $application = Application::find($id);
+        return new EditableApplicationResource($application);
+    }
+
     public function indexShort(Request $request) {
         return ShortApplicationResource::collection(Application::all());
     }
 
     public function storePlotApplication(StorePlotApplicationRequest $request) {
-        $application = new Application([
+        $application = Application::find($request->id);
+        $status = 204;
+
+        if (!$application) {
+            $application = new Application();
+            $status = 201;
+        }
+
+        $application->fill([
             "contract" => $request->contract,
             "price" => $request->price,
             "has_vat" => $request->hasVat,
@@ -67,6 +81,6 @@ class ApplicationController extends Controller {
             $application->save();
         }
 
-        return response($application->id, Response::HTTP_CREATED);
+        return response($application->id, $status);
     }
 }

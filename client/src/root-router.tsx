@@ -31,9 +31,9 @@ function RootRouter() {
           <Route path="/houses" element={null} />
           <Route path="/plots">
             <Route path="/plots" element={<PlotsPage />} />
-            <Route path="/plots/new" element={<EditablePlotPage isNew />} />
+            <Route path="/plots/new" element={<EditablePlotPage willCreate />} />
             <Route path="/plots/:id" element={<PlotPage />} />
-            <Route path="/plots/:id/edit" element={<EditablePlotPage isNew={false} />} />
+            <Route path="/plots/:id/edit" element={<EditablePlotPage />} />
           </Route>
           <Route path="/apartments" element={null} />
           <Route path="/rooms" element={null} />

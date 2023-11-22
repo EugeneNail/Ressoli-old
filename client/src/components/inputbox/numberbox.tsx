@@ -1,4 +1,4 @@
-import { ChangeEvent, KeyboardEvent, useState, useRef } from "react";
+import { ChangeEvent, KeyboardEvent, useState, useRef, useEffect } from "react";
 import "./inputbox.sass";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconDefinition, faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
@@ -36,6 +36,10 @@ function Numberbox({
   const inputRef = useRef<HTMLInputElement>(null);
   const intervalRef = useRef(0);
   const timeoutRef = useRef(0);
+
+  useEffect(() => {
+    setActive(value != 0);
+  }, [value]);
 
   function handleBlur() {
     if (value.toString().length === 0 || inputRef.current?.value.length === 0) {

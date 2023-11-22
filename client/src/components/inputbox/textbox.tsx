@@ -1,4 +1,4 @@
-import { ChangeEvent, useState, useRef } from "react";
+import { ChangeEvent, useState, useRef, useEffect } from "react";
 import "./inputbox.sass";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
@@ -17,6 +17,10 @@ interface TextboxProps {
 function Textbox({ value, label, onChange, name, icon: leadingIcon, errors, clearErrors }: TextboxProps) {
   const [isActive, setActive] = useState(value.length > 0);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    setActive(value.length > 0);
+  }, [value]);
 
   function handleBlur() {
     if (value.length === 0) {

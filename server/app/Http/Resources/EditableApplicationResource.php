@@ -2,11 +2,10 @@
 
 namespace App\Http\Resources;
 
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ApplicationResource extends JsonResource {
+class EditableApplicationResource extends JsonResource {
     /**
      * Transform the resource into an array.
      *
@@ -14,26 +13,22 @@ class ApplicationResource extends JsonResource {
      */
     public function toArray(Request $request): array {
         return [
-            "id" => $this->id,
-            "user" => [
-                "name" => $this->user->name,
-                "surname" => $this->user->surname
-            ],
             "client" => [
+                "id" => $this->client->id,
                 "name" => $this->client->name,
                 "surname" => $this->client->surname,
                 "phoneNumber" => $this->client->phone_number->id,
             ],
             "address" => [
+                "id" => $this->address->id,
                 "typeOfCity" => $this->address->type_of_city,
                 "city" => $this->address->city,
                 "typeOfStreet" => $this->address->type_of_street,
                 "street" => $this->address->street,
                 "houseNumber" => $this->address->house_number,
-                "label" => $this->address->label,
-                "position" => $this->address->position
             ],
             "applicable" => [
+                "id" => $this->applicable->id,
                 "gas" => $this->applicable->gas,
                 "sewer" => $this->applicable->sewer,
                 "water" => $this->applicable->water,
@@ -47,7 +42,6 @@ class ApplicationResource extends JsonResource {
                 "price" => $this->price,
                 "contract" => $this->contract,
             ],
-            "date" => Carbon::createFromFormat("Y-m-d H:i:s", $this->created_at)->format("Y-m-d"),
         ];
     }
 }
