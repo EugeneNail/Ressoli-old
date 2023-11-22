@@ -29,8 +29,8 @@ function ApplicationCard({ application }: ApplicationCardProps) {
 
   return (
     <div className="application-card">
-      <img src={`${env.PHORO_URL}/${application.preview}`} alt="" className="application-card__preview" />
       <div className="application-card__info-container">
+        <img src={`${env.PHORO_URL}/${application.preview}`} alt="" className="application-card__preview" />
         <h3 className="application-card__title">{buildTitle()}</h3>
         <div className="application-card__infos">
           <ApplicationCardInfo icon={faLocationDot} value={buildAddress()} />
