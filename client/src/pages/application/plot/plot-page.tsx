@@ -30,7 +30,7 @@ function PlotPage() {
   const [{ user, client, address, applicable, photos, date, contract }, setApplication] = useState(new Application());
 
   useEffect(() => {
-    api.get<{ data: Application }>("/applications/plots/" + id).then((response) => {
+    api.get<{ data: Application }>("/applications/" + id).then((response) => {
       setApplication(response.data.data);
     });
   }, []);

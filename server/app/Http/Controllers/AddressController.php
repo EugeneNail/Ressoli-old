@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Http;
 
 class AddressController extends Controller {
 
-    public function store(StoreAddressRequest $request) {
+    public function persist(StoreAddressRequest $request) {
         $address = Address::where("type_of_city", $request->typeOfCity)
             ->where("city", $request->city)
             ->where("type_of_street", $request->typeOfStreet)

@@ -12,7 +12,6 @@ import { Plot } from "../../../model/plot";
 import PhotoForm from "../../../components/form/photo-form";
 import ContractForm, { ContractFormErrors } from "../../../components/form/contract-form";
 import { Photo } from "../../../model/photo";
-import ApplicationPayload from "../../../model/application-payload";
 import { Contract } from "../../../model/contract";
 import { Client } from "../../../model/client";
 import { PlotOptions } from "../../../model/options/plot-options";
@@ -21,6 +20,7 @@ import { useParams } from "react-router";
 import { Application } from "../../../model/application";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { EditableApplication } from "../../../model/editable-application";
 
 type EditablePlotPageProps = {
   willCreate?: boolean;
@@ -39,7 +39,7 @@ function EditablePlotPage({ willCreate }: EditablePlotPageProps) {
   useEffect(() => {
     if (!willCreate) {
       setLoading(true);
-      api.get<{ data: Application }>(`/applications/plots/${id}/edit`).then(({ data: { data } }) => {
+      api.get<{ data: Application }>(`/applications/${id}/edit`).then(({ data: { data } }) => {
         client.setData(data.client);
         address.setData(data.address);
         plot.setData(data.applicable);
@@ -51,10 +51,10 @@ function EditablePlotPage({ willCreate }: EditablePlotPageProps) {
     api.get("/options/application").then((response) => setOptions(response.data));
   }, []);
 
-  async function submitClient() {
+  async function persistClient() {
     const response = await api.post("/clients", client.fields);
 
-    if (response.status === 400 || response.status === 409) {
+    if (response.status === 422 || response.status === 409) {
       client.setErrors(response.data.errors);
       return;
     }
@@ -66,7 +66,7 @@ function EditablePlotPage({ willCreate }: EditablePlotPageProps) {
     next();
   }
 
-  async function submitAddress() {
+  async function persistAddress() {
     const response = await api.post("/addresses", address.fields);
 
     if (response.status === 422) {
@@ -74,7 +74,7 @@ function EditablePlotPage({ willCreate }: EditablePlotPageProps) {
       return;
     }
 
-    if (response.status == 200 || response.status == 201) {
+    if (response.status === 200 || response.status === 201) {
       address.fields.id = response.data;
     }
 
@@ -84,22 +84,22 @@ function EditablePlotPage({ willCreate }: EditablePlotPageProps) {
   async function submitPlot() {
     const response = await api.post("/plots", plot.fields);
 
-    if (response.status >= 400) {
+    if (response.status === 422) {
       plot.setErrors(response.data.errors);
       return;
     }
 
-    if (response.status == 201) {
+    if (response.status === 201) {
       plot.fields.id = response.data;
     }
 
     next();
   }
 
-  async function submitContract() {
-    const response = await api.post("/applications/contract", contract.fields);
+  async function checkContractValidity() {
+    const response = await api.post("/applications/check-validity", contract.fields);
 
-    if (response.status >= 400) {
+    if (response.status === 422) {
       contract.setErrors(response.data.errors);
       return;
     }
@@ -108,7 +108,7 @@ function EditablePlotPage({ willCreate }: EditablePlotPageProps) {
   }
 
   async function submitPlotApplication() {
-    const payload = new ApplicationPayload(
+    const application = new EditableApplication(
       parseFloat(id || "0"),
       client.fields.id,
       address.fields.id,
@@ -116,15 +116,15 @@ function EditablePlotPage({ willCreate }: EditablePlotPageProps) {
       photos.map((photo) => photo.id),
       contract.fields
     );
-    let response = null;
 
     if (willCreate) {
-      response = await api.post("/applications/plots", payload);
+      var response = await api.post("/applications", application);
     } else {
-      response = await api.post("/applications/plots", payload);
+      var response = await api.post("/applications", application);
     }
 
     if (response.status >= 400) {
+      console.log(response.data);
       //TODO заменить системой оповещений
       alert(400);
       return;
@@ -140,11 +140,17 @@ function EditablePlotPage({ willCreate }: EditablePlotPageProps) {
   }
 
   const { steps, back, next, currentStep, goTo } = useMultiStepForm([
-    <ClientForm submit={submitClient} state={client} />,
-    <AddressForm options={options.address} back={() => back()} submit={submitAddress} state={address} />,
+    <ClientForm submit={persistClient} state={client} />,
+    <AddressForm options={options.address} back={() => back()} submit={persistAddress} state={address} />,
     <PlotForm options={options.applicable} back={() => back()} submit={submitPlot} state={plot} />,
     <PhotoForm back={() => back()} submit={() => next()} state={[photos, setPhotos]} />,
-    <ContractForm options={options.contract} back={() => back()} submit={submitContract} willCreate state={contract} />,
+    <ContractForm
+      options={options.contract}
+      back={() => back()}
+      submit={checkContractValidity}
+      willCreate
+      state={contract}
+    />,
   ]);
 
   return (

@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StorePlotApplicationRequest;
-use App\Http\Requests\ValidateContractRequest;
+use App\Http\Requests\StoreApplicationRequest;
 use App\Http\Resources\ApplicationResource;
 use App\Http\Resources\EditableApplicationResource;
 use App\Http\Resources\ShortApplicationResource;
@@ -12,14 +11,23 @@ use App\Models\Application;
 use App\Models\Client;
 use App\Models\Photo;
 use App\Models\Plot;
+use App\Services\DropOptionsService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class ApplicationController extends Controller {
 
-    public function validateContract(ValidateContractRequest $request) {
+    public function checkValidity(Request $request, DropOptionsService $options) {
+        $request->validate([
+            "contract" => ["required", Rule::in($options->forContract())],
+            "price" => ["required", "numeric", "min:1", "max: 100000000"],
+            "hasVat" => "boolean",
+            "hasMortgage" => "boolean"
+        ]);
+
         return response()->noContent();
     }
 
@@ -37,20 +45,20 @@ class ApplicationController extends Controller {
         return ShortApplicationResource::collection(Application::all());
     }
 
-    public function storePlotApplication(StorePlotApplicationRequest $request) {
-        $application = Application::find($request->id);
+    public function persist(StoreApplicationRequest $request) {
         $status = 204;
+        $application = Application::find($request->id);
 
-        if (!$application) {
+        if (is_null($application)) {
             $application = new Application();
             $status = 201;
         }
 
         $application->fill([
-            "contract" => $request->contract,
-            "price" => $request->price,
-            "has_vat" => $request->hasVat,
-            "has_mortgage" => $request->hasMortgage,
+            "price" => $request->contract["price"],
+            "contract" => $request->contract["contract"],
+            "has_vat" => $request->contract["hasVat"],
+            "has_mortgage" => $request->contract["hasMortgage"],
         ]);
 
         $client = Client::find($request->clientId);

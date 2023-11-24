@@ -11,7 +11,7 @@ use Illuminate\Support\MessageBag;
 
 class ClientController extends Controller {
 
-    public function store(StoreClientRequest $request) {
+    public function persist(StoreClientRequest $request) {
         $number = PhoneNumber::find($request->phoneNumber);
 
         if (is_null($number)) {

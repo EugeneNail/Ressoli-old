@@ -22,7 +22,7 @@ class StorePlotRequest extends FormRequest {
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(DropOptionsService $dropOptionsService, WordsRule $wordsRule): array {
-        $options = $dropOptionsService->collectPlot();
+        $options = $dropOptionsService->forPlot();
 
         return [
             "water" => ["required", "string", $wordsRule, Rule::in($options["water"])],

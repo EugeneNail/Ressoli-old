@@ -8,7 +8,7 @@ function PlotsPage() {
   const [plots, setPlots] = useState<ShortApplication[]>();
 
   useEffect(() => {
-    api.get<{ data: ShortApplication[] }>("/applications/plots").then((response) => {
+    api.get<{ data: ShortApplication[] }>("/applications").then((response) => {
       setPlots(response.data.data);
     });
   }, []);

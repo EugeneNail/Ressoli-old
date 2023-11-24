@@ -31,17 +31,17 @@ Route::group(["middleware" => "auth:sanctum"], function () {
     Route::post("/authenticate", [AuthController::class, "authenticate"])->middleware("auth:sanctum");
     Route::post("/logout", [AuthController::class, "logout"])->middleware("auth:sanctum");
 
-    Route::post("/clients", [ClientController::class, "store"]);
+    Route::post("/clients", [ClientController::class, "persist"]);
 
-    Route::post("/addresses", [AddressController::class, "store"]);
+    Route::post("/addresses", [AddressController::class, "persist"]);
 
-    Route::post("/plots", [PlotController::class, "store"]);
+    Route::post("/plots", [PlotController::class, "persist"]);
 
-    Route::post("applications/plots", [ApplicationController::class, "storePlotApplication"]);
-    Route::get("applications/plots", [ApplicationController::class, "indexShort"]);
-    Route::get("applications/plots/{id}", [ApplicationController::class, "get"]);
-    Route::get("applications/plots/{id}/edit", [ApplicationController::class, "getForEdit"]);
-    Route::post("applications/contract", [ApplicationController::class, "validateContract"]);
+    Route::post("applications", [ApplicationController::class, "persist"]);
+    Route::get("applications", [ApplicationController::class, "indexShort"]);
+    Route::get("applications/{id}", [ApplicationController::class, "get"]);
+    Route::get("applications/{id}/edit", [ApplicationController::class, "getForEdit"]);
+    Route::post("applications/check-validity", [ApplicationController::class, "checkValidity"]);
 
     Route::get("/options/application", [DropOptionController::class, "getForApplication"]);
 

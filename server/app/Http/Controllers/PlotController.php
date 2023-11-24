@@ -9,7 +9,7 @@ use Illuminate\Http\Response;
 
 class PlotController extends Controller {
 
-    public function store(StorePlotRequest $request) {
+    public function persist(StorePlotRequest $request) {
         $plot = Plot::create($request->all());
         return response($plot->id, Response::HTTP_CREATED);
     }

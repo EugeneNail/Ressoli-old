@@ -12,9 +12,9 @@ class DropOptionController extends Controller {
 
     public function getForApplication(DropOptionsService $options) {
         $applicationOptions = [
-            "address" => $options->collectAddress(),
-            "applicable" => $options->collectPlot(),
-            "contract" => $options->collectApplication()
+            "address" => $options->forAddress(),
+            "applicable" => $options->forPlot(),
+            "contract" => $options->forContract()
         ];
 
         return new JsonResponse($applicationOptions);

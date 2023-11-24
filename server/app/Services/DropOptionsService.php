@@ -13,7 +13,7 @@ class DropOptionsService {
         return collect($name)->map(fn ($item) => $item->value);
     }
 
-    public function collectAddress() {
+    public function forAddress() {
         $options = DB::table("drop_options")
             ->where("type", "address")
             ->select(["name", "value"])
@@ -24,7 +24,7 @@ class DropOptionsService {
         return $options;
     }
 
-    public function collectPlot() {
+    public function forPlot() {
         $options = DB::table("drop_options")
             ->where("type", "plot")
             ->select(["name", "value"])
@@ -35,7 +35,7 @@ class DropOptionsService {
         return $options;
     }
 
-    public function collectApplication(): array {
+    public function forContract(): array {
         $options = DB::table("drop_options")
             ->where("type", "application")
             ->where("name", "contract")

@@ -10,7 +10,7 @@ use App\Services\DropOptionsService;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StorePlotApplicationRequest extends FormRequest {
+class StoreApplicationRequest extends FormRequest {
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -23,17 +23,17 @@ class StorePlotApplicationRequest extends FormRequest {
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(DropOptionsService $dropOptionsService): array {
+    public function rules(DropOptionsService $options): array {
         return [
             "clientId" => new ClientExistsRule(),
             "addressId" => new AddressExistsRule(),
             "applicableId" => new PlotExistsRule(),
             "photos" => "array",
             "photos.*" => ["required", "numeric"],
-            "contract" => ["required", Rule::in($dropOptionsService->collectApplication())],
-            "price" => ["required", "numeric", "min:1", "max: 100000000"],
-            "hasVat" => "boolean",
-            "hasMortgage" => "boolean",
+            "contract.contract" => ["required", Rule::in($options->forContract())],
+            "contract.price" => ["required", "numeric", "min:1", "max: 100000000"],
+            "contract.hasVat" => "boolean",
+            "contract.hasMortgage" => "boolean",
         ];
     }
 }
