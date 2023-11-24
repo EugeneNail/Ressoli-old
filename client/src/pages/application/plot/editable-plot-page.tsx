@@ -21,6 +21,7 @@ import { Application } from "../../../model/application";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { EditableApplication } from "../../../model/editable-application";
+import Spinner from "../../../components/spinner/spinner";
 
 type EditablePlotPageProps = {
   willCreate?: boolean;
@@ -155,12 +156,7 @@ function EditablePlotPage({ willCreate }: EditablePlotPageProps) {
 
   return (
     <div className="editable-application-page">
-      {isLoading && (
-        <div className="editable-application-page__load-container">
-          <FontAwesomeIcon className="editable-application-page__load-icon" icon={faSpinner} pulse />
-          <p className="editable-application-page__load-text">Загрузка...</p>
-        </div>
-      )}
+      {isLoading && <Spinner className="editable-application-page__spinner" />}
       {!isLoading && (
         <>
           <FormProgressBar
