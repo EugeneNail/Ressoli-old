@@ -33,8 +33,4 @@ class Application extends Model {
     public function photos(): HasMany {
         return $this->hasMany(Photo::class);
     }
-
-    public function preview(): BelongsTo {
-        return $this->belongsTo(Photo::class);
-    }
 }

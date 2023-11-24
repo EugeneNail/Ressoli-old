@@ -69,7 +69,6 @@ class ApplicationController extends Controller {
         $application->client()->associate($client);
         $application->address()->associate($address);
         $application->applicable()->associate($plot);
-        $application->preview()->associate(Photo::find(1));
 
         $application->save();
 
@@ -85,7 +84,6 @@ class ApplicationController extends Controller {
             }
 
             $application->photos()->saveMany($photos);
-            $application->preview()->associate($photos[0]);
             $application->save();
         }
 

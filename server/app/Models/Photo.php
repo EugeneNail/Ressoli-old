@@ -14,10 +14,6 @@ class Photo extends Model {
         return $this->belongsTo(Application::class);
     }
 
-    public function previewedApplication(): HasOne {
-        return $this->hasOne(Application::class);
-    }
-
     protected $fillable = [
         "path",
         "application_id"

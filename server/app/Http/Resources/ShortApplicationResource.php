@@ -17,7 +17,7 @@ class ShortApplicationResource extends JsonResource {
 
         return [
             "id" => $this->id,
-            "preview" => $this->preview->path,
+            "preview" => $this->photos[0]->path,
             "contract" => $this->contract,
             "city" => $address->city,
             "street" => $address->street,
