@@ -22,9 +22,14 @@
     &__info-group
         margin-top: 2rem
         display: grid
-        grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr))
+        grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr))
         column-gap: 4rem
         row-gap: 2rem
+
+        &_separated
+            border-top: 1px solid $border
+            margin-top: 3.5rem
+            padding-top: 4rem
 
     &__map-container
         aspect-ratio: 2 / 1
@@ -40,6 +45,7 @@
         height: 100%
 
     &__carousel
+        grid-column: 1 / -1
         margin-top: 3rem
         margin-bottom: 2rem
 

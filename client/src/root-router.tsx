@@ -9,6 +9,8 @@ import PlotsPage from "./pages/application/plot/plots-page";
 import PlotPage from "./pages/application/plot/plot-page";
 import EditablePlotPage from "./pages/application/plot/editable-plot-page";
 import EditableHousePage from "./pages/application/house/editable-house-page";
+import HousePage from "./pages/application/house/house-page";
+import HousesPage from "./pages/application/house/houses-page";
 
 function RootRouter() {
   useEffect(() => {}, []);
@@ -37,7 +39,9 @@ function RootRouter() {
             <Route path="/plots/:id/edit" element={<EditablePlotPage />} />
           </Route>
           <Route path="/houses">
+            <Route path="/houses" element={<HousesPage />} />
             <Route path="/houses/new" element={<EditableHousePage willCreate />} />
+            <Route path="/houses/:id" element={<HousePage />} />
             <Route path="/houses/:id/edit" element={<EditableHousePage />} />
           </Route>
           <Route path="/apartments" element={null} />

@@ -32,7 +32,7 @@ class PersistApplicationRequest extends FormRequest {
             "type" => ["required", Rule::in(["plot", "house"])],
             "clientId" => new ClientExistsRule(),
             "addressId" => new AddressExistsRule(),
-            "applicableId" => $this->chooseRule($request->type),
+            "applicableId" => $this->selectRule($request->type),
             "photos" => "array",
             "photos.*" => ["required", "numeric"],
             "contract.contract" => ["required", Rule::in($options->forContract())],
@@ -42,7 +42,7 @@ class PersistApplicationRequest extends FormRequest {
         ];
     }
 
-    private function chooseRule($type) {
+    private function selectRule($type) {
         if ($type === "house") {
             return new HouseExistsRule();
         } else if ($type === "plot") {

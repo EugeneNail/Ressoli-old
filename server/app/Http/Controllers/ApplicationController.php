@@ -43,8 +43,19 @@ class ApplicationController extends Controller {
         return new EditableApplicationResource($application);
     }
 
+    private function selectApplicationsByApplicable(string $type) {
+        if ($type === "house") {
+            return Application::with("applicable")->where("applicable_type", House::class)->get();
+        }
+
+        if ($type === "plot") {
+            return Application::with("applicable")->where("applicable_type", Plot::class)->get();
+        }
+    }
+
     public function indexShort(Request $request) {
-        return ShortApplicationResource::collection(Application::all());
+        $applications = $this->selectApplicationsByApplicable($request->type);
+        return ShortApplicationResource::collection($applications);
     }
 
     private function findApplicable(string $type, int $id): Model {

@@ -4,7 +4,7 @@ import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 
 type ApplicationInfoProps = {
   label: string;
-  value: string;
+  value: string | number;
   icon: IconDefinition;
 };
 

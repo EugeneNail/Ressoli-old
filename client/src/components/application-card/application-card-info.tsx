@@ -6,7 +6,7 @@ import classNames from "classnames";
 type ApplicationCardInfoProps = {
   icon: IconDefinition;
   unit?: string;
-  value?: string;
+  value?: string | number;
   bold?: boolean;
 };
 

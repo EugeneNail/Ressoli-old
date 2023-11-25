@@ -2,11 +2,13 @@
 
 namespace App\Http\Resources;
 
+use App\Traits\HasApplicableSelect;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ApplicationResource extends JsonResource {
+    use HasApplicableSelect;
     /**
      * Transform the resource into an array.
      *
@@ -33,13 +35,7 @@ class ApplicationResource extends JsonResource {
                 "label" => $this->address->label,
                 "position" => $this->address->position
             ],
-            "applicable" => [
-                "gas" => $this->applicable->gas,
-                "sewer" => $this->applicable->sewer,
-                "water" => $this->applicable->water,
-                "electricity" => $this->applicable->electricity,
-                "area" => $this->applicable->area,
-            ],
+            "applicable" => $this->selectApplicable(),
             "photos" => $this->photos,
             "contract" => [
                 "hasVat" => $this->has_vat,
