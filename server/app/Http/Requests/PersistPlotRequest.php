@@ -8,7 +8,7 @@ use App\Services\DropOptionsService;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StorePlotRequest extends FormRequest {
+class PersistPlotRequest extends FormRequest {
     /**
      * Determine if the user is authorized to make this request.
      */

@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreApplicationRequest;
+use App\Http\Requests\PersistApplicationRequest;
 use App\Http\Resources\ApplicationResource;
 use App\Http\Resources\EditableApplicationResource;
 use App\Http\Resources\ShortApplicationResource;
 use App\Models\Address;
 use App\Models\Application;
 use App\Models\Client;
+use App\Models\House;
 use App\Models\Photo;
 use App\Models\Plot;
 use App\Services\DropOptionsService;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
@@ -45,7 +47,15 @@ class ApplicationController extends Controller {
         return ShortApplicationResource::collection(Application::all());
     }
 
-    public function persist(StoreApplicationRequest $request) {
+    private function findApplicable(string $type, int $id): Model {
+        if ($type === "plot") {
+            return Plot::find($id);
+        } else {
+            return House::find($id);
+        }
+    }
+
+    public function persist(PersistApplicationRequest $request) {
         $status = 204;
         $application = Application::find($request->id);
 
@@ -63,12 +73,13 @@ class ApplicationController extends Controller {
 
         $client = Client::find($request->clientId);
         $address = Address::find($request->addressId);
-        $plot = Plot::find($request->applicableId);
+
+        $applicable = $this->findApplicable($request->type, $request->applicableId);
 
         $application->user()->associate($request->user());
         $application->client()->associate($client);
         $application->address()->associate($address);
-        $application->applicable()->associate($plot);
+        $application->applicable()->associate($applicable);
 
         $application->save();
 

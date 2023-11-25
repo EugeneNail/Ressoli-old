@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ConfirmAddressRequest;
-use App\Http\Requests\StoreAddressRequest;
+use App\Http\Requests\PersistAddressRequest;
 use App\Models\Address;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Http;
 
 class AddressController extends Controller {
 
-    public function persist(StoreAddressRequest $request) {
+    public function persist(PersistAddressRequest $request) {
         $address = Address::where("type_of_city", $request->typeOfCity)
             ->where("city", $request->city)
             ->where("type_of_street", $request->typeOfStreet)

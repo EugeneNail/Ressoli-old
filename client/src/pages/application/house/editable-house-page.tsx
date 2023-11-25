@@ -7,49 +7,50 @@ import AddressForm, { AddressFormErrors } from "../../../components/form/address
 import { Address } from "../../../model/address";
 import useFormState from "../../../service/use-form-state";
 import api from "../../../service/api";
-import PlotForm, { PlotFormErrors } from "../../../components/form/plot-form";
-import { Plot } from "../../../model/plot";
 import PhotoForm from "../../../components/form/photo-form";
 import ContractForm, { ContractFormErrors } from "../../../components/form/contract-form";
 import { Photo } from "../../../model/photo";
 import { Contract } from "../../../model/contract";
 import { Client } from "../../../model/client";
-import { PlotOptions } from "../../../model/options/plot-options";
 import { ApplicationOptions } from "../../../model/options/application-options";
 import { useParams } from "react-router";
 import { Application } from "../../../model/application";
 import { EditableApplication } from "../../../model/editable-application";
 import Spinner from "../../../components/spinner/spinner";
+import { House } from "../../../model/house";
+import HouseForm, { HouseFormErrors } from "../../../components/form/house-form";
+import { HouseOptions } from "../../../model/options/house-options";
 
-type EditablePlotPageProps = {
+type EditableHousePageProps = {
   willCreate?: boolean;
 };
 
-function EditablePlotPage({ willCreate }: EditablePlotPageProps) {
+function EditableHousePage({ willCreate }: EditableHousePageProps) {
   const { id } = useParams<{ id: string }>();
   const client = useFormState(new Client(), new ClientFormErrors());
   const address = useFormState(new Address(), new AddressFormErrors());
-  const plot = useFormState(new Plot(), new PlotFormErrors());
+  const house = useFormState(new House(), new HouseFormErrors());
   const [photos, setPhotos] = useState<Photo[]>([]);
   const contract = useFormState(new Contract(), new ContractFormErrors());
-  const [options, setOptions] = useState(new ApplicationOptions<PlotOptions>());
+  const [options, setOptions] = useState(new ApplicationOptions<HouseOptions>());
   const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     if (!willCreate) {
       setLoading(true);
-      api.get<{ data: Application<Plot> }>(`/applications/${id}/edit`).then(({ data: { data } }) => {
+      api.get<{ data: Application<House> }>(`/applications/${id}/edit`).then(({ data: { data } }) => {
         client.setData(data.client);
         address.setData(data.address);
-        plot.setData(data.applicable);
+        house.setData(data.applicable);
         setPhotos(data.photos);
         contract.setData(data.contract);
         setLoading(false);
-        console.log(1, data.applicable);
       });
     }
-    console.log(2, plot);
-    api.get("/options/application?type=plot").then((response) => setOptions(response.data));
+    api.get("/options/application?type=house").then((response) => {
+      setOptions(response.data);
+      console.log(response.data);
+    });
   }, []);
 
   async function persistClient() {
@@ -82,16 +83,16 @@ function EditablePlotPage({ willCreate }: EditablePlotPageProps) {
     next();
   }
 
-  async function submitPlot() {
-    const response = await api.post("/plots", plot.fields);
+  async function persistHouse() {
+    const response = await api.post("/houses", house.fields);
 
     if (response.status === 422) {
-      plot.setErrors(response.data.errors);
+      house.setErrors(response.data.errors);
       return;
     }
 
-    if (response.status === 201 || response.status === 200) {
-      plot.fields.id = response.data;
+    if (response.status === 201 || response.status == 200) {
+      house.fields.id = response.data;
     }
 
     next();
@@ -105,16 +106,16 @@ function EditablePlotPage({ willCreate }: EditablePlotPageProps) {
       return;
     }
 
-    submitPlotApplication();
+    submitHouseApplication();
   }
 
-  async function submitPlotApplication() {
+  async function submitHouseApplication() {
     const application = new EditableApplication(
       parseFloat(id || "0"),
-      "plot",
+      "house",
       client.fields.id,
       address.fields.id,
-      plot.fields.id,
+      house.fields.id,
       photos.map((photo) => photo.id),
       contract.fields
     );
@@ -124,6 +125,8 @@ function EditablePlotPage({ willCreate }: EditablePlotPageProps) {
     } else {
       var response = await api.post("/applications", application);
     }
+
+    console.log(response.data);
 
     if (response.status >= 400) {
       console.log(response.data);
@@ -144,7 +147,7 @@ function EditablePlotPage({ willCreate }: EditablePlotPageProps) {
   const { steps, back, next, currentStep, goTo } = useMultiStepForm([
     <ClientForm submit={persistClient} state={client} />,
     <AddressForm options={options.address} back={() => back()} submit={persistAddress} state={address} />,
-    <PlotForm options={options.applicable} back={() => back()} submit={submitPlot} state={plot} />,
+    <HouseForm options={options.applicable} back={() => back()} submit={persistHouse} state={house} />,
     <PhotoForm back={() => back()} submit={() => next()} state={[photos, setPhotos]} />,
     <ContractForm
       options={options.contract}
@@ -175,4 +178,4 @@ function EditablePlotPage({ willCreate }: EditablePlotPageProps) {
   );
 }
 
-export default EditablePlotPage;
+export default EditableHousePage;

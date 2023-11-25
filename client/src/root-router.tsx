@@ -8,6 +8,7 @@ import ProtectedRoute from "./protected-route";
 import PlotsPage from "./pages/application/plot/plots-page";
 import PlotPage from "./pages/application/plot/plot-page";
 import EditablePlotPage from "./pages/application/plot/editable-plot-page";
+import EditableHousePage from "./pages/application/house/editable-house-page";
 
 function RootRouter() {
   useEffect(() => {}, []);
@@ -34,6 +35,9 @@ function RootRouter() {
             <Route path="/plots/new" element={<EditablePlotPage willCreate />} />
             <Route path="/plots/:id" element={<PlotPage />} />
             <Route path="/plots/:id/edit" element={<EditablePlotPage />} />
+          </Route>
+          <Route path="/houses">
+            <Route path="/houses/new" element={<EditableHousePage willCreate />} />
           </Route>
           <Route path="/apartments" element={null} />
           <Route path="/rooms" element={null} />

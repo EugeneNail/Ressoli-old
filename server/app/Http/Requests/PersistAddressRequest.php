@@ -7,7 +7,7 @@ use App\Rules\StreetRule;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreAddressRequest extends FormRequest {
+class PersistAddressRequest extends FormRequest {
     /**
      * Determine if the user is authorized to make this request.
      */

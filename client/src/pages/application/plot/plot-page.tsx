@@ -25,14 +25,17 @@ import api from "../../../service/api";
 import { Converter } from "../../../service/converter";
 import { useParams } from "react-router";
 import Spinner from "../../../components/spinner/spinner";
+import { Plot } from "../../../model/plot";
 
 function PlotPage() {
   const { id } = useParams<{ id: string }>();
-  const [{ user, client, address, applicable, photos, date, contract }, setApplication] = useState(new Application());
+  const [{ user, client, address, applicable, photos, date, contract }, setApplication] = useState(
+    new Application<Plot>()
+  );
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    api.get<{ data: Application }>("/applications/" + id).then((response) => {
+    api.get<{ data: Application<Plot> }>("/applications/" + id).then((response) => {
       setApplication(response.data.data);
       setLoading(false);
     });

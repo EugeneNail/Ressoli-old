@@ -5,6 +5,7 @@ use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DropOptionController;
+use App\Http\Controllers\HouseController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\PlotController;
 use App\Services\DropOptionsService;
@@ -36,6 +37,8 @@ Route::group(["middleware" => "auth:sanctum"], function () {
     Route::post("/addresses", [AddressController::class, "persist"]);
 
     Route::post("/plots", [PlotController::class, "persist"]);
+
+    Route::post("/houses", [HouseController::class, "persist"]);
 
     Route::post("applications", [ApplicationController::class, "persist"]);
     Route::get("applications", [ApplicationController::class, "indexShort"]);

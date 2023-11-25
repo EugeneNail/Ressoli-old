@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreClientRequest;
+use App\Http\Requests\PersistClientRequest;
 use App\Models\Client;
 use App\Models\PhoneNumber;
 use Illuminate\Http\Request;
@@ -11,7 +11,7 @@ use Illuminate\Support\MessageBag;
 
 class ClientController extends Controller {
 
-    public function persist(StoreClientRequest $request) {
+    public function persist(PersistClientRequest $request) {
         $number = PhoneNumber::find($request->phoneNumber);
 
         if (is_null($number)) {

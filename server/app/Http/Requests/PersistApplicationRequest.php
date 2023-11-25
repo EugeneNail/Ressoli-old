@@ -5,12 +5,14 @@ namespace App\Http\Requests;
 use App\Models\Support\ApplicationOptions;
 use App\Rules\AddressExistsRule;
 use App\Rules\ClientExistsRule;
+use App\Rules\HouseExistsRule;
 use App\Rules\PlotExistsRule;
 use App\Services\DropOptionsService;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-class StoreApplicationRequest extends FormRequest {
+class PersistApplicationRequest extends FormRequest {
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -23,11 +25,14 @@ class StoreApplicationRequest extends FormRequest {
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(DropOptionsService $options): array {
+    public function rules(Request $request, DropOptionsService $options): array {
+
+
         return [
+            "type" => ["required", Rule::in(["plot", "house"])],
             "clientId" => new ClientExistsRule(),
             "addressId" => new AddressExistsRule(),
-            "applicableId" => new PlotExistsRule(),
+            "applicableId" => $this->chooseRule($request->type),
             "photos" => "array",
             "photos.*" => ["required", "numeric"],
             "contract.contract" => ["required", Rule::in($options->forContract())],
@@ -35,5 +40,13 @@ class StoreApplicationRequest extends FormRequest {
             "contract.hasVat" => "boolean",
             "contract.hasMortgage" => "boolean",
         ];
+    }
+
+    private function chooseRule($type) {
+        if ($type === "house") {
+            return new HouseExistsRule();
+        } else if ($type === "plot") {
+            return new PlotExistsRule();
+        }
     }
 }

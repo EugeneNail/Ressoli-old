@@ -2,6 +2,7 @@ import { Contract } from "./contract";
 
 export class EditableApplication {
   id: number = 0;
+  type: "house" | "plot" = "plot";
   clientId: number = 0;
   addressId: number = 0;
   applicableId: number = 0;
@@ -10,6 +11,7 @@ export class EditableApplication {
 
   constructor(
     id: number,
+    type: "house" | "plot",
     clientId: number,
     addressId: number,
     applicableId: number,
@@ -17,6 +19,7 @@ export class EditableApplication {
     contract: Contract
   ) {
     this.id = id;
+    this.type = type;
     this.clientId = clientId;
     this.addressId = addressId;
     this.applicableId = applicableId;
