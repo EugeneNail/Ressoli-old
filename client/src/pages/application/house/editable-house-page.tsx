@@ -49,7 +49,6 @@ function EditableHousePage({ willCreate }: EditableHousePageProps) {
     }
     api.get("/options/application?type=house").then((response) => {
       setOptions(response.data);
-      console.log(response.data);
     });
   }, []);
 
@@ -119,17 +118,9 @@ function EditableHousePage({ willCreate }: EditableHousePageProps) {
       photos.map((photo) => photo.id),
       contract.fields
     );
-
-    if (willCreate) {
-      var response = await api.post("/applications", application);
-    } else {
-      var response = await api.post("/applications", application);
-    }
-
-    console.log(response.data);
+    const response = await api.post("/applications", application);
 
     if (response.status >= 400) {
-      console.log(response.data);
       //TODO заменить системой оповещений
       alert(400);
       return;

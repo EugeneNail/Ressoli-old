@@ -38,6 +38,7 @@ function RootRouter() {
           </Route>
           <Route path="/houses">
             <Route path="/houses/new" element={<EditableHousePage willCreate />} />
+            <Route path="/houses/:id/edit" element={<EditableHousePage />} />
           </Route>
           <Route path="/apartments" element={null} />
           <Route path="/rooms" element={null} />

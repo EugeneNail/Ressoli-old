@@ -118,15 +118,9 @@ function EditablePlotPage({ willCreate }: EditablePlotPageProps) {
       photos.map((photo) => photo.id),
       contract.fields
     );
-
-    if (willCreate) {
-      var response = await api.post("/applications", application);
-    } else {
-      var response = await api.post("/applications", application);
-    }
+    const response = await api.post("/applications", application);
 
     if (response.status >= 400) {
-      console.log(response.data);
       //TODO заменить системой оповещений
       alert(400);
       return;
