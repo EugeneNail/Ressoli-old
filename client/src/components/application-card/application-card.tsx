@@ -54,17 +54,6 @@ function ApplicationCard({
     }
   }
 
-  function openInNewTab() {
-    let route = "";
-    if (compareTypes(applicable, new ShortHouse())) {
-      route = "houses";
-    }
-    if (compareTypes(applicable, new ShortPlot())) {
-      route = "plots";
-    }
-    window.open(`${window.location.origin}/${route}/${id}`, "_blank");
-  }
-
   return (
     <div className="application-card">
       <div className="application-card__info-container">
@@ -78,7 +67,7 @@ function ApplicationCard({
         <div className="application-card__inner-grid">
           <div className="application-card__stats-container">{selectStats()}</div>
           <p className="application-card__date">{Converter.dateToFull(date)}</p>
-          <Button className="application-card__button" style="dotted" action={openInNewTab} text="Подробнее" />
+          <Button className="application-card__button" style="dotted" action={() => {}} text="Подробнее" to={id} />
         </div>
       </div>
     </div>
