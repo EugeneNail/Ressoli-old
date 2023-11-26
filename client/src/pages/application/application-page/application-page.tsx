@@ -5,28 +5,12 @@ import {
   faFileSignature,
   faRuble,
   faUserTie,
-  faBolt,
-  faDroplet,
-  faFire,
-  faMaximize,
-  faToilet,
   faRoad,
   faMap,
   faBuildingUser,
-  faCar,
-  faSoap,
-  faShower,
-  faLayerGroup,
-  faArrowsUpDown,
-  faBed,
-  faHouseCrack,
-  faPeopleRoof,
-  faWarehouse,
-  faWater,
-  faTemperatureHigh,
 } from "@fortawesome/free-solid-svg-icons";
 import ApplicationInfo from "../../../components/application-info/application-info";
-import "../application-page.sass";
+import "../application-page/application-page.sass";
 import Carousel from "../../../components/carousel/carousel";
 import { Map, Placemark, YMaps, ZoomControl } from "@pbe/react-yandex-maps";
 import Button from "../../../components/button/button";
@@ -34,23 +18,38 @@ import { useEffect, useState } from "react";
 import { Application } from "../../../model/application";
 import api from "../../../service/api";
 import { Converter } from "../../../service/converter";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import Spinner from "../../../components/spinner/spinner";
+import { Plot } from "../../../model/plot";
+import PlotSection from "./plot-section";
 import { House } from "../../../model/house";
+import { compareTypes } from "../../../service/compareTypes";
+import HouseSection from "./house-section";
 
-function HousePage() {
+function ApplicationPage<T>() {
+  const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const [{ user, client, address, applicable, photos, date, contract }, setApplication] = useState(
-    new Application<House>()
+    new Application<T>()
   );
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    api.get<{ data: Application<House> }>("/applications/" + id).then((response) => {
+    api.get<{ data: Application<T> }>("/applications/" + id).then((response) => {
       setApplication(response.data.data);
       setLoading(false);
     });
   }, []);
+
+  function selectApplicableSection() {
+    if (compareTypes(applicable, new Plot())) {
+      return <PlotSection plot={applicable as Plot} />;
+    }
+
+    if (compareTypes(applicable, new House())) {
+      return <HouseSection house={applicable as House} />;
+    }
+  }
 
   return (
     <>
@@ -68,7 +67,6 @@ function HousePage() {
               value={`${client.name} ${client.surname}\n${client.phoneNumber}`}
             />
             <ApplicationInfo icon={faCalendarDays} label="Дата размещения" value={Converter.dateToFull(date)} />
-            <ApplicationInfo icon={faMaximize} label="Площадь" value={`${applicable.area} квм`} />
             <ApplicationInfo
               icon={faRuble}
               label="Стоимость"
@@ -106,44 +104,17 @@ function HousePage() {
             </div>
           </section>
 
-          <h2 className="application-page__subheader">Участок</h2>
-          <section className="application-page__info-group">
-            <ApplicationInfo icon={faDroplet} label="Вода" value={applicable.water} />
-            <ApplicationInfo icon={faFire} label="Газ" value={applicable.gas} />
-            <ApplicationInfo icon={faToilet} label="Канализация" value={applicable.sewer} />
-            <ApplicationInfo icon={faBolt} label="Электричество" value={applicable.electricity} />
-          </section>
-
-          <section className="application-page__info-group application-page__info-group_separated">
-            <ApplicationInfo icon={faLayerGroup} label="Этажей в доме" value={applicable.levelCount} />
-            <ApplicationInfo icon={faArrowsUpDown} label="Высота потолков" value={`${applicable.ceiling} см`} />
-            <ApplicationInfo icon={faBed} label="Комнат в доме" value={applicable.roomCount} />
-            <ApplicationInfo icon={faMaximize} label="Площадь дома" value={`${applicable.area} квм`} />
-            <ApplicationInfo icon={faMaximize} label="Площадь участка" value={`${applicable.landArea} квм`} />
-          </section>
-          <section className="application-page__info-group application-page__info-group_separated">
-            <ApplicationInfo icon={faHouseCrack} label="Состояние" value={applicable.condition} />
-            <ApplicationInfo icon={faCalendarDays} label="Время постройки" value={applicable.constructionTime} />
-            <ApplicationInfo icon={faPeopleRoof} label="Крыша" value={applicable.roof} />
-            <ApplicationInfo icon={faWarehouse} label="Стены" value={applicable.walls} />
-          </section>
-          <section className="application-page__info-group application-page__info-group_separated">
-            <ApplicationInfo icon={faWater} label="Горячая вода" value={applicable.hotWater} />
-            <ApplicationInfo icon={faTemperatureHigh} label="Отопление" value={applicable.heating} />
-            <ApplicationInfo icon={faShower} label="Ванна" value={applicable.bath} />
-            <ApplicationInfo icon={faSoap} label="Санузел" value={applicable.toilet} />
-            {applicable.hasGarage && <ApplicationInfo icon={faCar} label="Есть" value="Гараж" />}
-          </section>
+          {selectApplicableSection()}
 
           {photos.length > 0 && (
-            <section className="application-page__info-group">
+            <div className="application-page__info-group">
               <Carousel className="application-page__carousel" photos={photos} />
-            </section>
+            </div>
           )}
 
           <div className="application-page__button-group">
             <Button style="filled" text="В архив" action={() => {}} />
-            <Button style="dotted" text="Редактировать" action={() => {}} />
+            <Button style="dotted" text="Редактировать" action={() => navigate(`edit`)} />
           </div>
         </div>
       )}
@@ -151,4 +122,4 @@ function HousePage() {
   );
 }
 
-export default HousePage;
+export default ApplicationPage;
