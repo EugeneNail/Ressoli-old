@@ -45,10 +45,8 @@ function EditablePlotPage({ willCreate }: EditablePlotPageProps) {
         setPhotos(data.photos);
         contract.setData(data.contract);
         setLoading(false);
-        console.log(1, data.applicable);
       });
     }
-    console.log(2, plot);
     api.get("/options/application?type=plot").then((response) => setOptions(response.data));
   }, []);
 

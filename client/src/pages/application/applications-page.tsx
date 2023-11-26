@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import api from "../../../service/api";
-import "../applications-page.sass";
-import ApplicationCard from "../../../components/application-card/application-card";
-import { ShortApplication } from "../../../model/short-application/short-application";
-import Spinner from "../../../components/spinner/spinner";
-import { ShortHouse } from "../../../model/short-application/short-house";
-import { ShortPlot } from "../../../model/short-application/short-plot";
+import api from "../../service/api";
+import ApplicationCard from "../../components/application-card/application-card";
+import { ShortApplication } from "../../model/short-application/short-application";
+import Spinner from "../../components/spinner/spinner";
+import { ShortHouse } from "../../model/short-application/short-house";
+import { ShortPlot } from "../../model/short-application/short-plot";
+import "./applications-page.sass";
 
 type ApplicationsPageProps = {
   type: string;
