@@ -5,14 +5,19 @@ import ApplicationCard from "../../../components/application-card/application-ca
 import { ShortApplication } from "../../../model/short-application/short-application";
 import Spinner from "../../../components/spinner/spinner";
 import { ShortHouse } from "../../../model/short-application/short-house";
+import { ShortPlot } from "../../../model/short-application/short-plot";
 
-function HousesPage() {
-  const [houses, setHouses] = useState<ShortApplication<ShortHouse>[]>();
+type ApplicationsPageProps = {
+  type: string;
+};
+
+function ApplicationsPage<T extends ShortHouse | ShortPlot>({ type }: ApplicationsPageProps) {
+  const [applications, setApplications] = useState<ShortApplication<T>[]>();
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    api.get<{ data: ShortApplication<ShortHouse>[] }>("/applications?type=house").then((response) => {
-      setHouses(response.data.data);
+    api.get<{ data: ShortApplication<T>[] }>(`/applications?type=${type}`).then((response) => {
+      setApplications(response.data.data);
       setLoading(false);
     });
   }, []);
@@ -24,8 +29,8 @@ function HousesPage() {
         <div className="applications-page">
           <div className="applications-page__settings"></div>
           <div className="applications-page__applications">
-            {houses?.map((house) => (
-              <ApplicationCard key={house.id} application={house} />
+            {applications?.map((application) => (
+              <ApplicationCard key={application.id} application={application} />
             ))}
           </div>
         </div>
@@ -34,4 +39,4 @@ function HousesPage() {
   );
 }
 
-export default HousesPage;
+export default ApplicationsPage;

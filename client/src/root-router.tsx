@@ -5,13 +5,14 @@ import SignupPage from "./pages/guest/signup-page";
 import DefaultLayout from "./layouts/default-layout/default-layout";
 import { useEffect } from "react";
 import ProtectedRoute from "./protected-route";
-import PlotsPage from "./pages/application/plot/plots-page";
 import ApplicationPage from "./pages/application/application-page/application-page";
 import EditablePlotPage from "./pages/application/plot/editable-plot-page";
 import EditableHousePage from "./pages/application/house/editable-house-page";
-import HousesPage from "./pages/application/house/houses-page";
+import ApplicationsPage from "./pages/application/house/applications-page";
 import { Plot } from "./model/plot";
 import { House } from "./model/house";
+import { ShortHouse } from "./model/short-application/short-house";
+import { ShortPlot } from "./model/short-application/short-plot";
 
 function RootRouter() {
   useEffect(() => {}, []);
@@ -34,13 +35,13 @@ function RootRouter() {
           <Route path="" element={<Navigate to={"/houses"} />} />
           <Route path="/houses" element={null} />
           <Route path="/plots">
-            <Route path="/plots" element={<PlotsPage />} />
+            <Route path="/plots" element={<ApplicationsPage<ShortPlot> key="plot" type="plot" />} />
             <Route path="/plots/new" element={<EditablePlotPage willCreate />} />
             <Route path="/plots/:id" element={<ApplicationPage<Plot> />} />
             <Route path="/plots/:id/edit" element={<EditablePlotPage />} />
           </Route>
           <Route path="/houses">
-            <Route path="/houses" element={<HousesPage />} />
+            <Route path="/houses" element={<ApplicationsPage<ShortHouse> key="house" type="house" />} />
             <Route path="/houses/new" element={<EditableHousePage willCreate />} />
             <Route path="/houses/:id" element={<ApplicationPage<House> />} />
             <Route path="/houses/:id/edit" element={<EditableHousePage />} />
