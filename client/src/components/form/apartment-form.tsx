@@ -3,110 +3,88 @@ import Button from "../button/button";
 import SelectBox from "../inputbox/selectbox";
 import Numberbox from "../inputbox/numberbox";
 import {
-  faArrowsUpDown,
   faBed,
-  faBolt,
   faCalendarDays,
-  faDroplet,
-  faFire,
   faHouseCrack,
   faLayerGroup,
   faMaximize,
-  faPeopleRoof,
   faShower,
   faSoap,
-  faTemperatureHigh,
-  faToilet,
   faWarehouse,
-  faWater,
+  faArrowsUpDown,
 } from "@fortawesome/free-solid-svg-icons";
-import { House } from "../../model/house";
-import { HouseOptions } from "../../model/options/house-options";
 import Checkbox from "../inputbox/checkbox";
+import { Apartment } from "../../model/apartment";
+import { ApartmentOptions } from "../../model/options/apartment-options";
 
-export class HouseFormErrors {
+export class ApartmentFormErrors {
   water: string[] = [];
   gas: string[] = [];
-  area: string[] = [];
   electricity: string[] = [];
   sewer: string[] = [];
+  condition: string[] = [];
   walls: string[] = [];
   hotWater: string[] = [];
-  condition: string[] = [];
   heating: string[] = [];
-  levelCount: string[] = [];
   bath: string[] = [];
-  ceiling: string[] = [];
   toilet: string[] = [];
-  roomCount: string[] = [];
-  hasGarage: string[] = [];
   constructionTime: string[] = [];
-  roof: string[] = [];
-  landArea: string[] = [];
+  loggia: string[] = [];
+  balcony: string[] = [];
+  area: string[] = [];
+  roomCount: string[] = [];
+  levelCount: string[] = [];
+  level: string[] = [];
+  ceiling: string[] = [];
+  has_garage: string[] = [];
+  has_garbage_chute: string[] = [];
+  has_elevator: string[] = [];
+  is_corner: string[] = [];
 }
 
-type HouseFormProps = {
+type ApartmentFormProps = {
   submit: () => void;
   back: () => void;
-  options: HouseOptions;
-  state: FormState<House, HouseFormErrors>;
+  options: ApartmentOptions;
+  state: FormState<Apartment, ApartmentFormErrors>;
 };
 
-function HouseForm({ back, submit, options, state: { fields, errors, setField, clearFieldErrors } }: HouseFormProps) {
+function ApartmentForm({
+  back,
+  submit,
+  options,
+  state: { fields, errors, setField, clearFieldErrors },
+}: ApartmentFormProps) {
   return (
     <form action="" className="form house-form">
       <h1 className="form__header">Дом</h1>
       <div className="form__input-group">
-        <SelectBox
-          value={fields.water}
-          label="Вода"
-          name="water"
-          icon={faDroplet}
-          options={options.water}
-          onChange={setField}
-          errors={errors.water}
-          clearErrors={clearFieldErrors}
-        />
-        <SelectBox
-          value={fields.gas}
-          label="Газ"
-          name="gas"
-          icon={faFire}
-          options={options.gas}
-          onChange={setField}
-          errors={errors.gas}
-          clearErrors={clearFieldErrors}
-        />
-        <SelectBox
-          value={fields.electricity}
-          label="Электричество"
-          name="electricity"
-          icon={faBolt}
-          options={options.electricity}
-          onChange={setField}
-          errors={errors.electricity}
-          clearErrors={clearFieldErrors}
-        />
-        <SelectBox
-          value={fields.sewer}
-          label="Канализация"
-          name="sewer"
-          icon={faToilet}
-          options={options.sewer}
-          onChange={setField}
-          errors={errors.sewer}
-          clearErrors={clearFieldErrors}
-        />
+        <Checkbox value={fields.hasWater} label="Вода" name="hasWater" onChange={setField} />
+        <Checkbox value={fields.hasGas} label="Газ" name="hasGas" onChange={setField} />
+        <Checkbox value={fields.hasElectricity} label="Электричество" name="hasElectricity" onChange={setField} />
+        <Checkbox value={fields.hasSewer} label="Канализация" name="hasSewer" onChange={setField} />
       </div>
       <div className="form__input-group">
+        <Numberbox
+          value={fields.level}
+          label="Этаж"
+          name="level"
+          icon={faLayerGroup}
+          min={1}
+          step={1}
+          max={100}
+          onChange={setField}
+          errors={errors.level}
+          clearErrors={clearFieldErrors}
+        />
         <Numberbox
           value={fields.levelCount}
           label="Этажей в доме"
           name="levelCount"
+          icon={faLayerGroup}
           min={1}
           step={1}
           max={100}
-          icon={faLayerGroup}
           onChange={setField}
           errors={errors.levelCount}
           clearErrors={clearFieldErrors}
@@ -115,50 +93,38 @@ function HouseForm({ back, submit, options, state: { fields, errors, setField, c
           value={fields.ceiling}
           label="Высота потолков"
           name="ceiling"
+          icon={faArrowsUpDown}
           min={1}
           step={0.01}
           max={5}
           precision={2}
-          icon={faArrowsUpDown}
           onChange={setField}
-          errors={errors.ceiling}
+          errors={errors.area}
           clearErrors={clearFieldErrors}
         />
         <Numberbox
           value={fields.roomCount}
-          label="Комнат в доме"
+          label="Комнат в квартире"
           name="roomCount"
-          min={1}
-          max={100}
-          step={1}
           icon={faBed}
+          min={1}
+          step={1}
+          max={100}
           onChange={setField}
           errors={errors.roomCount}
           clearErrors={clearFieldErrors}
         />
         <Numberbox
           value={fields.area}
-          label="Площадь дома"
+          label="Площадь"
           name="area"
+          icon={faMaximize}
           min={1}
           step={0.05}
           max={10000}
           precision={2}
-          icon={faMaximize}
           onChange={setField}
           errors={errors.area}
-          clearErrors={clearFieldErrors}
-        />
-        <Numberbox
-          value={fields.landArea}
-          label="Площадь участка"
-          name="landArea"
-          min={0}
-          step={1}
-          max={10000}
-          icon={faMaximize}
-          onChange={setField}
-          errors={errors.landArea}
           clearErrors={clearFieldErrors}
         />
       </div>
@@ -184,18 +150,8 @@ function HouseForm({ back, submit, options, state: { fields, errors, setField, c
           clearErrors={clearFieldErrors}
         />
         <SelectBox
-          value={fields.roof}
-          label="Крыша"
-          name="roof"
-          icon={faPeopleRoof}
-          options={options.roof}
-          onChange={setField}
-          errors={errors.roof}
-          clearErrors={clearFieldErrors}
-        />
-        <SelectBox
           value={fields.walls}
-          label="Стены"
+          label="Материал стен"
           name="walls"
           icon={faWarehouse}
           options={options.walls}
@@ -203,30 +159,13 @@ function HouseForm({ back, submit, options, state: { fields, errors, setField, c
           errors={errors.walls}
           clearErrors={clearFieldErrors}
         />
+        <Checkbox value={fields.isCorner} label="Угловая" name="isCorner" onChange={setField} />
+        <Checkbox value={fields.hasBalcony} label="Балкон" name="hasBalcony" onChange={setField} />
+        <Checkbox value={fields.hasLoggia} label="Лоджия" name="hasLoggia" onChange={setField} />
       </div>
-
       <div className="form__input-group">
-        <SelectBox
-          value={fields.hotWater}
-          label="Горячая вода"
-          name="hotWater"
-          icon={faWater}
-          options={options.hotWater}
-          onChange={setField}
-          errors={errors.hotWater}
-          clearErrors={clearFieldErrors}
-        />
-
-        <SelectBox
-          value={fields.heating}
-          label="Отопление"
-          name="heating"
-          icon={faTemperatureHigh}
-          options={options.heating}
-          onChange={setField}
-          errors={errors.heating}
-          clearErrors={clearFieldErrors}
-        />
+        <Checkbox value={fields.hasHotWater} label="Горячая вода" name="hasHotWater" onChange={setField} />
+        <Checkbox value={fields.hasHeating} label="Отопление" name="hasHeating" onChange={setField} />
         <SelectBox
           value={fields.bath}
           label="Ванна"
@@ -247,8 +186,11 @@ function HouseForm({ back, submit, options, state: { fields, errors, setField, c
           errors={errors.toilet}
           clearErrors={clearFieldErrors}
         />
-
+      </div>
+      <div className="form__input-group">
         <Checkbox value={fields.hasGarage} label="Гараж" name="hasGarage" onChange={setField} />
+        <Checkbox value={fields.hasGarbageChute} label="Мусоропровод" name="hasGarbageChute" onChange={setField} />
+        <Checkbox value={fields.hasElevator} label="Лифт" name="hasElevator" onChange={setField} />
       </div>
       <div className="form__button-group">
         <Button wide style="dotted" text="Назад" action={back} />
@@ -258,4 +200,4 @@ function HouseForm({ back, submit, options, state: { fields, errors, setField, c
   );
 }
 
-export default HouseForm;
+export default ApartmentForm;

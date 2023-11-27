@@ -13,6 +13,7 @@ import { Plot } from "./model/plot";
 import { House } from "./model/house";
 import { ShortHouse } from "./model/short-application/short-house";
 import { ShortPlot } from "./model/short-application/short-plot";
+import EditableApartmentPage from "./pages/application/editable-application-page/editable-apartment-page";
 
 function RootRouter() {
   useEffect(() => {}, []);
@@ -45,6 +46,9 @@ function RootRouter() {
             <Route path="/houses/new" element={<EditableHousePage willCreate />} />
             <Route path="/houses/:id" element={<ApplicationPage<House> />} />
             <Route path="/houses/:id/edit" element={<EditableHousePage />} />
+          </Route>
+          <Route path="/apartments">
+            <Route path="/apartments/new" element={<EditableApartmentPage willCreate />} />
           </Route>
           <Route path="/apartments" element={null} />
           <Route path="/rooms" element={null} />

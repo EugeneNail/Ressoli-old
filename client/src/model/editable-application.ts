@@ -2,7 +2,7 @@ import { Contract } from "./contract";
 
 export class EditableApplication {
   id: number = 0;
-  type: "house" | "plot" = "plot";
+  type: "house" | "plot" | "apartment" = "plot";
   clientId: number = 0;
   addressId: number = 0;
   applicableId: number = 0;
@@ -11,7 +11,7 @@ export class EditableApplication {
 
   constructor(
     id: number,
-    type: "house" | "plot",
+    type: "house" | "plot" | "apartment",
     clientId: number,
     addressId: number,
     applicableId: number,

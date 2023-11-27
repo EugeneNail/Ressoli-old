@@ -18,6 +18,8 @@ class DropOptionController extends Controller {
             $applicableOptions = $options->forHouse();
         } else if ($applicableType === "plot") {
             $applicableOptions = $options->forPlot();
+        } else if ($applicableType === "apartment") {
+            $applicableOptions = $options->forApartment();
         }
         $applicationOptions = [
             "address" => $options->forAddress(),

@@ -46,6 +46,17 @@ class DropOptionsService {
         return $options;
     }
 
+    public function forApartment() {
+        $options = DB::table("drop_options")
+            ->where("type", "apartment")
+            ->select(["name",  "value"])
+            ->get()
+            ->groupBy(["name"])
+            ->map(fn ($name) => $this->simplify($name));
+
+        return $options;
+    }
+
     public function forContract(): array {
         $options = DB::table("drop_options")
             ->where("type", "application")

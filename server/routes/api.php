@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\ApartmentController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientController;
@@ -39,6 +40,8 @@ Route::group(["middleware" => "auth:sanctum"], function () {
     Route::post("/plots", [PlotController::class, "persist"]);
 
     Route::post("/houses", [HouseController::class, "persist"]);
+
+    Route::post("/apartments", [ApartmentController::class, "persist"]);
 
     Route::post("applications", [ApplicationController::class, "persist"]);
     Route::get("applications", [ApplicationController::class, "indexShort"]);

@@ -7,6 +7,7 @@ use App\Http\Resources\ApplicationResource;
 use App\Http\Resources\EditableApplicationResource;
 use App\Http\Resources\ShortApplicationResource;
 use App\Models\Address;
+use App\Models\Apartment;
 use App\Models\Application;
 use App\Models\Client;
 use App\Models\House;
@@ -51,6 +52,10 @@ class ApplicationController extends Controller {
         if ($type === "plot") {
             return Application::with("applicable")->where("applicable_type", Plot::class)->get();
         }
+
+        if ($type === "apartment") {
+            return Application::with("applicable")->where("applicable_type", Apartment::class)->get();
+        }
     }
 
     public function indexShort(Request $request) {
@@ -61,9 +66,10 @@ class ApplicationController extends Controller {
     private function findApplicable(string $type, int $id): Model {
         if ($type === "plot") {
             return Plot::find($id);
-        } else {
+        } else if ($type === "house") {
             return House::find($id);
         }
+        return Apartment::find($id);
     }
 
     public function persist(PersistApplicationRequest $request) {

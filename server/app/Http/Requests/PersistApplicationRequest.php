@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Models\Support\ApplicationOptions;
 use App\Rules\AddressExistsRule;
+use App\Rules\ApartmentExistsRule;
 use App\Rules\ClientExistsRule;
 use App\Rules\HouseExistsRule;
 use App\Rules\PlotExistsRule;
@@ -29,7 +30,7 @@ class PersistApplicationRequest extends FormRequest {
 
 
         return [
-            "type" => ["required", Rule::in(["plot", "house"])],
+            "type" => ["required", Rule::in(["plot", "house", "apartment"])],
             "clientId" => new ClientExistsRule(),
             "addressId" => new AddressExistsRule(),
             "applicableId" => $this->selectRule($request->type),
@@ -47,6 +48,8 @@ class PersistApplicationRequest extends FormRequest {
             return new HouseExistsRule();
         } else if ($type === "plot") {
             return new PlotExistsRule();
+        } else if ($type === "apartment") {
+            return new ApartmentExistsRule();
         }
     }
 }
