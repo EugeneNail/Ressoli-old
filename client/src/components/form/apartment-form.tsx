@@ -16,6 +16,8 @@ import {
 import Checkbox from "../inputbox/checkbox";
 import { Apartment } from "../../model/apartment";
 import { ApartmentOptions } from "../../model/options/apartment-options";
+import { useEffect, useState } from "react";
+import api from "../../service/api";
 
 export class ApartmentFormErrors {
   water: string[] = [];
@@ -45,16 +47,16 @@ export class ApartmentFormErrors {
 type ApartmentFormProps = {
   submit: () => void;
   back: () => void;
-  options: ApartmentOptions;
   state: FormState<Apartment, ApartmentFormErrors>;
 };
 
-function ApartmentForm({
-  back,
-  submit,
-  options,
-  state: { fields, errors, setField, clearFieldErrors },
-}: ApartmentFormProps) {
+function ApartmentForm({ back, submit, state: { fields, errors, setField, clearFieldErrors } }: ApartmentFormProps) {
+  const [options, setOptions] = useState(new ApartmentOptions());
+
+  useEffect(() => {
+    api.get<ApartmentOptions>("/options/apartments").then((response) => setOptions(response.data));
+  }, []);
+
   return (
     <form action="" className="form house-form">
       <h1 className="form__header">Дом</h1>

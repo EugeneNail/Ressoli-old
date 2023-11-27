@@ -60,7 +60,7 @@ function ApplicationCard({
       applicable = applicable as ShortApartment;
       return (
         <>
-          {applicable.roomCount && <ApplicationCardInfo icon={faBed} />}
+          <ApplicationCardInfo icon={faBed} value={applicable.roomCount} />
           {applicable.hasGarage && <ApplicationCardInfo icon={faCar} />}
           {applicable.hasBalcony && <ApplicationCardInfo icon={faKaaba} />}
         </>

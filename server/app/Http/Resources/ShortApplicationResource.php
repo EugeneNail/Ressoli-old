@@ -52,9 +52,9 @@ class ShortApplicationResource extends JsonResource {
 
         if ($this->applicable_type === Apartment::class) {
             return [
-                // "roomCount" => $this->applicable->roomCount,
-                // "hasGarage" => $this->applicable->has_garage,
-                // "hasBalcony" => $this->applicable->has_balcony || $this->applicable->has_loggia
+                "roomCount" => $this->applicable->room_count,
+                "hasGarage" => $this->applicable->has_garage,
+                "hasBalcony" => $this->applicable->has_balcony || $this->applicable->has_loggia
             ];
         }
     }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\ApartmentApplicationController;
 use App\Http\Controllers\ApartmentController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\AuthController;
@@ -51,6 +52,13 @@ Route::group(["middleware" => "auth:sanctum"], function () {
             Route::put("/{id}", [HouseApplicationController::class, "update"]);
             Route::get("/{id}", [HouseApplicationController::class, "show"]);
         });
+
+        Route::group(["prefix" => "apartments"], function () {
+            Route::post("/", [ApartmentApplicationController::class, "store"]);
+            Route::get("/", [ApartmentApplicationController::class, "index"]);
+            Route::put("/{id}", [ApartmentApplicationController::class, "update"]);
+            Route::get("/{id}", [ApartmentApplicationController::class, "show"]);
+        });
     });
 
     Route::post("/addresses", [AddressController::class, "persist"]);
@@ -68,6 +76,7 @@ Route::group(["middleware" => "auth:sanctum"], function () {
         Route::get("/contract", [DropOptionController::class, "forContract"]);
         Route::get("/plot", [DropOptionController::class, "forPlot"]);
         Route::get("/house", [DropOptionController::class, "forHouse"]);
+        Route::get("/apartments", [DropOptionController::class, "forApartment"]);
     });
 
     Route::group(["prefix" => "photos"], function () {

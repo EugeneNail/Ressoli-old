@@ -41,8 +41,8 @@ class HouseApplicationController extends Controller {
     public function update(UpdateHouseApplicationRequest $request, int $id, ApplicationService $service) {
         $application = Application::find($id);
         $service->fill($application, $request);
-        $plot = House::find($request->applicableId);
-        $service->associateDependencies($application, $request, $plot);
+        $house = House::find($request->applicableId);
+        $service->associateDependencies($application, $request, $house);
         $application->save();
         $service->savePhotos($application, $request->photos);
 
