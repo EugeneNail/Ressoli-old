@@ -29,18 +29,14 @@ function EditPlotPage() {
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
-    api
-      .get<{ data: Application<Plot> }>("/applications/plots/" + id)
-      .then(({ data: { data } }) => {
-        client.setData(data.client);
-        console.log(data);
-        address.setData(data.address);
-        plot.setData(data.applicable);
-        setPhotos(data.photos);
-        contract.setData(data.contract);
-        setLoading(false);
-      })
-      .catch((response) => console.log(response));
+    api.get<{ data: Application<Plot> }>("/applications/plots/" + id).then(({ data: { data } }) => {
+      client.setData(data.client);
+      address.setData(data.address);
+      plot.setData(data.applicable);
+      setPhotos(data.photos);
+      contract.setData(data.contract);
+      setLoading(false);
+    });
   }, []);
 
   function clientSubmit() {
@@ -52,11 +48,10 @@ function EditPlotPage() {
   }
 
   function applicableSubmit() {
-    ApplicationService.persistApplicable(plot, next);
+    ApplicationService.persistApplicable("/plots", plot, next);
   }
 
   async function edit() {
-    console.log(client);
     if (await ApplicationService.checkContractValidity(contract)) {
       ApplicationService.editApplication(
         "/plots",

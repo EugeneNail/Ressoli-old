@@ -3,15 +3,15 @@ import api from "../../../service/api";
 import ApplicationCard from "../../../components/application-card/application-card";
 import { ShortApplication } from "../../../model/short-application/short-application";
 import Spinner from "../../../components/spinner/spinner";
-import { ShortPlot } from "../../../model/short-application/short-plot";
 import "../applications-page.sass";
+import { ShortHouse } from "../../../model/short-application/short-house";
 
-function PlotsPage() {
-  const [applications, setApplications] = useState<ShortApplication<ShortPlot>[]>();
+function HousesPage() {
+  const [applications, setApplications] = useState<ShortApplication<ShortHouse>[]>();
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    api.get<ShortApplication<ShortPlot>[]>(`/applications/plots`).then((response) => {
+    api.get<ShortApplication<ShortHouse>[]>(`/applications/houses`).then((response) => {
       setApplications(response.data);
       setLoading(false);
     });
@@ -34,4 +34,4 @@ function PlotsPage() {
   );
 }
 
-export default PlotsPage;
+export default HousesPage;

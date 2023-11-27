@@ -9,6 +9,10 @@ import PlotPage from "./pages/application/plot/plot-page";
 import CreatePlotPage from "./pages/application/plot/create-plot-page";
 import PlotsPage from "./pages/application/plot/plots-page";
 import EditPlotPage from "./pages/application/plot/edit-plot-page";
+import CreateHousePage from "./pages/application/house/create-house-page";
+import HousesPage from "./pages/application/house/houses-page";
+import HousePage from "./pages/application/house/house-page";
+import EditHousePage from "./pages/application/house/edit-house-page";
 
 function RootRouter() {
   useEffect(() => {}, []);
@@ -36,13 +40,13 @@ function RootRouter() {
             <Route path="/plots/:id" element={<PlotPage />} />
             <Route path="/plots/:id/edit" element={<EditPlotPage />} />
           </Route>
-          {/* <Route path="/houses">
-            <Route path="/houses" element={<ApplicationsPage<ShortHouse> key="house" type="house" />} />
-            <Route path="/houses/new" element={<EditableHousePage willCreate />} />
-            <Route path="/houses/:id" element={<ApplicationPage<House> />} />
-            <Route path="/houses/:id/edit" element={<EditableHousePage />} />
+          <Route path="/houses">
+            <Route path="/houses" element={<HousesPage />} />
+            <Route path="/houses/new" element={<CreateHousePage />} />
+            <Route path="/houses/:id" element={<HousePage />} />
+            <Route path="/houses/:id/edit" element={<EditHousePage />} />
           </Route>
-          <Route path="/apartments">
+          {/* <Route path="/apartments">
             <Route path="/apartments" element={<ApplicationsPage<ShortApartment> key="apartment" type="apartment" />} />
             <Route path="/apartments/new" element={<EditableApartmentPage willCreate />} />
             <Route path="/apartments/:id" element={<ApplicationPage<Apartment> />} />

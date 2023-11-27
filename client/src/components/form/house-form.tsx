@@ -23,6 +23,8 @@ import {
 import { House } from "../../model/house";
 import { HouseOptions } from "../../model/options/house-options";
 import Checkbox from "../inputbox/checkbox";
+import { useEffect, useState } from "react";
+import api from "../../service/api";
 
 export class HouseFormErrors {
   water: string[] = [];
@@ -48,13 +50,18 @@ export class HouseFormErrors {
 type HouseFormProps = {
   submit: () => void;
   back: () => void;
-  options: HouseOptions;
   state: FormState<House, HouseFormErrors>;
 };
 
-function HouseForm({ back, submit, options, state: { fields, errors, setField, clearFieldErrors } }: HouseFormProps) {
+function HouseForm({ back, submit, state: { fields, errors, setField, clearFieldErrors } }: HouseFormProps) {
+  const [options, setOptions] = useState(new HouseOptions());
+
+  useEffect(() => {
+    api.get("/options/house").then((response) => setOptions(response.data));
+  }, []);
+
   return (
-    <form action="" className="form house-form">
+    <form className="form house-form">
       <h1 className="form__header">Дом</h1>
       <div className="form__input-group">
         <SelectBox

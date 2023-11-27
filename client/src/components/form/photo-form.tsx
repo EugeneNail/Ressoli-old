@@ -49,7 +49,6 @@ function PhotoForm({ back, submit, state: [photos, setPhotos] }: PhotoFormProps)
 
   async function removePhoto(id: number) {
     const response = await api.delete("/photos/" + id);
-    console.log(response);
     if (response.status === 204) {
       setPhotos(photos.filter((photo) => photo.id != id));
     }

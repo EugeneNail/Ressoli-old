@@ -7,9 +7,10 @@ import api from "../../../service/api";
 import { useNavigate, useParams } from "react-router";
 import Spinner from "../../../components/spinner/spinner";
 import { Plot } from "../../../model/plot";
-import PlotSection from "../application-page/plot-section";
 import AddressSection from "../application-page/address-section";
 import ApplicationSection from "../application-page/application-section";
+import { faDroplet, faFire, faToilet, faBolt, faMaximize } from "@fortawesome/free-solid-svg-icons";
+import ApplicationInfo from "../../../components/application-info/application-info";
 
 function PlotPage() {
   const navigate = useNavigate();
@@ -20,8 +21,8 @@ function PlotPage() {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    api.get<{ data: Application<Plot> }>("/applications/" + id).then((response) => {
-      setApplication(response.data.data);
+    api.get<Application<Plot>>("/applications/plots/" + id).then((response) => {
+      setApplication(response.data);
       setLoading(false);
     });
   }, []);
@@ -36,7 +37,14 @@ function PlotPage() {
           <ApplicationSection user={user} contract={contract} date={date} client={client} />
           <AddressSection address={address} />
 
-          <PlotSection plot={plot} />
+          <h2 className="application-page__subheader">Участок</h2>
+          <section className="application-page__info-group">
+            <ApplicationInfo icon={faDroplet} label="Вода" value={plot.water} />
+            <ApplicationInfo icon={faFire} label="Газ" value={plot.gas} />
+            <ApplicationInfo icon={faToilet} label="Канализация" value={plot.sewer} />
+            <ApplicationInfo icon={faBolt} label="Электричество" value={plot.electricity} />
+            <ApplicationInfo icon={faMaximize} label="Площадь" value={`${plot.area} квм`} />
+          </section>
 
           {photos.length > 0 && (
             <div className="application-page__info-group">

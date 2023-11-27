@@ -15,36 +15,36 @@ use Illuminate\Http\Response;
 
 class PlotApplicationController extends Controller {
 
-    public function store(StorePlotApplicationRequest $request, ApplicationService $applicationService) {
+    public function store(StorePlotApplicationRequest $request, ApplicationService $service) {
         $application = new Application();
-        $applicationService->fill($application, $request);
+        $service->fill($application, $request);
         $plot = Plot::find($request->applicableId);
-        $applicationService->associateDependencies($application, $request, $plot);
+        $service->associateDependencies($application, $request, $plot);
         $application->save();
-        $applicationService->savePhotos($application, $request->photos);
+        $service->savePhotos($application, $request->photos);
 
         return new JsonResponse($application->id, Response::HTTP_CREATED);
     }
 
     public function show(Request $request, int $id) {
         $application = Application::find($id);
-        return new ApplicationResource($application);
+        return new JsonResponse(new ApplicationResource($application), Response::HTTP_OK);
     }
 
     public function index() {
         $plotApplications = Application::with(["address", "applicable"])
             ->where("applicable_type", Plot::class)->get();
 
-        return ShortApplicationResource::collection($plotApplications);
+        return new JsonResponse(ShortApplicationResource::collection($plotApplications), Response::HTTP_OK);
     }
 
-    public function update(UpdatePlotApplicationRequest $request, int $id, ApplicationService $applicationService) {
+    public function update(UpdatePlotApplicationRequest $request, int $id, ApplicationService $service) {
         $application = Application::find($id);
-        $applicationService->fill($application, $request);
+        $service->fill($application, $request);
         $plot = Plot::find($request->applicableId);
-        $applicationService->associateDependencies($application, $request, $plot);
+        $service->associateDependencies($application, $request, $plot);
         $application->save();
-        $applicationService->savePhotos($application, $request->photos);
+        $service->savePhotos($application, $request->photos);
 
         return new JsonResponse(null, Response::HTTP_NO_CONTENT);
     }

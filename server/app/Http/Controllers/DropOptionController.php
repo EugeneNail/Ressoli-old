@@ -14,11 +14,15 @@ class DropOptionController extends Controller {
         return new JsonResponse($options->forAddress(), Response::HTTP_OK);
     }
 
+    public function forContract(DropOptionsService $options) {
+        return new JsonResponse($options->forContract(), Response::HTTP_OK);
+    }
+
     public function forPlot(DropOptionsService $options) {
         return new JsonResponse($options->forPlot(), Response::HTTP_OK);
     }
 
-    public function forContract(DropOptionsService $options) {
-        return new JsonResponse($options->forContract(), Response::HTTP_OK);
+    public function forHouse(DropOptionsService $options) {
+        return new JsonResponse($options->forHouse(), Response::HTTP_OK);
     }
 }

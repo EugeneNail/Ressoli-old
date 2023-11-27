@@ -56,13 +56,14 @@ export class ApplicationService {
   }
 
   static async persistApplicable(
+    subRoute: string,
     applicable:
       | FormState<Plot, PlotFormErrors>
       | FormState<House, HouseFormErrors>
       | FormState<Apartment, ApartmentFormErrors>,
     next: () => void
   ) {
-    const response = await api.post("/plots", applicable.fields);
+    const response = await api.post(subRoute, applicable.fields);
 
     if (response.status === 422) {
       applicable.setErrors(response.data.errors);
@@ -126,7 +127,6 @@ export class ApplicationService {
       hasVat: contract.hasVat,
       price: contract.price,
     };
-    console.log(application);
     const response = await api.put(`/applications${subRoute}/${id}`, application);
 
     if (response.status >= 400) {
