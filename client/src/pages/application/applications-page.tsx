@@ -6,20 +6,26 @@ import Spinner from "../../components/spinner/spinner";
 import { ShortHouse } from "../../model/short-application/short-house";
 import { ShortPlot } from "../../model/short-application/short-plot";
 import "./applications-page.sass";
+import { ShortApartment } from "../../model/short-application/short-apartment";
 
 type ApplicationsPageProps = {
   type: string;
 };
 
-function ApplicationsPage<T extends ShortHouse | ShortPlot>({ type }: ApplicationsPageProps) {
+function ApplicationsPage<T extends ShortHouse | ShortPlot | ShortApartment>({ type }: ApplicationsPageProps) {
   const [applications, setApplications] = useState<ShortApplication<T>[]>();
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    api.get<{ data: ShortApplication<T>[] }>(`/applications?type=${type}`).then((response) => {
-      setApplications(response.data.data);
-      setLoading(false);
-    });
+    console.log(1);
+    api
+      .get<{ data: ShortApplication<T>[] }>(`/applications?type=${type}`)
+      .then((response) => {
+        setApplications(response.data.data);
+        setLoading(false);
+        console.log(response.data);
+      })
+      .catch((err) => console.log(err.response.data));
   }, []);
 
   return (

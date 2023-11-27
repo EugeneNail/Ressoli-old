@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use App\Models\Apartment;
 use App\Models\House;
 use App\Models\Plot;
 
@@ -40,6 +41,34 @@ trait HasApplicableSelect {
                 "water" => $this->applicable->water,
                 "electricity" => $this->applicable->electricity,
                 "area" => $this->applicable->area,
+            ];
+        }
+
+        if ($this->applicable_type === Apartment::class) {
+            return [
+                "id" => $this->applicable->id,
+                "hasWater"  => $this->applicable->has_water,
+                "hasGas"  => $this->applicable->has_gas,
+                "hasElectricity"  => $this->applicable->has_electricity,
+                "hasSewer"  => $this->applicable->has_sewer,
+                "hasHotWater" => $this->applicable->has_hot_water,
+                "hasGarage"  => $this->applicable->has_garage,
+                "hasGarbageChute"  => $this->applicable->has_garbage_chute,
+                "hasElevator"  => $this->applicable->has_elevator,
+                "isCorner" => $this->applicable->is_corner,
+                "hasHeating" => $this->applicable->has_heating,
+                "hasLoggia"  => $this->applicable->has_loggia,
+                "hasBalcony"  => $this->applicable->has_balcony,
+                "condition" => $this->applicable->condition,
+                "walls" => $this->applicable->walls,
+                "bath" => $this->applicable->bath,
+                "toilet" => $this->applicable->toilet,
+                "constructionTime" => $this->applicable->construction_time,
+                "area" => $this->applicable->area,
+                "roomCount" => $this->applicable->room_count,
+                "levelCount" => $this->applicable->level_count,
+                "level" => $this->applicable->level,
+                "ceiling" => $this->applicable->ceiling,
             ];
         }
 

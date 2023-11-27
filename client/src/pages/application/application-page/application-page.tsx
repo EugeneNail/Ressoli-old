@@ -25,6 +25,8 @@ import PlotSection from "./plot-section";
 import { House } from "../../../model/house";
 import { compareTypes } from "../../../service/compareTypes";
 import HouseSection from "./house-section";
+import { Apartment } from "../../../model/apartment";
+import ApartmentSection from "./apartment-section";
 
 function ApplicationPage<T>() {
   const navigate = useNavigate();
@@ -48,6 +50,10 @@ function ApplicationPage<T>() {
 
     if (compareTypes(applicable, new House())) {
       return <HouseSection house={applicable as House} />;
+    }
+
+    if (compareTypes(applicable, new Apartment())) {
+      return <ApartmentSection apartment={applicable as Apartment} />;
     }
   }
 

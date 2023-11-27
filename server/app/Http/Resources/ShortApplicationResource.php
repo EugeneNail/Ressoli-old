@@ -2,7 +2,9 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Apartment;
 use App\Models\House;
+use App\Models\Photo;
 use App\Models\Plot;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -19,7 +21,7 @@ class ShortApplicationResource extends JsonResource {
 
         return [
             "id" => $this->id,
-            "preview" => $this->photos[0]->path,
+            "preview" => $this->photos[0]->path ?? Photo::find(1)->path,
             "contract" => $this->contract,
             "city" => $address->city,
             "street" => $address->street,
@@ -45,6 +47,14 @@ class ShortApplicationResource extends JsonResource {
                 "hasWater" => $this->applicable->water !== "Нет",
                 "hasElectricity" => $this->applicable->electricity !== "Нет",
                 "hasGas" => $this->applicable->gas  !== "Нет",
+            ];
+        }
+
+        if ($this->applicable_type === Apartment::class) {
+            return [
+                // "roomCount" => $this->applicable->roomCount,
+                // "hasGarage" => $this->applicable->has_garage,
+                // "hasBalcony" => $this->applicable->has_balcony || $this->applicable->has_loggia
             ];
         }
     }

@@ -5,8 +5,10 @@ import {
   faBed,
   faBolt,
   faCalendarDays,
+  faCar,
   faDroplet,
   faFire,
+  faKaaba,
   faLocationDot,
   faMap,
   faMaximize,
@@ -18,9 +20,10 @@ import { Converter } from "../../service/converter";
 import { ShortHouse } from "../../model/short-application/short-house";
 import { ShortPlot } from "../../model/short-application/short-plot";
 import { compareTypes } from "../../service/compareTypes";
+import { ShortApartment } from "../../model/short-application/short-apartment";
 
 type ApplicationCardProps = {
-  application: ShortApplication<ShortPlot | ShortHouse>;
+  application: ShortApplication<ShortPlot | ShortHouse | ShortApartment>;
 };
 
 function ApplicationCard({
@@ -49,6 +52,17 @@ function ApplicationCard({
           {applicable.hasWater && <ApplicationCardInfo icon={faDroplet} />}
           {applicable.hasElectricity && <ApplicationCardInfo icon={faBolt} />}
           {applicable.hasGas && <ApplicationCardInfo icon={faFire} />}
+        </>
+      );
+    }
+
+    if (compareTypes(applicable, new ShortApartment())) {
+      applicable = applicable as ShortApartment;
+      return (
+        <>
+          {applicable.roomCount && <ApplicationCardInfo icon={faBed} />}
+          {applicable.hasGarage && <ApplicationCardInfo icon={faCar} />}
+          {applicable.hasBalcony && <ApplicationCardInfo icon={faKaaba} />}
         </>
       );
     }
