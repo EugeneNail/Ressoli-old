@@ -8,6 +8,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DropOptionController;
 use App\Http\Controllers\HouseController;
 use App\Http\Controllers\PhotoController;
+use App\Http\Controllers\PlotApplicationController;
 use App\Http\Controllers\PlotController;
 use App\Services\DropOptionsService;
 use Illuminate\Http\Request;
@@ -35,6 +36,15 @@ Route::group(["middleware" => "auth:sanctum"], function () {
 
     Route::post("/clients", [ClientController::class, "persist"]);
 
+    Route::group(["prefix" => "applications"], function () {
+        Route::group(["prefix" => "plots"], function () {
+            Route::post("/", [PlotApplicationController::class, "store"]);
+            Route::get("/", [PlotApplicationController::class, "index"]);
+            Route::put("/{id}", [PlotApplicationController::class, "update"]);
+            Route::get("/{id}", [PlotApplicationController::class, "show"]);
+        });
+    });
+
     Route::post("/addresses", [AddressController::class, "persist"]);
 
     Route::post("/plots", [PlotController::class, "persist"]);
@@ -43,13 +53,13 @@ Route::group(["middleware" => "auth:sanctum"], function () {
 
     Route::post("/apartments", [ApartmentController::class, "persist"]);
 
-    Route::post("applications", [ApplicationController::class, "persist"]);
-    Route::get("applications", [ApplicationController::class, "indexShort"]);
-    Route::get("applications/{id}", [ApplicationController::class, "get"]);
-    Route::get("applications/{id}/edit", [ApplicationController::class, "getForEdit"]);
     Route::post("applications/check-validity", [ApplicationController::class, "checkValidity"]);
 
-    Route::get("/options/application", [DropOptionController::class, "getForApplication"]);
+    Route::group(["prefix" => "options"], function () {
+        Route::get("/address", [DropOptionController::class, "forAddress"]);
+        Route::get("/contract", [DropOptionController::class, "forContract"]);
+        Route::get("/plot", [DropOptionController::class, "forPlot"]);
+    });
 
     Route::group(["prefix" => "photos"], function () {
         Route::post("/upload-temp", [PhotoController::class, "uploadTemp"]);

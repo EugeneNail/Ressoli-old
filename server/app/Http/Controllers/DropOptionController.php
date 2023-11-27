@@ -10,23 +10,15 @@ use Illuminate\Support\Facades\DB;
 
 class DropOptionController extends Controller {
 
-    public function getForApplication(Request $request, DropOptionsService $options) {
-        $applicableType = $request->input("type");
-        $applicableOptions = null;
+    public function forAddress(DropOptionsService $options) {
+        return new JsonResponse($options->forAddress(), Response::HTTP_OK);
+    }
 
-        if ($applicableType === "house") {
-            $applicableOptions = $options->forHouse();
-        } else if ($applicableType === "plot") {
-            $applicableOptions = $options->forPlot();
-        } else if ($applicableType === "apartment") {
-            $applicableOptions = $options->forApartment();
-        }
-        $applicationOptions = [
-            "address" => $options->forAddress(),
-            "applicable" => $applicableOptions,
-            "contract" => $options->forContract()
-        ];
+    public function forPlot(DropOptionsService $options) {
+        return new JsonResponse($options->forPlot(), Response::HTTP_OK);
+    }
 
-        return new JsonResponse($applicationOptions);
+    public function forContract(DropOptionsService $options) {
+        return new JsonResponse($options->forContract(), Response::HTTP_OK);
     }
 }

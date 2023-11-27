@@ -5,6 +5,8 @@ import Numberbox from "../inputbox/numberbox";
 import { faBolt, faDroplet, faFire, faMaximize, faToilet } from "@fortawesome/free-solid-svg-icons";
 import { Plot } from "../../model/plot";
 import { PlotOptions } from "../../model/options/plot-options";
+import { useEffect, useState } from "react";
+import api from "../../service/api";
 
 export class PlotFormErrors {
   water: string[] = [];
@@ -17,11 +19,16 @@ export class PlotFormErrors {
 type PlotFormProps = {
   submit: () => void;
   back: () => void;
-  options: PlotOptions;
   state: FormState<Plot, PlotFormErrors>;
 };
 
-function PlotForm({ back, submit, options, state: { fields, errors, setField, clearFieldErrors } }: PlotFormProps) {
+function PlotForm({ back, submit, state: { fields, errors, setField, clearFieldErrors } }: PlotFormProps) {
+  const [options, setOptions] = useState(new PlotOptions());
+
+  useEffect(() => {
+    api.get("/options/plot").then((response) => setOptions(response.data));
+  }, []);
+
   return (
     <form action="" className="form">
       <h1 className="form__header">Участок</h1>

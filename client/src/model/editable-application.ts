@@ -11,7 +11,6 @@ export class EditableApplication {
 
   constructor(
     id: number,
-    type: "house" | "plot" | "apartment",
     clientId: number,
     addressId: number,
     applicableId: number,
@@ -19,7 +18,6 @@ export class EditableApplication {
     contract: Contract
   ) {
     this.id = id;
-    this.type = type;
     this.clientId = clientId;
     this.addressId = addressId;
     this.applicableId = applicableId;

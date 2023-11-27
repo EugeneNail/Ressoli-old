@@ -3,12 +3,11 @@
 namespace App\Http\Requests;
 
 use App\Models\Support\Rules;
-use App\Rules\AddressNumberRule;
-use App\Rules\StreetRule;
-use Illuminate\Validation\Rule;
+use App\Rules\PlotExistsRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class PersistAddressRequest extends FormRequest {
+class StorePlotApplicationRequest extends FormRequest {
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -22,6 +21,11 @@ class PersistAddressRequest extends FormRequest {
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(Rules $rules): array {
-        return $rules->forAddress();
+        return array_merge(
+            [
+                "applicableId" => [new PlotExistsRule()],
+            ],
+            $rules->forApplication()
+        );
     }
 }

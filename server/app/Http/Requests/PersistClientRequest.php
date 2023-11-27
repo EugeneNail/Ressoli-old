@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Support\Rules;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PersistClientRequest extends FormRequest {
@@ -17,11 +18,7 @@ class PersistClientRequest extends FormRequest {
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array {
-        return [
-            "name" => "required|alpha",
-            "surname" => "required|alpha",
-            "phoneNumber" => "required|regex:/^\+{0,1}[0-9]{11}$/",
-        ];
+    public function rules(Rules $rules): array {
+        return $rules->forClient();
     }
 }

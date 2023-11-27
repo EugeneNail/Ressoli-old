@@ -42,14 +42,4 @@ class PersistApplicationRequest extends FormRequest {
             "contract.hasMortgage" => "boolean",
         ];
     }
-
-    private function selectRule($type) {
-        if ($type === "house") {
-            return new HouseExistsRule();
-        } else if ($type === "plot") {
-            return new PlotExistsRule();
-        } else if ($type === "apartment") {
-            return new ApartmentExistsRule();
-        }
-    }
 }

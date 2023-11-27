@@ -5,6 +5,8 @@ import Checkbox from "../inputbox/checkbox";
 import SelectBox from "../inputbox/selectbox";
 import { faFileSignature, faRuble } from "@fortawesome/free-solid-svg-icons";
 import { Contract } from "../../model/contract";
+import { useEffect, useState } from "react";
+import api from "../../service/api";
 
 export class ContractFormErrors {
   price: string[] = [];
@@ -14,7 +16,6 @@ export class ContractFormErrors {
 type ContractFormProps = {
   back: () => void;
   submit: () => void;
-  options: string[];
   willCreate?: boolean;
   state: FormState<Contract, ContractFormErrors>;
 };
@@ -22,10 +23,15 @@ type ContractFormProps = {
 function ContractForm({
   back,
   submit,
-  options,
   willCreate,
   state: { fields, errors, setField, clearFieldErrors },
 }: ContractFormProps) {
+  const [options, setOptions] = useState<string[]>([]);
+
+  useEffect(() => {
+    api.get("/options/contract").then((response) => setOptions(response.data));
+  }, []);
+
   return (
     <form action="" className="form">
       <h1 className="form__header">Ценовые условия</h1>

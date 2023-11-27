@@ -5,6 +5,8 @@ import { faCity, faMap, faRoad } from "@fortawesome/free-solid-svg-icons";
 import { Address } from "../../model/address";
 import SelectBox from "../inputbox/selectbox";
 import { AddressOptions } from "../../model/options/address-options";
+import { useEffect, useState } from "react";
+import api from "../../service/api";
 
 export class AddressFormErrors {
   typeOfCity: string[] = [];
@@ -17,16 +19,16 @@ export class AddressFormErrors {
 type AddressFormProps = {
   submit: () => void;
   back: () => void;
-  options: AddressOptions;
   state: FormState<Address, AddressFormErrors>;
 };
 
-function AddressForm({
-  submit,
-  back,
-  options,
-  state: { fields, errors, setField, clearFieldErrors },
-}: AddressFormProps) {
+function AddressForm({ submit, back, state: { fields, errors, setField, clearFieldErrors } }: AddressFormProps) {
+  const [options, setOptions] = useState(new AddressOptions());
+
+  useEffect(() => {
+    api.get("/options/address").then((response) => setOptions(response.data));
+  }, []);
+
   return (
     <form action="" className="form address-form">
       <h1 className="form__header">Адрес</h1>

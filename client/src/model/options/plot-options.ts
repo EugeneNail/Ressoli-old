@@ -1,6 +1,6 @@
-export type PlotOptions = {
-  water: string[];
-  gas: string[];
-  electricity: string[];
-  sewer: string[];
-};
+export class PlotOptions {
+  water: string[] = [];
+  gas: string[] = [];
+  electricity: string[] = [];
+  sewer: string[] = [];
+}

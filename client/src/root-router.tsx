@@ -5,17 +5,10 @@ import SignupPage from "./pages/guest/signup-page";
 import DefaultLayout from "./layouts/default-layout/default-layout";
 import { useEffect } from "react";
 import ProtectedRoute from "./protected-route";
-import ApplicationPage from "./pages/application/application-page/application-page";
-import EditablePlotPage from "./pages/application/editable-application-page/editable-plot-page";
-import EditableHousePage from "./pages/application/editable-application-page/editable-house-page";
-import ApplicationsPage from "./pages/application/applications-page";
-import { Plot } from "./model/plot";
-import { House } from "./model/house";
-import { ShortHouse } from "./model/short-application/short-house";
-import { ShortPlot } from "./model/short-application/short-plot";
-import EditableApartmentPage from "./pages/application/editable-application-page/editable-apartment-page";
-import { ShortApartment } from "./model/short-application/short-apartment";
-import { Apartment } from "./model/apartment";
+import PlotPage from "./pages/application/plot/plot-page";
+import CreatePlotPage from "./pages/application/plot/create-plot-page";
+import PlotsPage from "./pages/application/plot/plots-page";
+import EditPlotPage from "./pages/application/plot/edit-plot-page";
 
 function RootRouter() {
   useEffect(() => {}, []);
@@ -38,12 +31,12 @@ function RootRouter() {
           <Route path="" element={<Navigate to={"/houses"} />} />
           <Route path="/houses" element={null} />
           <Route path="/plots">
-            <Route path="/plots" element={<ApplicationsPage<ShortPlot> key="plot" type="plot" />} />
-            <Route path="/plots/new" element={<EditablePlotPage willCreate />} />
-            <Route path="/plots/:id" element={<ApplicationPage<Plot> />} />
-            <Route path="/plots/:id/edit" element={<EditablePlotPage />} />
+            <Route path="/plots" element={<PlotsPage />} />
+            <Route path="/plots/new" element={<CreatePlotPage />} />
+            <Route path="/plots/:id" element={<PlotPage />} />
+            <Route path="/plots/:id/edit" element={<EditPlotPage />} />
           </Route>
-          <Route path="/houses">
+          {/* <Route path="/houses">
             <Route path="/houses" element={<ApplicationsPage<ShortHouse> key="house" type="house" />} />
             <Route path="/houses/new" element={<EditableHousePage willCreate />} />
             <Route path="/houses/:id" element={<ApplicationPage<House> />} />
@@ -54,7 +47,7 @@ function RootRouter() {
             <Route path="/apartments/new" element={<EditableApartmentPage willCreate />} />
             <Route path="/apartments/:id" element={<ApplicationPage<Apartment> />} />
             <Route path="/apartments/:id/edit" element={<EditableApartmentPage />} />
-          </Route>
+          </Route> */}
           <Route path="/apartments" element={null} />
           <Route path="/rooms" element={null} />
           <Route path="/clients" element={null} />
