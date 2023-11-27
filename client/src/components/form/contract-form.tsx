@@ -3,7 +3,7 @@ import Button from "../button/button";
 import Numberbox from "../inputbox/numberbox";
 import Checkbox from "../inputbox/checkbox";
 import SelectBox from "../inputbox/selectbox";
-import { faFileSignature, faRuble } from "@fortawesome/free-solid-svg-icons";
+import { faCreditCard, faFileSignature, faPercent, faRuble } from "@fortawesome/free-solid-svg-icons";
 import { Contract } from "../../model/contract";
 import { useEffect, useState } from "react";
 import api from "../../service/api";
@@ -62,6 +62,7 @@ function ContractForm({
           value={fields.hasVat}
           label="С учетом НДС"
           name="hasVat"
+          icon={faPercent}
           onChange={setField}
           clearErrors={clearFieldErrors}
         />
@@ -69,6 +70,7 @@ function ContractForm({
           value={fields.hasMortgage}
           label="Есть ипотека"
           name="hasMortgage"
+          icon={faCreditCard}
           onChange={setField}
           clearErrors={clearFieldErrors}
         />

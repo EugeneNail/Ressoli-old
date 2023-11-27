@@ -12,6 +12,17 @@ import {
   faSoap,
   faWarehouse,
   faArrowsUpDown,
+  faDroplet,
+  faFire,
+  faBolt,
+  faToilet,
+  faKaaba,
+  faWater,
+  faTemperatureHigh,
+  faCube,
+  faCar,
+  faTrash,
+  faElevator,
 } from "@fortawesome/free-solid-svg-icons";
 import Checkbox from "../inputbox/checkbox";
 import { Apartment } from "../../model/apartment";
@@ -59,12 +70,18 @@ function ApartmentForm({ back, submit, state: { fields, errors, setField, clearF
 
   return (
     <form action="" className="form house-form">
-      <h1 className="form__header">Дом</h1>
+      <h1 className="form__header">Квартира</h1>
       <div className="form__input-group">
-        <Checkbox value={fields.hasWater} label="Вода" name="hasWater" onChange={setField} />
-        <Checkbox value={fields.hasGas} label="Газ" name="hasGas" onChange={setField} />
-        <Checkbox value={fields.hasElectricity} label="Электричество" name="hasElectricity" onChange={setField} />
-        <Checkbox value={fields.hasSewer} label="Канализация" name="hasSewer" onChange={setField} />
+        <Checkbox value={fields.hasWater} label="Вода" name="hasWater" icon={faDroplet} onChange={setField} />
+        <Checkbox value={fields.hasGas} label="Газ" name="hasGas" icon={faFire} onChange={setField} />
+        <Checkbox
+          value={fields.hasElectricity}
+          label="Электричество"
+          name="hasElectricity"
+          icon={faBolt}
+          onChange={setField}
+        />
+        <Checkbox value={fields.hasSewer} label="Канализация" name="hasSewer" icon={faToilet} onChange={setField} />
       </div>
       <div className="form__input-group">
         <Numberbox
@@ -161,13 +178,25 @@ function ApartmentForm({ back, submit, state: { fields, errors, setField, clearF
           errors={errors.walls}
           clearErrors={clearFieldErrors}
         />
-        <Checkbox value={fields.isCorner} label="Угловая" name="isCorner" onChange={setField} />
-        <Checkbox value={fields.hasBalcony} label="Балкон" name="hasBalcony" onChange={setField} />
-        <Checkbox value={fields.hasLoggia} label="Лоджия" name="hasLoggia" onChange={setField} />
+        <Checkbox value={fields.isCorner} label="Угловая" name="isCorner" icon={faCube} onChange={setField} />
+        <Checkbox value={fields.hasBalcony} label="Балкон" name="hasBalcony" icon={faKaaba} onChange={setField} />
+        <Checkbox value={fields.hasLoggia} label="Лоджия" name="hasLoggia" icon={faKaaba} onChange={setField} />
       </div>
       <div className="form__input-group">
-        <Checkbox value={fields.hasHotWater} label="Горячая вода" name="hasHotWater" onChange={setField} />
-        <Checkbox value={fields.hasHeating} label="Отопление" name="hasHeating" onChange={setField} />
+        <Checkbox
+          value={fields.hasHotWater}
+          label="Горячая вода"
+          name="hasHotWater"
+          icon={faWater}
+          onChange={setField}
+        />
+        <Checkbox
+          value={fields.hasHeating}
+          label="Отопление"
+          name="hasHeating"
+          icon={faTemperatureHigh}
+          onChange={setField}
+        />
         <SelectBox
           value={fields.bath}
           label="Ванна"
@@ -190,9 +219,15 @@ function ApartmentForm({ back, submit, state: { fields, errors, setField, clearF
         />
       </div>
       <div className="form__input-group">
-        <Checkbox value={fields.hasGarage} label="Гараж" name="hasGarage" onChange={setField} />
-        <Checkbox value={fields.hasGarbageChute} label="Мусоропровод" name="hasGarbageChute" onChange={setField} />
-        <Checkbox value={fields.hasElevator} label="Лифт" name="hasElevator" onChange={setField} />
+        <Checkbox value={fields.hasGarage} label="Гараж" name="hasGarage" icon={faCar} onChange={setField} />
+        <Checkbox
+          value={fields.hasGarbageChute}
+          label="Мусоропровод"
+          name="hasGarbageChute"
+          icon={faTrash}
+          onChange={setField}
+        />
+        <Checkbox value={fields.hasElevator} label="Лифт" name="hasElevator" icon={faElevator} onChange={setField} />
       </div>
       <div className="form__button-group">
         <Button wide style="dotted" text="Назад" action={back} />

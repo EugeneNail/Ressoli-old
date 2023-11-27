@@ -7,6 +7,7 @@ import {
   faBed,
   faBolt,
   faCalendarDays,
+  faCar,
   faDroplet,
   faFire,
   faHouseCrack,
@@ -255,7 +256,7 @@ function HouseForm({ back, submit, state: { fields, errors, setField, clearField
           clearErrors={clearFieldErrors}
         />
 
-        <Checkbox value={fields.hasGarage} label="Гараж" name="hasGarage" onChange={setField} />
+        <Checkbox value={fields.hasGarage} label="Гараж" name="hasGarage" icon={faCar} onChange={setField} />
       </div>
       <div className="form__button-group">
         <Button wide style="dotted" text="Назад" action={back} />

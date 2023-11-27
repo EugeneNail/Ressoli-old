@@ -212,7 +212,6 @@ input[type=number]
 .checkbox
     display: flex
     align-items: center
-    gap: .8rem
     cursor: pointer
     position: relative
     border: 1px solid $input-bd
@@ -225,14 +224,22 @@ input[type=number]
     &:hover
         background: $input-bg-hover
 
-    &:has(input:checked) &__icon
+    &:has(input:checked) &__checkmark
         background: $accent
         color: white
 
     &:has(input:checked) &__text
         color: $font-strong
 
+    &__icon-container
+        width: 3.5rem
+        display: flex
+        justify-content: center
+
     &__icon
+        color: $font-weak
+
+    &__checkmark
         aspect-ratio: 1 / 1
         color: transparent
         pointer-events: none
@@ -247,5 +254,6 @@ input[type=number]
         opacity: 0
 
     &__text
+        margin-left: 0.8rem
         color: $font-weak
         user-select: none
