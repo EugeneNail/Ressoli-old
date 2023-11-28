@@ -8,7 +8,6 @@ import { useNavigate, useParams } from "react-router";
 import Spinner from "../../../components/spinner/spinner";
 import AddressSection from "../application-page/address-section";
 import ApplicationSection from "../application-page/application-section";
-import { House } from "../../../model/house";
 import {
   faDroplet,
   faFire,
@@ -20,7 +19,6 @@ import {
   faMaximize,
   faHouseCrack,
   faCalendarDays,
-  faPeopleRoof,
   faWarehouse,
   faWater,
   faTemperatureHigh,
@@ -54,10 +52,10 @@ function ApartmentPage() {
       {isLoading && <Spinner />}
       {!isLoading && (
         <div className="application-page">
-          <h1 className="application-page__header">Заявка #{id} о частном доме</h1>
+          <h1 className="application-page__header">Заявка #{id} о квартире</h1>
 
           <ApplicationSection user={user} contract={contract} date={date} client={client} />
-          <AddressSection address={address} />
+          <AddressSection address={address} label="Номер дома" />
 
           <h2 className="application-page__subheader">Квартира</h2>
           <section className="application-page__info-group">

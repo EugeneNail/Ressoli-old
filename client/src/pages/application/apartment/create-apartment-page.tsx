@@ -27,7 +27,7 @@ function CreateApartmentPage() {
   }
 
   function addressSubmit() {
-    ApplicationService.persistAddress(address, next);
+    ApplicationService.persistAddress(address, next, true);
   }
 
   function applicableSubmit() {
@@ -49,7 +49,7 @@ function CreateApartmentPage() {
 
   const { steps, back, next, currentStep, goTo } = useMultiStepForm([
     <ClientForm submit={clientSubmit} state={client} />,
-    <AddressForm back={() => back()} submit={addressSubmit} state={address} />,
+    <AddressForm full back={() => back()} submit={addressSubmit} state={address} />,
     <ApartmentForm back={() => back()} submit={applicableSubmit} state={apartment} />,
     <PhotoForm back={() => back()} submit={() => next()} state={[photos, setPhotos]} />,
     <ContractForm back={() => back()} submit={create} willCreate state={contract} />,

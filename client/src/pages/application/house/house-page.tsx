@@ -53,7 +53,7 @@ function HousePage() {
           <h1 className="application-page__header">Заявка #{id} о частном доме</h1>
 
           <ApplicationSection user={user} contract={contract} date={date} client={client} />
-          <AddressSection address={address} />
+          <AddressSection address={address} label="Номер дома" />
 
           <h2 className="application-page__subheader">Дом</h2>
           <section className="application-page__info-group">

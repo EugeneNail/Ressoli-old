@@ -4,6 +4,7 @@ import { ClientFormErrors } from "../components/form/client-form";
 import { ContractFormErrors } from "../components/form/contract-form";
 import { HouseFormErrors } from "../components/form/house-form";
 import { PlotFormErrors } from "../components/form/plot-form";
+import { RoomFormErrors } from "../components/form/room-form";
 import { Address } from "../model/address";
 import { Apartment } from "../model/apartment";
 import { Client } from "../model/client";
@@ -12,6 +13,7 @@ import { FormState } from "../model/form-state";
 import { House } from "../model/house";
 import { Photo } from "../model/photo";
 import { Plot } from "../model/plot";
+import { Room } from "../model/room";
 import api from "./api";
 
 export class ApplicationService {
@@ -30,8 +32,12 @@ export class ApplicationService {
     next();
   }
 
-  static async persistAddress(address: FormState<Address, AddressFormErrors>, next: () => void) {
-    const response = await api.post("/addresses", address.fields);
+  static async persistAddress(
+    address: FormState<Address, AddressFormErrors>,
+    next: () => void,
+    isFull: boolean = false
+  ) {
+    const response = await api.post("/addresses" + (isFull ? "?fields=full" : ""), address.fields);
 
     if (response.status === 422) {
       address.setErrors(response.data.errors);
@@ -60,7 +66,8 @@ export class ApplicationService {
     applicable:
       | FormState<Plot, PlotFormErrors>
       | FormState<House, HouseFormErrors>
-      | FormState<Apartment, ApartmentFormErrors>,
+      | FormState<Apartment, ApartmentFormErrors>
+      | FormState<Room, RoomFormErrors>,
     next: () => void
   ) {
     const response = await api.post(subRoute, applicable.fields);

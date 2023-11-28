@@ -12,6 +12,8 @@ use App\Http\Controllers\HouseController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\PlotApplicationController;
 use App\Http\Controllers\PlotController;
+use App\Http\Controllers\RoomApplicationController;
+use App\Http\Controllers\RoomController;
 use App\Services\DropOptionsService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -59,6 +61,13 @@ Route::group(["middleware" => "auth:sanctum"], function () {
             Route::put("/{id}", [ApartmentApplicationController::class, "update"]);
             Route::get("/{id}", [ApartmentApplicationController::class, "show"]);
         });
+
+        Route::group(["prefix" => "rooms"], function () {
+            Route::post("/", [RoomApplicationController::class, "store"]);
+            Route::get("/", [RoomApplicationController::class, "index"]);
+            Route::put("/{id}", [RoomApplicationController::class, "update"]);
+            Route::get("/{id}", [RoomApplicationController::class, "show"]);
+        });
     });
 
     Route::post("/addresses", [AddressController::class, "persist"]);
@@ -69,6 +78,8 @@ Route::group(["middleware" => "auth:sanctum"], function () {
 
     Route::post("/apartments", [ApartmentController::class, "persist"]);
 
+    Route::post("/rooms", [RoomController::class, "persist"]);
+
     Route::post("applications/check-validity", [ApplicationController::class, "checkValidity"]);
 
     Route::group(["prefix" => "options"], function () {
@@ -76,7 +87,8 @@ Route::group(["middleware" => "auth:sanctum"], function () {
         Route::get("/contract", [DropOptionController::class, "forContract"]);
         Route::get("/plot", [DropOptionController::class, "forPlot"]);
         Route::get("/house", [DropOptionController::class, "forHouse"]);
-        Route::get("/apartments", [DropOptionController::class, "forApartment"]);
+        Route::get("/apartment", [DropOptionController::class, "forApartment"]);
+        Route::get("/room", [DropOptionController::class, "forRoom"]);
     });
 
     Route::group(["prefix" => "photos"], function () {

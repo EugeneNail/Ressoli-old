@@ -5,6 +5,7 @@ export class Address {
   typeOfStreet: string = "";
   street: string = "";
   houseNumber: string = "";
+  apartmentNumber: string = "";
   label: string = "";
   position: string = "";
 }

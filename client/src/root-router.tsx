@@ -17,6 +17,10 @@ import ApartmentsPage from "./pages/application/apartment/apartments-page";
 import ApartmentPage from "./pages/application/apartment/apartment-page";
 import CreateApartmentPage from "./pages/application/apartment/create-apartment-page";
 import EditApartmentPage from "./pages/application/apartment/edit-apartment-page";
+import CreateRoomPage from "./pages/application/room/create-room-page";
+import EditRoomPage from "./pages/application/room/edit-room-page";
+import RoomPage from "./pages/application/room/room-page";
+import RoomsPage from "./pages/application/room/rooms-page";
 
 function RootRouter() {
   useEffect(() => {}, []);
@@ -55,6 +59,12 @@ function RootRouter() {
             <Route path="/apartments/:id" element={<ApartmentPage />} />
             <Route path="/apartments/new" element={<CreateApartmentPage />} />
             <Route path="/apartments/:id/edit" element={<EditApartmentPage />} />
+          </Route>
+          <Route path="/rooms">
+            <Route path="/rooms" element={<RoomsPage />} />
+            <Route path="/rooms/:id" element={<RoomPage />} />
+            <Route path="/rooms/new" element={<CreateRoomPage />} />
+            <Route path="/rooms/:id/edit" element={<EditRoomPage />} />
           </Route>
           <Route path="/apartments" element={null} />
           <Route path="/rooms" element={null} />

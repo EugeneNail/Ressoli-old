@@ -34,6 +34,7 @@ class ApplicationResource extends JsonResource {
                 "typeOfStreet" => $this->address->type_of_street,
                 "street" => $this->address->street,
                 "houseNumber" => $this->address->house_number,
+                "apartmentNumber" => $this->address->apartment_number,
                 "label" => $this->address->label,
                 "position" => $this->address->position
             ],

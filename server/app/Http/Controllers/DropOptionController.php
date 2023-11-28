@@ -35,4 +35,8 @@ class DropOptionController extends Controller {
     public function forApartment() {
         return new JsonResponse($this->options->forApartment(), Response::HTTP_OK);
     }
+
+    public function forRoom() {
+        return new JsonResponse($this->options->forRoom(), Response::HTTP_OK);
+    }
 }

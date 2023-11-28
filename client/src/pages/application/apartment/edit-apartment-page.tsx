@@ -22,7 +22,7 @@ import { Apartment } from "../../../model/apartment";
 function EditApartmentPage() {
   const client = useFormState(new Client(), new ClientFormErrors());
   const address = useFormState(new Address(), new AddressFormErrors());
-  const house = useFormState(new Apartment(), new ApartmentFormErrors());
+  const apartment = useFormState(new Apartment(), new ApartmentFormErrors());
   const [photos, setPhotos] = useState<Photo[]>([]);
   const contract = useFormState(new Contract(), new ContractFormErrors());
   const [isLoading, setLoading] = useState(false);
@@ -32,7 +32,7 @@ function EditApartmentPage() {
     api.get<Application<Apartment>>("/applications/apartments/" + id).then(({ data }) => {
       client.setData(data.client);
       address.setData(data.address);
-      house.setData(data.applicable);
+      apartment.setData(data.applicable);
       setPhotos(data.photos);
       contract.setData(data.contract);
       setLoading(false);
@@ -44,11 +44,11 @@ function EditApartmentPage() {
   }
 
   function addressSubmit() {
-    ApplicationService.persistAddress(address, next);
+    ApplicationService.persistAddress(address, next, true);
   }
 
   function applicableSubmit() {
-    ApplicationService.persistApplicable("/apartments", house, next);
+    ApplicationService.persistApplicable("/apartments", apartment, next);
   }
 
   async function edit() {
@@ -58,7 +58,7 @@ function EditApartmentPage() {
         parseFloat(id as string),
         client.fields.id,
         address.fields.id,
-        house.fields.id,
+        apartment.fields.id,
         photos,
         contract.fields
       );
@@ -67,8 +67,8 @@ function EditApartmentPage() {
 
   const { steps, back, next, currentStep, goTo } = useMultiStepForm([
     <ClientForm submit={clientSubmit} state={client} />,
-    <AddressForm back={() => back()} submit={addressSubmit} state={address} />,
-    <ApartmentForm back={() => back()} submit={applicableSubmit} state={house} />,
+    <AddressForm full back={() => back()} submit={addressSubmit} state={address} />,
+    <ApartmentForm back={() => back()} submit={applicableSubmit} state={apartment} />,
     <PhotoForm back={() => back()} submit={() => next()} state={[photos, setPhotos]} />,
     <ContractForm back={() => back()} submit={edit} state={contract} />,
   ]);

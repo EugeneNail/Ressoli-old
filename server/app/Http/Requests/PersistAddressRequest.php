@@ -7,6 +7,7 @@ use App\Rules\AddressNumberRule;
 use App\Rules\StreetRule;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 
 class PersistAddressRequest extends FormRequest {
     /**
@@ -21,7 +22,13 @@ class PersistAddressRequest extends FormRequest {
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(Rules $rules): array {
-        return $rules->forAddress();
+    public function rules(Rules $rules, Request $request): array {
+        $addressRules = $rules->forAddress();
+
+        if ($request->fields === "full") {
+            $addressRules["apartmentNumber"] = ["required", new AddressNumberRule()];
+        }
+
+        return $addressRules;
     }
 }

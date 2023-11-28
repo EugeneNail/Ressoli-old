@@ -1,8 +1,9 @@
 import { ShortApartment } from "./short-apartment";
 import { ShortHouse } from "./short-house";
 import { ShortPlot } from "./short-plot";
+import { ShortRoom } from "./short-room";
 
-export class ShortApplication<T extends ShortHouse | ShortPlot | ShortApartment> {
+export class ShortApplication<T extends ShortHouse | ShortPlot | ShortApartment | ShortRoom> {
   id: number = 0;
   preview: string = "";
   contract: string = "";

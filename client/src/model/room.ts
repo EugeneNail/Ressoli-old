@@ -1,0 +1,19 @@
+export class Room {
+  id: number = 0;
+  hasWater: boolean = false;
+  hasGas: boolean = false;
+  hasElectricity: boolean = false;
+  hasSewer: boolean = false;
+  hasHotWater: boolean = false;
+  hasHeating: boolean = false;
+  hasElevator: boolean = false;
+  hasGarbageChute: boolean = false;
+  walls: string = "";
+  condition: string = "";
+  bath: string = "";
+  toilet: string = "";
+  levelCount: number = 0;
+  level: number = 0;
+  area: number = 0;
+  ceiling: number = 0;
+}

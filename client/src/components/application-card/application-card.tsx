@@ -8,11 +8,13 @@ import {
   faCar,
   faDroplet,
   faFire,
-  faKaaba,
+  faLayerGroup,
   faLocationDot,
   faMap,
   faMaximize,
   faRuble,
+  faShower,
+  faTemperatureHigh,
 } from "@fortawesome/free-solid-svg-icons";
 import { ShortApplication } from "../../model/short-application/short-application";
 import { env } from "../../env";
@@ -21,9 +23,10 @@ import { ShortHouse } from "../../model/short-application/short-house";
 import { ShortPlot } from "../../model/short-application/short-plot";
 import { compareTypes } from "../../service/compareTypes";
 import { ShortApartment } from "../../model/short-application/short-apartment";
+import { ShortRoom } from "../../model/short-application/short-room";
 
 type ApplicationCardProps = {
-  application: ShortApplication<ShortPlot | ShortHouse | ShortApartment>;
+  application: ShortApplication<ShortRoom | ShortPlot | ShortHouse | ShortApartment>;
 };
 
 function ApplicationCard({
@@ -62,7 +65,18 @@ function ApplicationCard({
         <>
           <ApplicationCardInfo icon={faBed} value={applicable.roomCount} />
           {applicable.hasGarage && <ApplicationCardInfo icon={faCar} />}
-          {applicable.hasBalcony && <ApplicationCardInfo icon={faKaaba} />}
+          <ApplicationCardInfo icon={faLayerGroup} value={`${applicable.level}/${applicable.levelCount}`} />
+        </>
+      );
+    }
+
+    if (compareTypes(applicable, new ShortRoom())) {
+      applicable = applicable as ShortRoom;
+      return (
+        <>
+          <ApplicationCardInfo icon={faLayerGroup} value={`${applicable.level}/${applicable.levelCount}`} />
+          {applicable.hasHeating && <ApplicationCardInfo icon={faTemperatureHigh} />}
+          {applicable.hasBath && <ApplicationCardInfo icon={faShower} />}
         </>
       );
     }

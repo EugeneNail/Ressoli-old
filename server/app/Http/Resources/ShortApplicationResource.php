@@ -6,6 +6,7 @@ use App\Models\Apartment;
 use App\Models\House;
 use App\Models\Photo;
 use App\Models\Plot;
+use App\Models\Room;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -54,7 +55,17 @@ class ShortApplicationResource extends JsonResource {
             return [
                 "roomCount" => $this->applicable->room_count,
                 "hasGarage" => $this->applicable->has_garage,
-                "hasBalcony" => $this->applicable->has_balcony || $this->applicable->has_loggia
+                "level" => $this->applicable->level,
+                "levelCount" => $this->applicable->level_count,
+            ];
+        }
+
+        if ($this->applicable_type === Room::class) {
+            return [
+                "hasHeating" => $this->applicable->has_heating,
+                "level" => $this->applicable->level,
+                "levelCount" => $this->applicable->level_count,
+                "hasBath" => $this->applicable->bath != "Нет"
             ];
         }
     }

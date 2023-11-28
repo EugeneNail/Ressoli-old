@@ -6,8 +6,6 @@ import useMultiStepForm from "../../../service/use-multi-step-form";
 import AddressForm, { AddressFormErrors } from "../../../components/form/address-form";
 import { Address } from "../../../model/address";
 import useFormState from "../../../service/use-form-state";
-import PlotForm, { PlotFormErrors } from "../../../components/form/plot-form";
-import { Plot } from "../../../model/plot";
 import PhotoForm from "../../../components/form/photo-form";
 import ContractForm, { ContractFormErrors } from "../../../components/form/contract-form";
 import { Photo } from "../../../model/photo";
@@ -18,21 +16,23 @@ import api from "../../../service/api";
 import { useParams } from "react-router";
 import { Application } from "../../../model/application";
 import Spinner from "../../../components/spinner/spinner";
+import { Room } from "../../../model/room";
+import RoomForm, { RoomFormErrors } from "../../../components/form/room-form";
 
-function EditPlotPage() {
+function EditRoomPage() {
   const client = useFormState(new Client(), new ClientFormErrors());
   const address = useFormState(new Address(), new AddressFormErrors());
-  const plot = useFormState(new Plot(), new PlotFormErrors());
+  const room = useFormState(new Room(), new RoomFormErrors());
   const [photos, setPhotos] = useState<Photo[]>([]);
   const contract = useFormState(new Contract(), new ContractFormErrors());
   const [isLoading, setLoading] = useState(false);
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
-    api.get<Application<Plot>>("/applications/plots/" + id).then(({ data }) => {
+    api.get<Application<Room>>("/applications/rooms/" + id).then(({ data }) => {
       client.setData(data.client);
       address.setData(data.address);
-      plot.setData(data.applicable);
+      room.setData(data.applicable);
       setPhotos(data.photos);
       contract.setData(data.contract);
       setLoading(false);
@@ -44,21 +44,21 @@ function EditPlotPage() {
   }
 
   function addressSubmit() {
-    ApplicationService.persistAddress(address, next);
+    ApplicationService.persistAddress(address, next, true);
   }
 
   function applicableSubmit() {
-    ApplicationService.persistApplicable("/plots", plot, next);
+    ApplicationService.persistApplicable("/rooms", room, next);
   }
 
   async function edit() {
     if (await ApplicationService.checkContractValidity(contract)) {
       ApplicationService.editApplication(
-        "/plots",
+        "/rooms",
         parseFloat(id as string),
         client.fields.id,
         address.fields.id,
-        plot.fields.id,
+        room.fields.id,
         photos,
         contract.fields
       );
@@ -67,10 +67,10 @@ function EditPlotPage() {
 
   const { steps, back, next, currentStep, goTo } = useMultiStepForm([
     <ClientForm submit={clientSubmit} state={client} />,
-    <AddressForm label="Номер участка" back={() => back()} submit={addressSubmit} state={address} />,
-    <PlotForm back={() => back()} submit={applicableSubmit} state={plot} />,
+    <AddressForm full back={() => back()} submit={addressSubmit} state={address} />,
+    <RoomForm back={() => back()} submit={applicableSubmit} state={room} />,
     <PhotoForm back={() => back()} submit={() => next()} state={[photos, setPhotos]} />,
-    <ContractForm back={() => back()} submit={edit} willCreate state={contract} />,
+    <ContractForm back={() => back()} submit={edit} state={contract} />,
   ]);
 
   return (
@@ -95,4 +95,4 @@ function EditPlotPage() {
   );
 }
 
-export default EditPlotPage;
+export default EditRoomPage;

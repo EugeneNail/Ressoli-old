@@ -1,7 +1,7 @@
 import { ChangeEvent } from "react";
 import "./inputbox.sass";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { IconDefinition, faCheck, faDroplet } from "@fortawesome/free-solid-svg-icons";
+import { IconDefinition, faCheck } from "@fortawesome/free-solid-svg-icons";
 import classNames from "classnames";
 
 type CheckboxProps = {
