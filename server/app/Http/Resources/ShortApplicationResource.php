@@ -22,7 +22,7 @@ class ShortApplicationResource extends JsonResource {
 
         return [
             "id" => $this->id,
-            "preview" => $this->photos[0]->path ?? Photo::find(1)->path,
+            "preview" => count($this->photos) ? $this->photos[0]->path : "blank-plot.jpg",
             "contract" => $this->contract,
             "city" => $address->city,
             "street" => $address->street,
