@@ -51,6 +51,16 @@ export function Numeric({
     adjustRepeatedly(-1);
   }
 
+  function adjustRepeatedly(vector: -1 | 1) {
+    adjustByStep(vector);
+    intervalRef.current = setInterval(() => adjustByStep(vector), 100);
+
+    timeoutRef.current = setTimeout(() => {
+      clearInterval(intervalRef.current);
+      intervalRef.current = setInterval(() => adjustByStep(vector), 33);
+    }, 2000);
+  }
+
   function adjustByStep(vector: -1 | 1) {
     const { current: input } = ref;
     const initialValue: number = input.value.length > 0 ? parseFloat(input.value) : 0;
@@ -61,16 +71,6 @@ export function Numeric({
     }
 
     input.value = newValue.toFixed(precision).toString();
-  }
-
-  function adjustRepeatedly(vector: -1 | 1) {
-    adjustByStep(vector);
-    intervalRef.current = setInterval(() => adjustByStep(vector), 100);
-
-    timeoutRef.current = setTimeout(() => {
-      clearInterval(intervalRef.current);
-      intervalRef.current = setInterval(() => adjustByStep(vector), 33);
-    }, 2000);
   }
 
   function resetActions() {

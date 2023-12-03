@@ -91,12 +91,22 @@ input[type=number]
     &__button
 
     &__helper-text
-        margin-top: 0.3rem
+        display: flex
+        gap: .5rem
+        align-items: center
+        margin-top: 0.5rem
         margin-left: 1rem
         font-size: 1.2rem
 
-    &.invalid &__helper-text
+    &.invalid &__helper-text,
+    &.invalid &__helper-text *
         color: $invalid !important
+
+    &__helper-icon
+        align-self: start
+        font-size: 1.4rem
+        color: #007bff
+        font-variation-settings: "FILL" 1
 
 .dropdown
 
