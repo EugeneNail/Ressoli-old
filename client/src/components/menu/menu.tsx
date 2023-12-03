@@ -1,10 +1,23 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import "./menu.sass";
 import { MenuLink } from "./menu-link";
 import { MenuUser } from "./menu-user";
+import { StorageUser } from "../../model/storage-user";
+import api from "../../service/api";
 
 export function Menu() {
-  function logout() {}
+  const navigate = useNavigate();
+
+  async function logout() {
+    const { status } = await api.post("/logout");
+    if (status === 200 || status === 401) {
+      const user = new StorageUser();
+      user.name = "";
+      user.image = "";
+      user.token = "";
+      navigate("/login");
+    }
+  }
 
   return (
     <aside className="menu">

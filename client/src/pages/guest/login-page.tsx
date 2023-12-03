@@ -2,6 +2,7 @@ import api from "../../service/api";
 import { useNavigate } from "react-router";
 import LoginForm, { LoginFormErrors } from "../../components/form/login-form";
 import { useErrors } from "../../service/use-errors";
+import { StorageUser } from "../../model/storage-user";
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -18,9 +19,11 @@ function LoginPage() {
     }
 
     api.get("/csrf");
-    localStorage.setItem("access_token", data.token);
-    localStorage.setItem("user_name", data.username);
-    localStorage.setItem("image_url", data.imageUrl);
+
+    const user = new StorageUser();
+    user.token = data.userToken;
+    user.image = data.userImageUrl;
+    user.name = data.userName;
     navigate("/");
   }
 

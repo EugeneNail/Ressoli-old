@@ -32,9 +32,9 @@ class AuthController extends Controller {
 
         $user = User::where("email", $request->email)->first();
         $userInfo = [
-            "username" => $user->name,
-            "imageUrl" => $user->image_url,
-            "token" => $user->createToken($request->ip())->plainTextToken
+            "userName" => $user->name,
+            "userImageUrl" => $user->image_url,
+            "userToken" => $user->createToken($request->ip())->plainTextToken
         ];
 
         return response($userInfo, Response::HTTP_OK);
