@@ -1,18 +1,9 @@
-import { FormState } from "../../model/form-state";
-import { faUser, faEnvelope, faKey } from "@fortawesome/free-solid-svg-icons";
-import Passwordbox from "../inputbox/passwordbox";
-import Textbox from "../inputbox/textbox";
 import Button from "../button/button";
+import { FormEvent } from "react";
+import { Field } from "../custom-control/field";
+import { Errors } from "../../service/use-errors";
 
-class SignupFormFields {
-  name: string = "";
-  surname: string = "";
-  email: string = "";
-  password: string = "";
-  password_confirmation: string = "";
-}
-
-class SignupFormErrors {
+export class SignupFormErrors {
   name: string[] = [];
   surname: string[] = [];
   email: string[] = [];
@@ -21,68 +12,42 @@ class SignupFormErrors {
 }
 
 type SignupFormProps = {
-  submit: () => {};
-  state: FormState<SignupFormFields, SignupFormErrors>;
+  submit: (event: FormEvent) => {};
+  errors: Errors<SignupFormErrors>;
 };
 
-function SignupForm({ submit, state: { fields, errors, setField, clearFieldErrors } }: SignupFormProps) {
+function SignupForm({ submit, errors }: SignupFormProps) {
   return (
-    <form action="" className="form">
-      <h1 className="form__header">Регистрация</h1>
+    <form action="" onSubmit={submit} className="form">
+      <h1 className="form__header">Signup</h1>
       <div className="form__input-group">
-        <Textbox
-          value={fields.name}
-          label="Имя"
-          name="name"
-          onChange={setField}
-          icon={faUser}
-          errors={errors.name}
-          clearErrors={clearFieldErrors}
-        />
-        <Textbox
-          value={fields.surname}
-          label="Фамилия"
-          name="surname"
-          onChange={setField}
-          icon={faUser}
-          errors={errors.surname}
-          clearErrors={clearFieldErrors}
-        />
-        <Textbox
-          value={fields.email}
-          label="Электронная почта"
-          name="email"
-          onChange={setField}
-          icon={faEnvelope}
-          errors={errors.email}
-          clearErrors={clearFieldErrors}
-        />
-        <Passwordbox
-          value={fields.password}
-          label="Пароль"
+        <Field label="Email address" name="email" icon="mail" errors={errors.values.email} resetError={errors.reset} />
+        <Field label="Name" name="name" icon="person" errors={errors.values.name} resetError={errors.reset} />
+        <Field label="Surname" name="surname" icon="person" errors={errors.values.surname} resetError={errors.reset} />
+        <Field
+          label="Password"
           name="password"
-          onChange={setField}
-          icon={faKey}
-          errors={errors.password}
-          clearErrors={clearFieldErrors}
+          icon="lock"
+          password
+          errors={errors.values.password}
+          resetError={errors.reset}
         />
-        <Passwordbox
-          value={fields.password_confirmation}
-          label="Повторите пароль"
+        <Field
+          label="Confirm password"
           name="password_confirmation"
-          onChange={setField}
-          icon={faKey}
-          errors={errors.password_confirmation}
-          clearErrors={clearFieldErrors}
+          icon="lock"
+          password
+          errors={errors.values.password_confirmation}
+          resetError={errors.reset}
         />
       </div>
       <div className="form__button-group">
-        <Button style="filled" wide text="Создать аккаунт" action={() => submit()} />
+        <Button style="filled" wide text="Signup" />
       </div>
       <p className="guest__message">
-        Уже есть аккаунт?
+        Already have an account?
         <a href="/login" className="guest__link">
-          Войти
+          Login
         </a>
       </p>
     </form>

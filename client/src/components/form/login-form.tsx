@@ -1,13 +1,8 @@
 import Button from "../button/button";
-import { FormState } from "../../model/form-state";
-import { faEnvelope, faKey } from "@fortawesome/free-solid-svg-icons";
-import Passwordbox from "../inputbox/passwordbox";
-import Textbox from "../inputbox/textbox";
-
-export class LoginFormFields {
-  email: string = "";
-  password: string = "";
-}
+import { Field } from "../custom-control/field";
+import { Errors } from "../../service/use-errors";
+import { FormEvent } from "react";
+import "./form.sass";
 
 export class LoginFormErrors {
   email: string[] = [];
@@ -15,41 +10,33 @@ export class LoginFormErrors {
 }
 
 type LoginFormProps = {
-  submit: () => void;
-  state: FormState<LoginFormFields, LoginFormErrors>;
+  submit: (event: FormEvent) => void;
+  errors: Errors<LoginFormErrors>;
 };
 
-function LoginForm({ submit, state: { fields, errors, setField, clearFieldErrors } }: LoginFormProps) {
+function LoginForm({ submit, errors }: LoginFormProps) {
   return (
-    <form action="" className="form">
-      <h1 className="form__header">Вход</h1>
+    <form action="" onSubmit={submit} className="form">
+      <h1 className="form__header">Login</h1>
       <div className="form__input-group">
-        <Textbox
-          value={fields.email}
-          label="Электронная почта"
-          name="email"
-          onChange={setField}
-          icon={faEnvelope}
-          errors={errors.email}
-          clearErrors={clearFieldErrors}
-        />
-        <Passwordbox
-          value={fields.password}
-          label="Пароль"
+        <Field icon="mail" label="Email" name="email" errors={errors.values.email} resetError={errors.reset} />
+        <Field
+          icon="lock"
+          helperText={errors.values.password?.[0]}
+          label="Password"
           name="password"
-          onChange={setField}
-          icon={faKey}
-          errors={errors.password}
-          clearErrors={clearFieldErrors}
+          password
+          errors={errors.values.password}
+          resetError={errors.reset}
         />
       </div>
       <div className="form__button-group">
-        <Button style="filled" wide action={submit} text="Войти" />
+        <Button style="filled" wide text="Login" />
       </div>
       <p className="form__message">
-        Еще нет аккаунта?
+        Don't have an account?
         <a href="/signup" className="form__link">
-          Зарегистрироваться
+          Signup
         </a>
       </p>
     </form>

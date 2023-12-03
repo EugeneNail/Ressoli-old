@@ -82,7 +82,7 @@ export function Numeric({
     <div className={classNames("control", { invalid: isInvalid }, { active: isActive })}>
       <label htmlFor={name} className="control__main-area" onMouseLeave={resetActions}>
         <div className="control__icon-container">
-          <span className="control__icon material-symbols-outlined">{icon}</span>
+          <span className="control__icon material-symbols-rounded">{icon}</span>
         </div>
         <p className="control__label">{label}</p>
         <input
@@ -98,10 +98,10 @@ export function Numeric({
           onBlur={handleBlur}
         />
         <div className="control__button control__icon-container" onMouseDown={add} onMouseUp={resetActions}>
-          <span className="control__icon material-symbols-outlined">add</span>
+          <span className="control__icon material-symbols-rounded">add</span>
         </div>
         <div className="control__button control__icon-container" onMouseDown={remove} onMouseUp={resetActions}>
-          <span className="control__icon material-symbols-outlined">remove</span>
+          <span className="control__icon material-symbols-rounded">remove</span>
         </div>
       </label>
       <HelperText errors={errors} text={helperText} />

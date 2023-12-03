@@ -38,7 +38,7 @@ export function Dropdown({
     <div className={classNames("control", { active: isActive }, { invalid: isInvalid })}>
       <label htmlFor={name} className="control__main-area dropdown">
         <div className="control__icon-container">
-          <span className="control__icon material-symbols-outlined">{icon}</span>
+          <span className="control__icon material-symbols-rounded">{icon}</span>
         </div>
         <select
           onBlur={handleBlur}
@@ -58,7 +58,7 @@ export function Dropdown({
         </select>
         <p className="control__label">{label}</p>
         <div className="control__button control__icon-container">
-          <span className="control__icon dropdown__icon affected material-symbols-outlined">expand_more</span>
+          <span className="control__icon dropdown__icon affected material-symbols-rounded">expand_more</span>
         </div>
       </label>
       <HelperText errors={errors} text={helperText} />

@@ -17,7 +17,7 @@ export function Checkbox({ label, name, checked = false }: CheckboxProps) {
   return (
     <label htmlFor={name} className="checkbox">
       <div className="checkbox__square">
-        <span className="checkbox__icon material-symbols-outlined">check</span>
+        <span className="checkbox__icon material-symbols-rounded">check</span>
       </div>
       <input ref={ref} name={name} id={name} type="checkbox" className="checkbox__input" />
       <p className="checkbox__label">{label}</p>

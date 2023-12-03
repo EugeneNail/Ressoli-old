@@ -1,17 +1,17 @@
 @import ../../_variables
 
 .form
+    padding: 2rem
+    background: $background-main
     display: flex
     flex-direction: column
     border-radius: 10px
-    width: 300px
-
-    &_photo
-        width: calc(100vw - 260px)
+    width: 350px
 
     &__header
+        margin-top: 1rem
         color: $font-strong
-        text-transform: uppercase
+        text-align: center
         font-weight: 900
 
     &__subtext
@@ -25,81 +25,22 @@
         gap: 1.8rem
         flex-direction: column
 
-    &__photos
-        // Костыль, чтобы в хроме не лагало во время скролла галереи
-        backface-visibility: hidden
-        transform: translate3d(0,0,0)
-        //----------------------------------------------------------
-        margin-top: 5rem
-        width: 100%
-        display: grid
-        gap: 2rem
-        grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr))
-
-    &__photo-container
-        position: relative
-        border-radius: 1rem
-        overflow: hidden
-        border: 1px solid $border
-        aspect-ratio: 1 / 1
-
-    &__photo
-        width: 100%
-        height: 100%
-        object-fit: cover
-
-    &__photo-icon
-        position: absolute
-        left: 50%
-        transform: translateX(-50%)
-        bottom: 3rem
-        z-index: 1
-        cursor: pointer
-        font-size: 8rem
-        color: transparentize(white, 0.4)
-        display: none
-
-        &:hover
-            color: transparentize(white, 0.15)
-
-    &__photo-container:hover &__photo-icon
-        display: block
-
     &__button-group
-        margin-top: 7rem
+        margin-top: 5rem
         display: grid
         grid-auto-flow: column
         gap: 2rem
         grid-template-columns: repeat(auto-fit, 1fr)
 
     &__message
-        display: block
-        border-top: 1px solid $input-bd
-        margin-top: 3rem
-        padding-top: 2rem
-        font-size: 1.2rem
         text-align: center
+        font-size: 1.2rem
+        margin-top: 3rem
+        border-top: 1px solid $border
+        padding-top: 2rem
 
     &__link
         margin-left: 0.5rem
-        cursor: pointer
-        color: $accent
 
         &:hover
             text-decoration: underline
-
-.form-container:has(.address-form)
-    width: calc(20rem + 25%)
-
-.address-form
-    width: 100%
-
-    &__city-group
-        display: grid
-        grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr))
-        gap: 1rem
-
-    &__street-group
-        display: grid
-        grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr))
-        gap: 1rem

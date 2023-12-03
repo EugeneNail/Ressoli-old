@@ -1,34 +1,20 @@
-import useFormState from "../../service/use-form-state";
-import api from "../../service/api";
 import { useNavigate } from "react-router";
-import SignupForm from "../../components/form/signup-form";
-
-class SignupFormFields {
-  name: string = "";
-  surname: string = "";
-  email: string = "";
-  password: string = "";
-  password_confirmation: string = "";
-}
-
-class SignupFormErrors {
-  name: string[] = [];
-  surname: string[] = [];
-  email: string[] = [];
-  password: string[] = [];
-  password_confirmation: string[] = [];
-}
+import SignupForm, { SignupFormErrors } from "../../components/form/signup-form";
+import { useErrors } from "../../service/use-errors";
+import { FormEvent } from "react";
+import api from "../../service/api";
 
 function SignupPage() {
   const navigate = useNavigate();
-  const signup = useFormState(new SignupFormFields(), new SignupFormErrors());
+  const errors = useErrors(new SignupFormErrors());
 
-  async function submit() {
-    const response = await api.post("/signup", signup.fields);
-    const data = response.data;
+  async function submit(event: FormEvent) {
+    event.preventDefault();
+    const payload = new FormData(event.target as HTMLFormElement);
+    const { data, status } = await api.post("/signup", payload);
 
-    if (response.status === 422 || response.status === 409) {
-      signup.setErrors(data.errors);
+    if (status === 422 || status == 409) {
+      errors.set(data.errors);
       return;
     }
 
@@ -39,7 +25,7 @@ function SignupPage() {
     navigate("/");
   }
 
-  return <SignupForm state={signup} submit={submit} />;
+  return <SignupForm submit={submit} errors={errors} />;
 }
 
 export default SignupPage;

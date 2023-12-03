@@ -5,13 +5,11 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
 
-class SignupRequest extends FormRequest
-{
+class SignupRequest extends FormRequest {
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
-    {
+    public function authorize(): bool {
         return true;
     }
 
@@ -20,8 +18,7 @@ class SignupRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
-    {
+    public function rules(): array {
         return [
             "name" => "required|alpha",
             "surname" => "required|alpha",
@@ -34,7 +31,7 @@ class SignupRequest extends FormRequest
     public function messages(): array {
         return [
             "name.required" => "Как Вас зовут?",
-            "password_confirmation.same" => "Пароли не совпадают", 
+            "password_confirmation.same" => "Пароли не совпадают",
         ];
     }
 }

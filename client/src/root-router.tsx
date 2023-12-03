@@ -4,23 +4,6 @@ import LoginPage from "./pages/guest/login-page";
 import SignupPage from "./pages/guest/signup-page";
 import DefaultLayout from "./layouts/default-layout/default-layout";
 import { useEffect } from "react";
-import ProtectedRoute from "./protected-route";
-import PlotPage from "./pages/application/plot/plot-page";
-import CreatePlotPage from "./pages/application/plot/create-plot-page";
-import PlotsPage from "./pages/application/plot/plots-page";
-import EditPlotPage from "./pages/application/plot/edit-plot-page";
-import CreateHousePage from "./pages/application/house/create-house-page";
-import HousesPage from "./pages/application/house/houses-page";
-import HousePage from "./pages/application/house/house-page";
-import EditHousePage from "./pages/application/house/edit-house-page";
-import ApartmentsPage from "./pages/application/apartment/apartments-page";
-import ApartmentPage from "./pages/application/apartment/apartment-page";
-import CreateApartmentPage from "./pages/application/apartment/create-apartment-page";
-import EditApartmentPage from "./pages/application/apartment/edit-apartment-page";
-import CreateRoomPage from "./pages/application/room/create-room-page";
-import EditRoomPage from "./pages/application/room/edit-room-page";
-import RoomPage from "./pages/application/room/room-page";
-import RoomsPage from "./pages/application/room/rooms-page";
 
 function RootRouter() {
   useEffect(() => {}, []);
@@ -32,17 +15,10 @@ function RootRouter() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
         </Route>
-        <Route
-          path="/"
-          element={
-            <ProtectedRoute>
-              <DefaultLayout />
-            </ProtectedRoute>
-          }
-        >
+        <Route path="/" element={<DefaultLayout />}>
           <Route path="" element={<Navigate to={"/houses"} />} />
           <Route path="/houses" element={null} />
-          <Route path="/plots">
+          {/* <Route path="/plots">
             <Route path="/plots" element={<PlotsPage />} />
             <Route path="/plots/new" element={<CreatePlotPage />} />
             <Route path="/plots/:id" element={<PlotPage />} />
@@ -65,7 +41,7 @@ function RootRouter() {
             <Route path="/rooms/:id" element={<RoomPage />} />
             <Route path="/rooms/new" element={<CreateRoomPage />} />
             <Route path="/rooms/:id/edit" element={<EditRoomPage />} />
-          </Route>
+          </Route> */}
           <Route path="/apartments" element={null} />
           <Route path="/rooms" element={null} />
           <Route path="/clients" element={null} />

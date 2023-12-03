@@ -26,7 +26,7 @@ export function Field({ name, label, value = "", icon, helperText = "", password
     <div className={classNames("control", { invalid: isInvalid }, { active: isActive })}>
       <label htmlFor={name} className="control__main-area">
         <div className="control__icon-container">
-          <span className="control__icon material-symbols-outlined">{icon}</span>
+          <span className="control__icon material-symbols-rounded">{icon}</span>
         </div>
         <p className="control__label">{label}</p>
         <input
@@ -43,7 +43,7 @@ export function Field({ name, label, value = "", icon, helperText = "", password
         {password && (
           <>
             <div className="control__button control__icon-container" onClick={() => setVisible(!isVisible)}>
-              <span className="control__icon material-symbols-outlined">
+              <span className="control__icon material-symbols-rounded">
                 {isVisible ? "visibility_off" : "visibility"}
               </span>
             </div>

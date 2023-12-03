@@ -1,28 +1,19 @@
 import api from "../../service/api";
-import useFormState from "../../service/use-form-state";
 import { useNavigate } from "react-router";
-import LoginForm from "../../components/form/login-form";
-
-class LoginFormFields {
-  email: string = "";
-  password: string = "";
-}
-
-class LoginFormErrors {
-  email: string[] = [];
-  password: string[] = [];
-}
+import LoginForm, { LoginFormErrors } from "../../components/form/login-form";
+import { useErrors } from "../../service/use-errors";
 
 function LoginPage() {
   const navigate = useNavigate();
-  const login = useFormState(new LoginFormFields(), new LoginFormErrors());
+  const errors = useErrors(new LoginFormErrors());
 
-  async function submit() {
-    const response = await api.post("/login", login.fields);
-    const data = response.data;
+  async function submit(event: React.FormEvent) {
+    event.preventDefault();
+    const payload = new FormData(event.target as HTMLFormElement);
+    const { data, status } = await api.post("/login", payload);
 
-    if (response.status === 422 || response.status === 401) {
-      login.setErrors(data.errors);
+    if (status === 422 || status === 401) {
+      errors.set(data.errors);
       return;
     }
 
@@ -33,7 +24,7 @@ function LoginPage() {
     navigate("/");
   }
 
-  return <LoginForm submit={submit} state={login} />;
+  return <LoginForm submit={submit} errors={errors} />;
 }
 
 export default LoginPage;
