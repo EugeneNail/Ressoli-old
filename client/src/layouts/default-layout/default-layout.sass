@@ -2,8 +2,8 @@
 
 .default-layout
     display: grid
-    grid-template-columns: 20rem 1fr
-    grid-template-areas: "aside main"
+    grid-template-columns: 25rem 1fr
+    grid-template-areas: "menu main"
     width: 100vw
     height: 100vh
 
@@ -12,76 +12,3 @@
     overflow-y: auto
     grid-area: main
     display: grid
-
-.aside
-    background: white
-    grid-area: aside
-    display: grid
-    grid-template-rows: auto auto 1fr
-    flex-direction: column
-
-    &__logo
-        cursor: pointer
-        padding-left: 1.3rem
-        width: 100%
-        display: flex
-        align-items: center
-        gap: 1rem
-        margin-top: 1.4rem
-        margin-bottom: 4rem
-
-    &__image
-        width: 4.5rem
-        height: 4.5rem
-
-    &__name
-        font-size: 2.2rem
-        font-weight: bold
-
-    &__navigation
-        flex-direction: column
-        display: flex
-        gap: .5rem
-
-    &__logout
-        align-self: end
-        cursor: pointer
-        user-select: none
-        color: darken(red, 10%)
-        font-size: 1.6rem
-        height: 5rem
-        align-items: center
-        padding: 0 2.5rem
-        display: grid
-        grid-template-columns: 2rem 1fr
-        gap: 1.6rem
-
-        & *
-            transition: .3s
-
-.aside-link
-    font-size: 1.6rem
-    height: 5rem
-    align-items: center
-    padding: 0 2.5rem
-    display: grid
-    grid-template-columns: 2rem 1fr
-    gap: 2.2rem
-    color: $font-weak
-    transition: .3s
-
-    &:hover
-        padding-left: 3rem
-
-    &.active
-        font-weight: 900
-        color: $font-strong
-        background: transparentize($accent, 0.85)
-        border-right: 4px solid $accent
-
-    .active &__text
-        font-weight: 1000 !important
-
-    &__icon
-        justify-self: center
-        font-size: 2rem
