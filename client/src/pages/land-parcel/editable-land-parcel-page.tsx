@@ -10,6 +10,7 @@ import { TermsForm, TermsFormErrors } from "../../components/form/contract-form"
 import { EditableApplication } from "../../model/editable-application";
 import { PhotoForm } from "../../components/form/photo-form";
 import { Photo } from "../../model/photo";
+import Resizer from "react-image-file-resizer";
 
 export function EditableLandParcelPage() {
   const clientErrors = useErrors(new ClientFormErrors());
@@ -53,9 +54,16 @@ export function EditableLandParcelPage() {
 
     if (status === 422) {
       landParcelErrors.set(data.errors);
+      return;
     }
 
     application.applicableId = data;
+  }
+
+  function resizeFile(file: File) {
+    return new Promise((resolve) => {
+      Resizer.imageFileResizer(file, 2000, 1000, "JPEG", 100, 0, (uri) => resolve(uri), "blob");
+    });
   }
 
   async function uploadToServer(files: FileList) {
@@ -65,7 +73,8 @@ export function EditableLandParcelPage() {
     const allowedAmountOfFiles = Math.min(maximumAmountOfFiles - photos.length, files.length);
 
     for (let i = 0; i < allowedAmountOfFiles; i++) {
-      data.append("images[]", files[i]);
+      const file = (await resizeFile(files[i])) as File;
+      data.append("images[]", file);
     }
 
     const response = await api.post<Photo[]>("/photos/upload-temp", data);
@@ -95,6 +104,11 @@ export function EditableLandParcelPage() {
     event?.preventDefault();
     const payload = new FormData(event.target as HTMLFormElement);
     const { data, status } = await api.post("/applications/terms", payload);
+
+    if (status === 422) {
+      termsErrors.set(data.errors);
+      return;
+    }
   }
 
   return (
