@@ -1,19 +1,24 @@
 import "./button.sass";
-import { MouseEvent } from "react";
 import classNames from "classnames";
 import { Link } from "react-router-dom";
 
+export enum ButtonStyle {
+  primary = "primary",
+  secondary = "secondary",
+  tertiary = "tertiary",
+}
+
 type ButtonProps = {
   text?: string;
-  style: "filled" | "dotted";
+  style?: ButtonStyle;
   wide?: boolean;
   action?: () => void;
   className?: string;
   to?: string | number;
 };
 
-function Button({ text, style, wide, action, className, to }: ButtonProps) {
-  const classList = classNames("button", "button_" + style, { button_wide: wide }, className);
+function Button({ text, style = ButtonStyle.primary, wide, action, className, to }: ButtonProps) {
+  const classList = classNames("button", { wide: wide }, className, style);
 
   function handleClick() {
     action?.();

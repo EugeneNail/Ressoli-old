@@ -18,7 +18,7 @@
         height: 4.5rem
         padding: 0
 
-    &_filled
+    &.primary
         color: white
         background: $accent
 
@@ -28,7 +28,7 @@
         &:active
             background: darken($accent, 5%)
 
-    &_dotted
+    &.secondary
         border: 2px dotted $accent
         background: none
         color: $accent
@@ -36,5 +36,5 @@
         &:hover
             border: 2px solid $accent
 
-    &_wide
+    &.wide
         width: 100%
