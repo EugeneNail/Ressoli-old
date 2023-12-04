@@ -2,13 +2,14 @@
 
 namespace App\Http\Requests;
 
+use App\Models\LandParcel;
 use App\Models\Support\PlotOptions;
 use App\Rules\WordsRule;
 use App\Services\DropOptionsService;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class PersistPlotRequest extends FormRequest {
+class PersistLandParcelRequest extends FormRequest {
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -22,7 +23,7 @@ class PersistPlotRequest extends FormRequest {
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(DropOptionsService $dropOptionsService, WordsRule $wordsRule): array {
-        $options = $dropOptionsService->forPlot();
+        $options = $dropOptionsService->getFor(LandParcel::class);
 
         return [
             "water" => ["required", "string", $wordsRule, Rule::in($options["water"])],

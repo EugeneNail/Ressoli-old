@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\LandParcel;
 use App\Services\DropOptionsService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -24,8 +25,8 @@ class DropOptionController extends Controller {
         return new JsonResponse($this->options->forContract(), Response::HTTP_OK);
     }
 
-    public function forPlot() {
-        return new JsonResponse($this->options->forPlot(), Response::HTTP_OK);
+    public function forLandParcel() {
+        return new JsonResponse($this->options->getFor(LandParcel::class), Response::HTTP_OK);
     }
 
     public function forHouse() {

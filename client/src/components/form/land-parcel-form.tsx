@@ -1,7 +1,10 @@
+import { useEffect, useState } from "react";
 import { FormProps } from "../../model/form-props";
 import Button from "../button/button";
 import { Dropdown } from "../custom-control/dropdown";
 import { Numeric } from "../custom-control/numeric";
+import { LandParcelOptions } from "../../model/options/land-parcel-options";
+import api from "../../service/api";
 
 export class LandParcelFormErrors {
   gas: string[] = [];
@@ -14,16 +17,19 @@ export class LandParcelFormErrors {
 type LandParcelFormProps = FormProps<LandParcelFormErrors> & {};
 
 export function LandParcelForm({ submit, errors }: LandParcelFormProps) {
-  const test = ["First", "Second", "Third", "Fourth"];
+  const [options, setOptions] = useState(new LandParcelOptions());
+  useEffect(() => {
+    api.get<LandParcelOptions>("/options/land-parcel").then(({ data }) => setOptions(data));
+  }, []);
 
   return (
-    <form action="" className="form" onSubmit={submit}>
+    <form action="" method="POST" className="form" onSubmit={submit}>
       <div className="form__control-group">
         <Dropdown
           label="Water"
           name="water"
           icon="water_drop"
-          options={test}
+          options={options.water}
           errors={errors.values.water}
           resetError={errors.reset}
         />
@@ -31,7 +37,7 @@ export function LandParcelForm({ submit, errors }: LandParcelFormProps) {
           label="Gas"
           name="gas"
           icon="local_fire_department"
-          options={test}
+          options={options.gas}
           errors={errors.values.gas}
           resetError={errors.reset}
         />
@@ -39,7 +45,7 @@ export function LandParcelForm({ submit, errors }: LandParcelFormProps) {
           label="Electicity"
           name="electricity"
           icon="flash_on"
-          options={test}
+          options={options.electricity}
           errors={errors.values.electricity}
           resetError={errors.reset}
         />
@@ -47,7 +53,7 @@ export function LandParcelForm({ submit, errors }: LandParcelFormProps) {
           label="Sewer"
           name="sewer"
           icon="water_pump"
-          options={test}
+          options={options.sewer}
           errors={errors.values.sewer}
           resetError={errors.reset}
         />

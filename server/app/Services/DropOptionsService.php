@@ -13,6 +13,17 @@ class DropOptionsService {
         return collect($name)->map(fn ($item) => $item->value);
     }
 
+    public function getFor(string $type) {
+        $options = DB::table("drop_options")
+            ->where("type", $type)
+            ->select(["name", "value"])
+            ->get()
+            ->groupBy(["name"])
+            ->map(fn ($typeObject) => $this->simplify($typeObject));
+
+        return $options;
+    }
+
     public function forAddress() {
         $options = DB::table("drop_options")
             ->where("type", "address")

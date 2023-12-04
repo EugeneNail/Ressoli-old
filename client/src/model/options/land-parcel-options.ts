@@ -1,4 +1,4 @@
-export class PlotOptions {
+export class LandParcelOptions {
   water: string[] = [];
   gas: string[] = [];
   electricity: string[] = [];
