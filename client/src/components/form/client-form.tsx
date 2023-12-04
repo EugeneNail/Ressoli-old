@@ -1,9 +1,8 @@
-import Textbox from "../inputbox/textbox";
-import Button from "../button/button";
+import { FormEvent } from "react";
 import "./form.sass";
-import { FormState } from "../../model/form-state";
-import { faPhone, faUser } from "@fortawesome/free-solid-svg-icons";
-import { Client } from "../../model/client";
+import { Field } from "../custom-control/field";
+import { Errors } from "../../service/use-errors";
+import Button from "../button/button";
 
 export class ClientFormErrors {
   name: string[] = [];
@@ -12,48 +11,33 @@ export class ClientFormErrors {
 }
 
 type ClientFormProps = {
-  submit: () => void;
-  state: FormState<Client, ClientFormErrors>;
+  submit: (event: FormEvent) => void;
+  errors: Errors<ClientFormErrors>;
 };
 
-function ClientForm({ submit, state: { fields, errors, setField, clearFieldErrors } }: ClientFormProps) {
+export function ClientForm({ submit, errors }: ClientFormProps) {
   return (
-    <form action="" className="client-form form">
-      <h1 className="form__header">Клиент</h1>
-      <div className="form__input-group">
-        <Textbox
-          name="name"
-          label="Имя"
-          icon={faUser}
-          value={fields.name}
-          onChange={setField}
-          errors={errors.name}
-          clearErrors={clearFieldErrors}
-        />
-        <Textbox
-          value={fields.surname}
+    <form method="POST" className="form" onSubmit={submit}>
+      <div className="form__control-group">
+        <Field label="Name" name="name" icon="account_box" errors={errors.values.name} resetError={errors.reset} />
+        <Field
+          label="Surname"
           name="surname"
-          label="Фамилия"
-          icon={faUser}
-          onChange={setField}
-          errors={errors.surname}
-          clearErrors={clearFieldErrors}
+          icon="account_box"
+          errors={errors.values.name}
+          resetError={errors.reset}
         />
-        <Textbox
-          value={fields.phoneNumber}
+        <Field
+          label="Phone number"
           name="phoneNumber"
-          label="Номер телефона"
-          icon={faPhone}
-          onChange={setField}
-          errors={errors.phoneNumber}
-          clearErrors={clearFieldErrors}
+          icon="contact_phone"
+          errors={errors.values.name}
+          resetError={errors.reset}
         />
       </div>
       <div className="form__button-group">
-        <Button wide style="filled" text="Далее" action={submit} />
+        <Button className="form__button" text="Confirm" />
       </div>
     </form>
   );
 }
-
-export default ClientForm;

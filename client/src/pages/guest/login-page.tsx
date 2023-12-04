@@ -1,6 +1,6 @@
 import api from "../../service/api";
 import { useNavigate } from "react-router";
-import LoginForm, { LoginFormErrors } from "../../components/form/login-form";
+import LoginForm, { LoginFormErrors } from "../../components/guest-form/login-form";
 import { useErrors } from "../../service/use-errors";
 import { StorageUser } from "../../model/storage-user";
 

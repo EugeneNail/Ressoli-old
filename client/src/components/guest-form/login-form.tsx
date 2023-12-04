@@ -2,7 +2,7 @@ import Button from "../button/button";
 import { Field } from "../custom-control/field";
 import { Errors } from "../../service/use-errors";
 import { FormEvent } from "react";
-import "./form.sass";
+import "./guest-form.sass";
 
 export class LoginFormErrors {
   email: string[] = [];
@@ -16,9 +16,9 @@ type LoginFormProps = {
 
 function LoginForm({ submit, errors }: LoginFormProps) {
   return (
-    <form action="" onSubmit={submit} className="form">
-      <h1 className="form__header">Login</h1>
-      <div className="form__input-group">
+    <form action="" onSubmit={submit} className="guest-form">
+      <h1 className="guest-form__header">Login</h1>
+      <div className="guest-form__input-group">
         <Field icon="mail" label="Email" name="email" errors={errors.values.email} resetError={errors.reset} />
         <Field
           icon="lock"
@@ -30,12 +30,12 @@ function LoginForm({ submit, errors }: LoginFormProps) {
           resetError={errors.reset}
         />
       </div>
-      <div className="form__button-group">
-        <Button style="filled" wide text="Login" />
+      <div className="guest-form__button-group">
+        <Button wide text="Login" />
       </div>
-      <p className="form__message">
+      <p className="guest-form__message">
         Don't have an account?
-        <a href="/signup" className="form__link">
+        <a href="/signup" className="guest-form__link">
           Signup
         </a>
       </p>

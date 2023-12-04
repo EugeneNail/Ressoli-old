@@ -1,0 +1,33 @@
+@import  ../../_variables
+
+.spoiler
+    background: white
+    overflow: hidden
+    border-radius: .8rem
+    transition: max-height 1s
+
+    &.closed
+        max-height: 5.9rem
+
+    &__head
+        cursor: pointer
+        user-select: none
+        display: grid
+        grid-template-columns: 1fr 6rem
+
+        &:hover
+            background: darken(white, 2%)
+
+    &__title
+        font-weight: 500
+        color: $font-strong
+        padding: 2rem 3rem
+
+    &__chevron
+        place-self: center
+
+    &:hover &__chevron
+        color: $accent
+
+    &__content
+        border-top: 1px solid $border

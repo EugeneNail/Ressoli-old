@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router";
-import SignupForm, { SignupFormErrors } from "../../components/form/signup-form";
+import SignupForm, { SignupFormErrors } from "../../components/guest-form/signup-form";
 import { useErrors } from "../../service/use-errors";
 import { FormEvent } from "react";
 import api from "../../service/api";

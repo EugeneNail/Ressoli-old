@@ -4,6 +4,7 @@ import LoginPage from "./pages/guest/login-page";
 import SignupPage from "./pages/guest/signup-page";
 import DefaultLayout from "./layouts/default-layout/default-layout";
 import { useEffect } from "react";
+import { EditableLandParcelPage } from "./pages/land-parcel/editable-land-parcel-page";
 
 function RootRouter() {
   useEffect(() => {}, []);
@@ -16,8 +17,10 @@ function RootRouter() {
           <Route path="/signup" element={<SignupPage />} />
         </Route>
         <Route path="/" element={<DefaultLayout />}>
-          <Route path="" element={<Navigate to={"/houses"} />} />
-          <Route path="/houses" element={null} />
+          <Route path="" element={<Navigate to={"/dashboard"} />} />
+          <Route path="/land-parcels">
+            <Route path="/land-parcels/new" element={<EditableLandParcelPage />} />
+          </Route>
           {/* <Route path="/plots">
             <Route path="/plots" element={<PlotsPage />} />
             <Route path="/plots/new" element={<CreatePlotPage />} />

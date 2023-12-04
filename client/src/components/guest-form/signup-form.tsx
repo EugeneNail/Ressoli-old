@@ -2,6 +2,7 @@ import Button from "../button/button";
 import { FormEvent } from "react";
 import { Field } from "../custom-control/field";
 import { Errors } from "../../service/use-errors";
+import "./guest-form.sass";
 
 export class SignupFormErrors {
   name: string[] = [];
@@ -18,9 +19,9 @@ type SignupFormProps = {
 
 function SignupForm({ submit, errors }: SignupFormProps) {
   return (
-    <form action="" onSubmit={submit} className="form">
-      <h1 className="form__header">Signup</h1>
-      <div className="form__input-group">
+    <form action="" onSubmit={submit} className="guest-form">
+      <h1 className="guest-form__header">Signup</h1>
+      <div className="guest-form__input-group">
         <Field label="Email address" name="email" icon="mail" errors={errors.values.email} resetError={errors.reset} />
         <Field label="Name" name="name" icon="person" errors={errors.values.name} resetError={errors.reset} />
         <Field label="Surname" name="surname" icon="person" errors={errors.values.surname} resetError={errors.reset} />
@@ -41,12 +42,12 @@ function SignupForm({ submit, errors }: SignupFormProps) {
           resetError={errors.reset}
         />
       </div>
-      <div className="form__button-group">
-        <Button style="filled" wide text="Signup" />
+      <div className="guest-form__button-group">
+        <Button wide text="Signup" />
       </div>
-      <p className="guest__message">
+      <p className="guest-form__message">
         Already have an account?
-        <a href="/login" className="guest__link">
+        <a href="/login" className="guest-form__link">
           Login
         </a>
       </p>
