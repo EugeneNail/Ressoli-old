@@ -1,3 +1,4 @@
+import { Icon } from "../icon/icon";
 import "./menu.sass";
 
 type MenuUserProps = {
@@ -13,9 +14,7 @@ export function MenuUser({ name, imgUrl, email, logout }: MenuUserProps) {
       <img src={imgUrl} alt="" className="menu-user__image" />
       <p className="menu-user__name">{name}</p>
       <p className="menu-user__email">{email}</p>
-      <span className="material-symbols-rounded menu-user__logout" onClick={logout}>
-        logout
-      </span>
+      <Icon className="menu-user__logout" name="logout" onClick={logout} />
     </div>
   );
 }

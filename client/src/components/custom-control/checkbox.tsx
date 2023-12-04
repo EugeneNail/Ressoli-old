@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { Icon } from "../icon/icon";
 
 type CheckboxProps = {
   label: string;
@@ -17,7 +18,7 @@ export function Checkbox({ label, name, checked = false }: CheckboxProps) {
   return (
     <label htmlFor={name} className="checkbox">
       <div className="checkbox__square">
-        <span className="checkbox__icon material-symbols-rounded">check</span>
+        <Icon className="checkbox__icon" name="check" />
       </div>
       <input ref={ref} name={name} id={name} type="checkbox" className="checkbox__input" />
       <p className="checkbox__label">{label}</p>

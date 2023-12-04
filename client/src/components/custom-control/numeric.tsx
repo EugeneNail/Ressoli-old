@@ -3,6 +3,7 @@ import "./custom-control.sass";
 import { useState, FocusEvent, useRef, useEffect } from "react";
 import { ControlProps } from "../../model/control-props";
 import { HelperText } from "./helper-text";
+import { Icon } from "../icon/icon";
 
 type NumericProps = ControlProps & {
   min?: number;
@@ -82,7 +83,7 @@ export function Numeric({
     <div className={classNames("control", { invalid: isInvalid }, { active: isActive })}>
       <label htmlFor={name} className="control__main-area" onMouseLeave={resetActions}>
         <div className="control__icon-container">
-          <span className="control__icon material-symbols-rounded">{icon}</span>
+          <Icon className="control__icon" name={icon} />
         </div>
         <p className="control__label">{label}</p>
         <input
@@ -98,10 +99,10 @@ export function Numeric({
           onBlur={handleBlur}
         />
         <div className="control__button control__icon-container" onMouseDown={add} onMouseUp={resetActions}>
-          <span className="control__icon material-symbols-rounded">add</span>
+          <Icon className="control__icon" name="add" />
         </div>
         <div className="control__button control__icon-container" onMouseDown={remove} onMouseUp={resetActions}>
-          <span className="control__icon material-symbols-rounded">remove</span>
+          <Icon className="control__icon" name="remove" />
         </div>
       </label>
       <HelperText errors={errors} text={helperText} />
