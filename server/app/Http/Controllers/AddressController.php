@@ -12,14 +12,18 @@ use Illuminate\Support\Facades\Http;
 class AddressController extends Controller {
 
     public function persist(PersistAddressRequest $request) {
-        $address = Address::where("type_of_city", $request->typeOfCity)
-            ->where("city", $request->city)
-            ->where("type_of_street", $request->typeOfStreet)
+        $address = Address::where("city", $request->city)
             ->where("street", $request->street)
-            ->where("house_number", $request->houseNumber)
+            ->where("address_number", $request->addressNumber)
+            ->where("apartment_number", $request->apartmentNumber)
             ->first();
 
         if (isset($address)) {
+            if ($address->postal_code === null) {
+                $address->postal_code = $request->postalCode;
+                $address->save();
+            }
+
             return response($address->id, Response::HTTP_OK);
         }
 
@@ -30,13 +34,13 @@ class AddressController extends Controller {
         ]);
         $geoObject = $response->object()->response->GeoObjectCollection->featureMember[0]->GeoObject;
         $address = Address::create([
-            "type_of_city" => $request->typeOfCity,
             "city" => $request->city,
-            "type_of_street" => $request->typeOfStreet,
             "street" => $request->street,
-            "house_number" => $request->houseNumber,
+            "address_number" => $request->addressNumber,
             "label" => $geoObject->metaDataProperty->GeocoderMetaData->text,
-            "position" => implode(" ", array_reverse(explode(" ", $geoObject->Point->pos)))
+            "position" => implode(" ", array_reverse(explode(" ", $geoObject->Point->pos))),
+            "postal_code" => $request->postalCode
+
         ]);
 
         return response($address->id, Response::HTTP_CREATED);

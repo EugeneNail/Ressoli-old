@@ -33,6 +33,13 @@ export function EditableLandParcelPage() {
     event?.preventDefault();
     const payload = new FormData(event.target as HTMLFormElement);
     const { data, status } = await api.post("/addresses", payload);
+
+    if (status === 422 || status === 409) {
+      addressErrors.set(data.errors);
+      return;
+    }
+
+    application.addressId = data;
   }
 
   async function persistLandParcel(event: FormEvent) {

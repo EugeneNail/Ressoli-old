@@ -6,7 +6,7 @@ import "./form.sass";
 export class AddressFormErrors {
   addressNumber: string[] = [];
   city: string[] = [];
-  zipCode: string[] = [];
+  postalCode: string[] = [];
   street: string[] = [];
   typeOfStreet: string[] = [];
 }
@@ -20,13 +20,19 @@ export function AddressForm({ submit, errors }: AddressFormProps) {
         <Field
           label="Address Number"
           name="addressNumber"
-          icon="other_houses"
+          icon="location_on"
           errors={errors.values.addressNumber}
           resetError={errors.reset}
         />
         <Field label="Street" name="street" icon="add_road" errors={errors.values.street} resetError={errors.reset} />
         <Field label="City" name="city" icon="location_city" errors={errors.values.city} resetError={errors.reset} />
-        <Field label="Zip Code" name="zipCode" icon="mail" errors={errors.values.zipCode} resetError={errors.reset} />
+        <Field
+          label="Postal Code (optional)"
+          name="zipCode"
+          icon="mail"
+          errors={errors.values.postalCode}
+          resetError={errors.reset}
+        />
       </div>
       <div className="form__button-group">
         <Button className="form__button" text="Confirm" />

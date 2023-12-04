@@ -22,13 +22,17 @@ class PersistAddressRequest extends FormRequest {
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(Rules $rules, Request $request): array {
-        $addressRules = $rules->forAddress();
+    public function rules(Request $request): array {
+        $rules = [
+            "city" => ["required", "alpha"],
+            "street" => ["required", new StreetRule()],
+            "addressNumber" => ["required", new AddressNumberRule()],
+        ];
 
         if ($request->fields === "full") {
-            $addressRules["apartmentNumber"] = ["required", new AddressNumberRule()];
+            $rules["apartmentNumber"] = ["required", new AddressNumberRule()];
         }
 
-        return $addressRules;
+        return $rules;
     }
 }

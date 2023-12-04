@@ -43,9 +43,7 @@ class Rules {
         return [
             $prefix . "city" => "required|alpha",
             $prefix . "street" => ["required", new StreetRule()],
-            $prefix . "houseNumber" => ["required", new AddressNumberRule()],
-            $prefix . "typeOfCity" => ["required", Rule::in(["Город", "Село", "Хутор", "ПГТ"])],
-            $prefix . "typeOfStreet" => ["required", Rule::in(["Бульвар", "Проезд", "Переулок", "Улица", "Проспект"])]
+            $prefix . "addressNumber" => ["required", new AddressNumberRule()],
         ];
     }
 
