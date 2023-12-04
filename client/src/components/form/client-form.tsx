@@ -1,8 +1,7 @@
-import { FormEvent } from "react";
 import "./form.sass";
 import { Field } from "../custom-control/field";
-import { Errors } from "../../service/use-errors";
 import Button from "../button/button";
+import { FormProps } from "../../model/form-props";
 
 export class ClientFormErrors {
   name: string[] = [];
@@ -10,10 +9,7 @@ export class ClientFormErrors {
   phoneNumber: string[] = [];
 }
 
-type ClientFormProps = {
-  submit: (event: FormEvent) => void;
-  errors: Errors<ClientFormErrors>;
-};
+type ClientFormProps = FormProps<ClientFormErrors> & {};
 
 export function ClientForm({ submit, errors }: ClientFormProps) {
   return (
