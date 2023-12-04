@@ -1,20 +1,10 @@
 import { useState } from "react";
 import AsideLink from "./aside-link";
-import {
-  faBed,
-  faBuilding,
-  faHouse,
-  faMap,
-  faRightFromBracket,
-  faRightToBracket,
-  faUser,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import api from "../../service/api";
 import { useNavigate } from "react-router";
 
 function Aside() {
-  const [logoutIcon, setLogoutIcon] = useState(faRightToBracket);
   const navigate = useNavigate();
 
   async function logout() {
@@ -32,22 +22,6 @@ function Aside() {
         <img src="/img/logo.svg" alt="" className="aside__image" />
         <p className="aside__name">Ressoli</p>
       </div>
-      <nav className="aside__navigation">
-        <AsideLink icon={faHouse} route="/houses" text="Дома" />
-        <AsideLink icon={faMap} route="/plots" text="Участки" />
-        <AsideLink icon={faBuilding} route="/apartments" text="Квартиры" />
-        <AsideLink icon={faBed} route="/rooms" text="Комнаты" />
-        <AsideLink icon={faUser} route="/clients" text="Клиенты" />
-      </nav>
-      <a
-        className="aside__logout"
-        onMouseOver={() => setLogoutIcon(faRightFromBracket)}
-        onMouseLeave={() => setLogoutIcon(faRightToBracket)}
-        onClick={logout}
-      >
-        <FontAwesomeIcon icon={logoutIcon} />
-        Выйти
-      </a>
     </aside>
   );
 }
