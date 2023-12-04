@@ -10,14 +10,7 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 class Client extends Model {
     use HasFactory;
 
-    protected $fillable = [
-        "name",
-        "surname"
-    ];
-
-    public function phone_number(): MorphOne {
-        return $this->morphOne(PhoneNumber::class, "numberable");
-    }
+    protected $guarded = [];
 
     public function applications(): HasMany {
         return $this->hasMany(Application::class);

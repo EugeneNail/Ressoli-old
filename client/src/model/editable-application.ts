@@ -1,4 +1,4 @@
-import { Contract } from "./contract";
+import { Contract as Terms } from "./contract";
 
 export class EditableApplication {
   id: number = 0;
@@ -7,21 +7,14 @@ export class EditableApplication {
   addressId: number = 0;
   applicableId: number = 0;
   photoIds: number[] = [];
-  contract: Contract = new Contract();
+  terms: Terms = new Terms();
 
-  constructor(
-    id: number,
-    clientId: number,
-    addressId: number,
-    applicableId: number,
-    photoIds: number[],
-    contract: Contract
-  ) {
-    this.id = id;
-    this.clientId = clientId;
-    this.addressId = addressId;
-    this.applicableId = applicableId;
-    this.photoIds = photoIds;
-    this.contract = contract;
-  }
+  // constructor(id: number, clientId: number, addressId: number, applicableId: number, photoIds: number[], terms: Terms) {
+  //   this.id = id;
+  //   this.clientId = clientId;
+  //   this.addressId = addressId;
+  //   this.applicableId = applicableId;
+  //   this.photoIds = photoIds;
+  //   this.terms = terms;
+  // }
 }

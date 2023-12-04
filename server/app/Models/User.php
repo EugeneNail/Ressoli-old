@@ -33,10 +33,6 @@ class User extends Authenticatable {
         'password' => 'hashed',
     ];
 
-    public function phone_numbers(): MorphOne {
-        return $this->morphOne(PhoneNumber::class, "numberable");
-    }
-
     public function applications(): HasMany {
         return $this->hasMany(Application::class);
     }

@@ -1,4 +1,4 @@
-import { FormEvent } from "react";
+import { FormEvent, useRef } from "react";
 import { ClientForm, ClientFormErrors } from "../../components/form/client-form";
 import { Spoiler } from "../../components/spoler/spoiler";
 import { useErrors } from "../../service/use-errors";
@@ -7,17 +7,26 @@ import api from "../../service/api";
 import { AddressForm, AddressFormErrors } from "../../components/form/address-form";
 import { LandParcelForm, LandParcelFormErrors } from "../../components/form/land-parcel-form";
 import { TermsForm, TermsFormErrors } from "../../components/form/contract-form";
+import { EditableApplication } from "../../model/editable-application";
 
 export function EditableLandParcelPage() {
   const clientErrors = useErrors(new ClientFormErrors());
   const addressErrors = useErrors(new AddressFormErrors());
   const landParcelErrors = useErrors(new LandParcelFormErrors());
   const termsErrors = useErrors(new TermsFormErrors());
+  const { current: application } = useRef(new EditableApplication());
 
   async function persistClient(event: FormEvent) {
     event?.preventDefault();
     const payload = new FormData(event.target as HTMLFormElement);
     const { data, status } = await api.post("/clients", payload);
+
+    if (status === 422 || status === 409) {
+      clientErrors.set(data.errors);
+      return;
+    }
+
+    application.clientId = data;
   }
 
   async function persistAddress(event: FormEvent) {

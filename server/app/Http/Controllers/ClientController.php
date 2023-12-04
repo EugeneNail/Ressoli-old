@@ -12,17 +12,17 @@ use Illuminate\Support\MessageBag;
 class ClientController extends Controller {
 
     public function persist(PersistClientRequest $request) {
-        $number = PhoneNumber::find($request->phoneNumber);
+        $client = Client::where("phone_number", $request->phoneNumber)->first();
 
-        if (is_null($number)) {
-            $client = Client::create($request->all());
-            $newNumber = new PhoneNumber(["id" => $request->phoneNumber]);
-            $client->phone_number()->save($newNumber);
-            $newNumber->save();
+        if (is_null($client)) {
+            $client = Client::create([
+                "name" => $request->name,
+                "surname" => $request->surname,
+                "phone_number" => $request->phoneNumber
+            ]);
+
             return response($client->id, Response::HTTP_CREATED);
         }
-
-        $client = $number->numberable;
 
         if ($client->name === $request->name && $client->surname === $request->surname) {
             return response($client->id, Response::HTTP_OK);

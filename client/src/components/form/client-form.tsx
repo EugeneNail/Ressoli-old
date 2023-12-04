@@ -20,14 +20,14 @@ export function ClientForm({ submit, errors }: ClientFormProps) {
           label="Surname"
           name="surname"
           icon="account_box"
-          errors={errors.values.name}
+          errors={errors.values.surname}
           resetError={errors.reset}
         />
         <Field
           label="Phone number"
           name="phoneNumber"
           icon="contact_phone"
-          errors={errors.values.name}
+          errors={errors.values.phoneNumber}
           resetError={errors.reset}
         />
       </div>
