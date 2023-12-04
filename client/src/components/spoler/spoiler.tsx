@@ -3,7 +3,7 @@ import "./spoiler.sass";
 import classNames from "classnames";
 
 type SpoilerProps = {
-  open: boolean;
+  open?: boolean;
   children: JSX.Element;
   title: string;
 };

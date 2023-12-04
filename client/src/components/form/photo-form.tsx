@@ -3,15 +3,17 @@ import { Photo } from "../../model/photo";
 import { Icon } from "../icon/icon";
 import "./form.sass";
 import "./photo-form.sass";
+import { Saveable } from "../../model/saveable";
+import { SaveMark } from "./save-mark";
 
-type PhotoFormProps = {
+type PhotoFormProps = Saveable & {
   submit: (files: FileList) => void;
   uploading: boolean;
   remove: (id: number) => void;
   photos: Photo[];
 };
 
-export function PhotoForm({ submit, uploading, remove, photos }: PhotoFormProps) {
+export function PhotoForm({ submit, uploading, remove, photos, saved, unsave }: PhotoFormProps) {
   const [isDragged, setDragged] = useState(false);
 
   function handleDragOver(event: DragEvent<HTMLDivElement>) {
@@ -26,6 +28,7 @@ export function PhotoForm({ submit, uploading, remove, photos }: PhotoFormProps)
       return;
     }
     setDragged(false);
+    unsave();
     submit(files);
   }
 
@@ -34,6 +37,7 @@ export function PhotoForm({ submit, uploading, remove, photos }: PhotoFormProps)
     if (!files || !files.length) {
       return;
     }
+    unsave();
     submit(files);
   }
 
@@ -77,13 +81,19 @@ export function PhotoForm({ submit, uploading, remove, photos }: PhotoFormProps)
         {photos.length > 0 &&
           photos.map((photo) => (
             <div className="photo-form__photo">
-              <img src={"http://localhost:8000/storage/" + photo.path} alt="" className="photo-form__image" />
+              <img
+                key={photo.id}
+                src={"http://localhost:8000/storage/" + photo.path}
+                alt=""
+                className="photo-form__image"
+              />
               <button className="photo-form__button" onClick={() => remove(photo.id)}>
                 <Icon className="photo-form__icon" name="delete" />
               </button>
             </div>
           ))}
       </div>
+      {saved && <SaveMark />}
     </form>
   );
 }

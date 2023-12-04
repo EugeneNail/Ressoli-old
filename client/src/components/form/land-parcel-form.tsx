@@ -5,6 +5,8 @@ import { Dropdown } from "../custom-control/dropdown";
 import { Numeric } from "../custom-control/numeric";
 import { LandParcelOptions } from "../../model/options/land-parcel-options";
 import api from "../../service/api";
+import { SaveMark } from "./save-mark";
+import { Saveable } from "../../model/saveable";
 
 export class LandParcelFormErrors {
   gas: string[] = [];
@@ -14,16 +16,16 @@ export class LandParcelFormErrors {
   area: string[] = [];
 }
 
-type LandParcelFormProps = FormProps<LandParcelFormErrors> & {};
+type LandParcelFormProps = FormProps<LandParcelFormErrors> & Saveable & {};
 
-export function LandParcelForm({ submit, errors }: LandParcelFormProps) {
+export function LandParcelForm({ submit, errors, saved, unsave }: LandParcelFormProps) {
   const [options, setOptions] = useState(new LandParcelOptions());
   useEffect(() => {
     api.get<LandParcelOptions>("/options/land-parcel").then(({ data }) => setOptions(data));
   }, []);
 
   return (
-    <form action="" method="POST" className="form" onSubmit={submit}>
+    <form action="" method="POST" className="form" onSubmit={submit} onClick={unsave}>
       <div className="form__control-group">
         <Dropdown
           label="Water"
@@ -68,9 +70,12 @@ export function LandParcelForm({ submit, errors }: LandParcelFormProps) {
           resetError={errors.reset}
         />
       </div>
-      <div className="form__button-group">
-        <Button className="form__button" text="Confirm" />
-      </div>
+      {!saved && (
+        <div className="form__button-group">
+          <Button className="form__button" text="Confirm" />
+        </div>
+      )}
+      {saved && <SaveMark />}
     </form>
   );
 }

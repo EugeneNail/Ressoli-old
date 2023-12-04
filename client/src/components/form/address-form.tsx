@@ -1,6 +1,8 @@
+import { Saveable } from "../../model/saveable";
 import { FormProps } from "../../model/form-props";
 import Button from "../button/button";
 import { Field } from "../custom-control/field";
+import { SaveMark } from "./save-mark";
 import "./form.sass";
 
 export class AddressFormErrors {
@@ -11,11 +13,11 @@ export class AddressFormErrors {
   typeOfStreet: string[] = [];
 }
 
-type AddressFormProps = FormProps<AddressFormErrors> & {};
+type AddressFormProps = FormProps<AddressFormErrors> & Saveable & {};
 
-export function AddressForm({ submit, errors }: AddressFormProps) {
+export function AddressForm({ submit, errors, saved, unsave }: AddressFormProps) {
   return (
-    <form action="" className="form" onSubmit={submit}>
+    <form action="" className="form" onSubmit={submit} onClick={unsave}>
       <div className="form__control-group">
         <Field
           label="Address Number"
@@ -34,9 +36,12 @@ export function AddressForm({ submit, errors }: AddressFormProps) {
           resetError={errors.reset}
         />
       </div>
-      <div className="form__button-group">
-        <Button className="form__button" text="Confirm" />
-      </div>
+      {!saved && (
+        <div className="form__button-group">
+          <Button className="form__button" text="Confirm" />
+        </div>
+      )}
+      {saved && <SaveMark />}
     </form>
   );
 }

@@ -6,6 +6,8 @@ import { Dropdown } from "../custom-control/dropdown";
 import { Numeric } from "../custom-control/numeric";
 import { TermsOptions } from "../../model/options/terms-options";
 import api from "../../service/api";
+import { Saveable } from "../../model/saveable";
+import { SaveMark } from "./save-mark";
 
 export class TermsFormErrors {
   contract: string[] = [];
@@ -14,9 +16,9 @@ export class TermsFormErrors {
   price: string[] = [];
 }
 
-type TermsFormProps = FormProps<TermsFormErrors> & {};
+type TermsFormProps = FormProps<TermsFormErrors> & Saveable;
 
-export function TermsForm({ submit, errors }: TermsFormProps) {
+export function TermsForm({ submit, errors, saved, unsave }: TermsFormProps) {
   const [options, setOptions] = useState(new TermsOptions());
 
   useEffect(() => {
@@ -24,7 +26,7 @@ export function TermsForm({ submit, errors }: TermsFormProps) {
   }, []);
 
   return (
-    <form action="" className="form" onSubmit={submit}>
+    <form action="" className="form" onSubmit={submit} onClick={unsave}>
       <div className="form__control-group">
         <Dropdown
           label="Contract"
@@ -49,9 +51,12 @@ export function TermsForm({ submit, errors }: TermsFormProps) {
         <Checkbox label="Mortgage" name="hasMortgage" />
         <Checkbox label="VAT" name="hasVat" />
       </div>
-      <div className="form__button-group">
-        <Button className="form__button" text="Confirm" />
-      </div>
+      {!saved && (
+        <div className="form__button-group">
+          <Button className="form__button" text="Confirm" />
+        </div>
+      )}
+      {saved && <SaveMark />}
     </form>
   );
 }

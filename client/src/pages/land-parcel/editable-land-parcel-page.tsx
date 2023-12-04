@@ -20,17 +20,24 @@ export function EditableLandParcelPage() {
   const { current: application } = useRef(new EditableApplication());
   const [isUploading, setUploading] = useState(false);
   const [photos, setPhotos] = useState<Photo[]>([]);
+  const [formSaves, setFormSaves] = useState([false, false, false, false, false]);
+
+  function setSaved(indexToUpdate: number, newValue: boolean) {
+    setFormSaves(formSaves.map((value, index) => (index === indexToUpdate ? newValue : value)));
+  }
 
   async function persistClient(event: FormEvent) {
     event?.preventDefault();
     const payload = new FormData(event.target as HTMLFormElement);
     const { data, status } = await api.post("/clients", payload);
+    // setFormLocks([true, false, true, true, true]);
 
     if (status === 422 || status === 409) {
       clientErrors.set(data.errors);
       return;
     }
 
+    setSaved(0, true);
     application.clientId = data;
   }
 
@@ -44,6 +51,7 @@ export function EditableLandParcelPage() {
       return;
     }
 
+    setSaved(1, true);
     application.addressId = data;
   }
 
@@ -57,6 +65,7 @@ export function EditableLandParcelPage() {
       return;
     }
 
+    setSaved(2, true);
     application.applicableId = data;
   }
 
@@ -88,15 +97,20 @@ export function EditableLandParcelPage() {
       alert("Не удалось загрузить изображения");
     }
 
+    setSaved(3, true);
     setUploading(false);
   }
 
   async function removePhoto(id: number) {
+    setUploading(true);
+    setSaved(3, false);
     const response = await api.delete("/photos/" + id);
 
     if (response.status === 204) {
       setPhotos(photos.filter((photo) => photo.id != id));
       application.photoIds = application.photoIds.filter((photoId) => photoId != id);
+      setUploading(false);
+      setSaved(3, true);
     }
   }
 
@@ -109,25 +123,49 @@ export function EditableLandParcelPage() {
       termsErrors.set(data.errors);
       return;
     }
+
+    setSaved(4, true);
   }
 
   return (
     <div className="editable-application-page">
       <h1 className="editable-application-page__header">New Land Parcel</h1>
       <Spoiler open title="Client">
-        <ClientForm submit={persistClient} errors={clientErrors} />
+        <ClientForm
+          saved={formSaves[0]}
+          unsave={() => setSaved(0, false)}
+          submit={persistClient}
+          errors={clientErrors}
+        />
       </Spoiler>
       <Spoiler open title="Address">
-        <AddressForm submit={persistAddress} errors={addressErrors} />
+        <AddressForm
+          saved={formSaves[1]}
+          unsave={() => setSaved(1, false)}
+          submit={persistAddress}
+          errors={addressErrors}
+        />
       </Spoiler>
       <Spoiler open title="Land Parcel">
-        <LandParcelForm submit={persistLandParcel} errors={landParcelErrors} />
+        <LandParcelForm
+          saved={formSaves[2]}
+          unsave={() => setSaved(2, false)}
+          submit={persistLandParcel}
+          errors={landParcelErrors}
+        />
       </Spoiler>
       <Spoiler open title="Photos">
-        <PhotoForm photos={photos} submit={uploadToServer} uploading={isUploading} remove={removePhoto} />
+        <PhotoForm
+          saved={formSaves[3]}
+          unsave={() => setSaved(3, false)}
+          photos={photos}
+          submit={uploadToServer}
+          uploading={isUploading}
+          remove={removePhoto}
+        />
       </Spoiler>
       <Spoiler open title="Contract">
-        <TermsForm submit={confirmTerms} errors={termsErrors} />
+        <TermsForm saved={formSaves[4]} unsave={() => setSaved(4, false)} submit={confirmTerms} errors={termsErrors} />
       </Spoiler>
     </div>
   );

@@ -22,7 +22,7 @@ class UploadTempRequest extends FormRequest {
         return [
             "images.*" => [
                 File::types(["png", "jpg", "jpeg", "bmp"])
-                    ->min(512)
+                    ->min(128)
                     ->max(15 * 1024)
             ]
         ];

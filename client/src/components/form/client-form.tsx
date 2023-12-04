@@ -2,6 +2,8 @@ import "./form.sass";
 import { Field } from "../custom-control/field";
 import Button from "../button/button";
 import { FormProps } from "../../model/form-props";
+import { SaveMark } from "./save-mark";
+import { Saveable } from "../../model/saveable";
 
 export class ClientFormErrors {
   name: string[] = [];
@@ -9,11 +11,11 @@ export class ClientFormErrors {
   phoneNumber: string[] = [];
 }
 
-type ClientFormProps = FormProps<ClientFormErrors> & {};
+type ClientFormProps = FormProps<ClientFormErrors> & Saveable & {};
 
-export function ClientForm({ submit, errors }: ClientFormProps) {
+export function ClientForm({ submit, errors, saved, unsave }: ClientFormProps) {
   return (
-    <form method="POST" className="form" onSubmit={submit}>
+    <form method="POST" className="form" onSubmit={submit} onClick={unsave}>
       <div className="form__control-group">
         <Field label="Name" name="name" icon="account_box" errors={errors.values.name} resetError={errors.reset} />
         <Field
@@ -31,9 +33,12 @@ export function ClientForm({ submit, errors }: ClientFormProps) {
           resetError={errors.reset}
         />
       </div>
-      <div className="form__button-group">
-        <Button className="form__button" text="Confirm" />
-      </div>
+      {!saved && (
+        <div className="form__button-group">
+          <Button className="form__button" text="Confirm" />
+        </div>
+      )}
+      {saved && <SaveMark />}
     </form>
   );
 }
