@@ -6,7 +6,7 @@ import "./editable-application-page.sass";
 import api from "../../service/api";
 import { AddressForm, AddressFormErrors } from "../../components/form/address-form";
 import { LandParcelForm, LandParcelFormErrors } from "../../components/form/land-parcel-form";
-import { TermsForm, TermsFormErrors } from "../../components/form/contract-form";
+import { TermsForm, TermsFormErrors } from "../../components/form/terms-form";
 import { EditableApplication } from "../../model/editable-application";
 import { PhotoForm } from "../../components/form/photo-form";
 import { Photo } from "../../model/photo";

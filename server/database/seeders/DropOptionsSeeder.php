@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Application;
 use App\Models\LandParcel;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -35,7 +36,10 @@ class DropOptionsSeeder extends Seeder {
                 ["type" => LandParcel::class, "name" => "electricity", "value" => "Overhead line"],
                 ["type" => LandParcel::class, "name" => "electricity", "value" => "Underground cable"],
                 ["type" => LandParcel::class, "name" => "electricity", "value" => "On the boundary"],
-                ["type" => LandParcel::class, "name" => "electricity", "value" => "Nearby"]
+                ["type" => LandParcel::class, "name" => "electricity", "value" => "Nearby"],
+
+                ["type" => Application::class, "name" => "contract", "value" => "Sale"],
+                ["type" => Application::class, "name" => "contract", "value" => "Rent"]
             ]
         );
     }

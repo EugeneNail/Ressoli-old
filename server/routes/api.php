@@ -42,31 +42,6 @@ Route::group(["middleware" => "auth:sanctum"], function () {
 
     Route::group(["prefix" => "applications"], function () {
         Route::group(["prefix" => "plots"], function () {
-            Route::post("/", [PlotApplicationController::class, "store"]);
-            Route::get("/", [PlotApplicationController::class, "index"]);
-            Route::put("/{id}", [PlotApplicationController::class, "update"]);
-            Route::get("/{id}", [PlotApplicationController::class, "show"]);
-        });
-
-        Route::group(["prefix" => "houses"], function () {
-            Route::post("/", [HouseApplicationController::class, "store"]);
-            Route::get("/", [HouseApplicationController::class, "index"]);
-            Route::put("/{id}", [HouseApplicationController::class, "update"]);
-            Route::get("/{id}", [HouseApplicationController::class, "show"]);
-        });
-
-        Route::group(["prefix" => "apartments"], function () {
-            Route::post("/", [ApartmentApplicationController::class, "store"]);
-            Route::get("/", [ApartmentApplicationController::class, "index"]);
-            Route::put("/{id}", [ApartmentApplicationController::class, "update"]);
-            Route::get("/{id}", [ApartmentApplicationController::class, "show"]);
-        });
-
-        Route::group(["prefix" => "rooms"], function () {
-            Route::post("/", [RoomApplicationController::class, "store"]);
-            Route::get("/", [RoomApplicationController::class, "index"]);
-            Route::put("/{id}", [RoomApplicationController::class, "update"]);
-            Route::get("/{id}", [RoomApplicationController::class, "show"]);
         });
     });
 
@@ -80,11 +55,11 @@ Route::group(["middleware" => "auth:sanctum"], function () {
 
     Route::post("/rooms", [RoomController::class, "persist"]);
 
-    Route::post("applications/check-validity", [ApplicationController::class, "checkValidity"]);
+    Route::post("applications/terms", [ApplicationController::class, "validateTerms"]);
 
     Route::group(["prefix" => "options"], function () {
         Route::get("/address", [DropOptionController::class, "forAddress"]);
-        Route::get("/contract", [DropOptionController::class, "forContract"]);
+        Route::get("/terms", [DropOptionController::class, "forTerms"]);
         Route::get("/land-parcel", [DropOptionController::class, "forLandParcel"]);
         Route::get("/house", [DropOptionController::class, "forHouse"]);
         Route::get("/apartment", [DropOptionController::class, "forApartment"]);

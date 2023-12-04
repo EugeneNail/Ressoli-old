@@ -1,8 +1,11 @@
+import { useEffect, useState } from "react";
 import { FormProps } from "../../model/form-props";
 import Button from "../button/button";
 import { Checkbox } from "../custom-control/checkbox";
 import { Dropdown } from "../custom-control/dropdown";
 import { Numeric } from "../custom-control/numeric";
+import { TermsOptions } from "../../model/options/terms-options";
+import api from "../../service/api";
 
 export class TermsFormErrors {
   contract: string[] = [];
@@ -14,6 +17,12 @@ export class TermsFormErrors {
 type TermsFormProps = FormProps<TermsFormErrors> & {};
 
 export function TermsForm({ submit, errors }: TermsFormProps) {
+  const [options, setOptions] = useState(new TermsOptions());
+
+  useEffect(() => {
+    api.get<TermsOptions>("/options/terms").then(({ data }) => setOptions(data));
+  }, []);
+
   return (
     <form action="" className="form" onSubmit={submit}>
       <div className="form__control-group">
@@ -21,7 +30,7 @@ export function TermsForm({ submit, errors }: TermsFormProps) {
           label="Contract"
           name="contract"
           icon="description"
-          options={["Test", "test2"]}
+          options={options.contract}
           errors={errors.values.contract}
           resetError={errors.reset}
         />
@@ -32,7 +41,7 @@ export function TermsForm({ submit, errors }: TermsFormProps) {
           min={1}
           step={1000}
           max={100000000}
-          errors={errors.values.contract}
+          errors={errors.values.price}
           resetError={errors.reset}
         />
       </div>
