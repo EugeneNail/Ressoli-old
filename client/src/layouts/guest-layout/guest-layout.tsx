@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router";
 import "./guest-layout.sass";
-import api from "../../service/api";
 
 function GuestLayout() {
   return (

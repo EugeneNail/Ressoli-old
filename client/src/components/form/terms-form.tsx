@@ -51,12 +51,8 @@ export function TermsForm({ submit, errors, saved, unsave }: TermsFormProps) {
         <Checkbox label="Mortgage" name="hasMortgage" />
         <Checkbox label="VAT" name="hasVat" />
       </div>
-      {!saved && (
-        <div className="form__button-group">
-          <Button className="form__button" text="Confirm" />
-        </div>
-      )}
       {saved && <SaveMark />}
+      <div className="form__button-group">{!saved && <Button className="form__button" text="Save" />}</div>
     </form>
   );
 }

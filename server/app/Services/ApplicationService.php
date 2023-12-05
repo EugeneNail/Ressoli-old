@@ -8,22 +8,29 @@ use App\Models\Client;
 use App\Models\Photo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class ApplicationService {
 
+    private readonly array $options;
+
+    public function __construct(DropOptionsService $options) {
+        $this->options = $options->getFor(Application::class);
+    }
+
     public function fill(Application $application, Request $request): void {
         $application->fill([
-            "price" => $request->price,
-            "contract" => $request->contract,
-            "has_vat" => $request->hasVat,
-            "has_mortgage" => $request->hasMortgage,
+            "price" => $request->terms["price"],
+            "contract" => $request->terms["contract"],
+            "has_vat" => isset($request->terms["hasVat"]),
+            "has_mortgage" => isset($request->terms["hasMortgage"]),
         ]);
     }
 
     public function associateDependencies(Application $application, Request $request, $applicable) {
         $application->user()->associate($request->user());
-        $application->client()->associate(Client::find($request->clientId));
-        $application->address()->associate(Address::find($request->addressId));
+        $application->client_id = $request->clientId;
+        $application->address_id = $request->addressId;
         $application->applicable()->associate($applicable);
     }
 
@@ -42,5 +49,22 @@ class ApplicationService {
             $application->photos()->saveMany($photos);
             $application->save();
         }
+    }
+
+    public function rules(): array {
+        return array_merge([
+            "clientId" => ["numeric", "integer"],
+            "addressId" => ["numeric", "integer"],
+            "applicableId" => ["numeric", "integer"],
+            "photoIds" => "array",
+            "photoIds.*" => ["required", "numeric"],
+        ], $this->termsRules("terms."));
+    }
+
+    public function termsRules(string $prefix = null): array {
+        return [
+            $prefix . "contract" => ["required", Rule::in($this->options["contract"])],
+            $prefix . "price" => ["required", "numeric", "min:1", "max: 100000000"],
+        ];
     }
 }

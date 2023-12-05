@@ -1,6 +1,5 @@
 import "./default-layout.sass";
 import { Outlet } from "react-router";
-import Aside from "./aside";
 import { Menu } from "../../components/menu/menu";
 
 function DefaultLayout() {

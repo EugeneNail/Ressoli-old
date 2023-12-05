@@ -30,15 +30,6 @@ class Rules {
         ];
     }
 
-    public function forContract(string $prefix = null): array {
-        return [
-            $prefix . "contract" => ["required", Rule::in($this->options->forContract())],
-            $prefix . "price" => ["required", "numeric", "min:1", "max: 100000000"],
-            $prefix . "hasVat" => "boolean",
-            $prefix . "hasMortgage" => "boolean"
-        ];
-    }
-
     public function forAddress(string $prefix = null): array {
         return [
             $prefix . "city" => "required|alpha",

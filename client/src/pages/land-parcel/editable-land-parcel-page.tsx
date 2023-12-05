@@ -11,6 +11,9 @@ import { EditableApplication } from "../../model/editable-application";
 import { PhotoForm } from "../../components/form/photo-form";
 import { Photo } from "../../model/photo";
 import Resizer from "react-image-file-resizer";
+import Button from "../../components/button/button";
+import { Terms } from "../../model/terms";
+import { useNavigate } from "react-router";
 
 export function EditableLandParcelPage() {
   const clientErrors = useErrors(new ClientFormErrors());
@@ -21,6 +24,7 @@ export function EditableLandParcelPage() {
   const [isUploading, setUploading] = useState(false);
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [formSaves, setFormSaves] = useState([false, false, false, false, false]);
+  const navigate = useNavigate();
 
   function setSaved(indexToUpdate: number, newValue: boolean) {
     setFormSaves(formSaves.map((value, index) => (index === indexToUpdate ? newValue : value)));
@@ -124,7 +128,27 @@ export function EditableLandParcelPage() {
       return;
     }
 
+    application.terms = Object.fromEntries(Array.from(payload)) as unknown as Terms;
     setSaved(4, true);
+  }
+
+  async function createNewApplication() {
+    if (!formSaves.every((saved) => saved === true)) {
+      //TODO replace with notification system
+      alert("Not all the forms are saved");
+      return;
+      return;
+    }
+
+    const { data, status } = await api.post("/applications/land-parcel", application);
+
+    if (status === 422 || status === 409) {
+      //TODO replace with notification system
+      alert("Something went wrong");
+      return;
+    }
+
+    navigate("/land-parcels/" + data);
   }
 
   return (
@@ -165,7 +189,19 @@ export function EditableLandParcelPage() {
         />
       </Spoiler>
       <Spoiler open title="Contract">
-        <TermsForm saved={formSaves[4]} unsave={() => setSaved(4, false)} submit={confirmTerms} errors={termsErrors} />
+        <>
+          <TermsForm
+            saved={formSaves[4]}
+            unsave={() => setSaved(4, false)}
+            submit={confirmTerms}
+            errors={termsErrors}
+          />
+          <Button
+            className="editable-application-page__button"
+            action={createNewApplication}
+            text="Create new application"
+          />
+        </>
       </Spoiler>
     </div>
   );

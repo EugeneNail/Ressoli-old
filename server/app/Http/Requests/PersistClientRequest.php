@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\Support\Rules;
+use App\Services\ClientService;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PersistClientRequest extends FormRequest {
@@ -18,7 +19,7 @@ class PersistClientRequest extends FormRequest {
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(Rules $rules): array {
-        return $rules->forClient();
+    public function rules(ClientService $service): array {
+        return $service->rules();
     }
 }

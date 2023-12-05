@@ -41,8 +41,7 @@ Route::group(["middleware" => "auth:sanctum"], function () {
     Route::post("/clients", [ClientController::class, "persist"]);
 
     Route::group(["prefix" => "applications"], function () {
-        Route::group(["prefix" => "plots"], function () {
-        });
+        Route::post("/land-parcel", [ApplicationController::class, "persistWithLandParcel"]);
     });
 
     Route::post("/addresses", [AddressController::class, "persist"]);
