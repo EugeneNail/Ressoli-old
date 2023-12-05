@@ -140,7 +140,7 @@ export function EditableLandParcelPage() {
       return;
     }
 
-    const { data, status } = await api.post("/applications/land-parcel", application);
+    const { data, status } = await api.post("/applications/land-parcels", application);
 
     if (status === 422 || status === 409) {
       //TODO replace with notification system

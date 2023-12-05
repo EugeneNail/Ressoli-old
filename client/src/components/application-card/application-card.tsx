@@ -1,105 +1,58 @@
+import { Navigate } from "react-router";
+import { CardApplication } from "../../model/card-application/card-application";
+import { ApplicationCardStat } from "./application-card-stat";
 import "./application-card.sass";
-import Button from "../button/button";
-import ApplicationCardInfo from "./application-card-info";
-import {
-  faBed,
-  faBolt,
-  faCalendarDays,
-  faCar,
-  faDroplet,
-  faFire,
-  faLayerGroup,
-  faLocationDot,
-  faMap,
-  faMaximize,
-  faRuble,
-  faShower,
-  faTemperatureHigh,
-} from "@fortawesome/free-solid-svg-icons";
-import { ShortApplication } from "../../model/short-application/short-application";
-import { env } from "../../env";
-import { Converter } from "../../service/converter";
-import { ShortHouse } from "../../model/short-application/short-house";
-import { ShortPlot } from "../../model/short-application/short-plot";
-import { compareTypes } from "../../service/compareTypes";
-import { ShortApartment } from "../../model/short-application/short-apartment";
-import { ShortRoom } from "../../model/short-application/short-room";
+import { ApplicationCardInfo } from "./application-card-info";
 
 type ApplicationCardProps = {
-  application: ShortApplication<ShortRoom | ShortPlot | ShortHouse | ShortApartment>;
+  application: CardApplication;
 };
 
-function ApplicationCard({
-  application: { applicable, area, city, contract, date, houseNumber, id, preview, price, street },
-}: ApplicationCardProps) {
-  function buildTitle(): string {
-    return `Участок ${contract === "Продажа" ? "на продажу" : "под аренду"}`;
+export function ApplicationCard({ application }: ApplicationCardProps) {
+  function selectApplicable() {
+    if (application.type === "land-parcel") {
+      return landParcelStats();
+    }
   }
 
-  function selectStats() {
-    if (compareTypes(applicable, new ShortHouse())) {
-      applicable = applicable as ShortHouse;
-      return (
-        <>
-          <ApplicationCardInfo icon={faBed} value={applicable.roomCount} />
-          <ApplicationCardInfo icon={faCalendarDays} value={applicable.constructionTime} />
-          <ApplicationCardInfo icon={faMap} value={applicable.landArea} unit="квм" />
-        </>
-      );
-    }
+  function landParcelStats() {
+    return (
+      <>
+        {application.applicable.hasWater && <ApplicationCardStat icon="water_drop" />}
+        {application.applicable.hasGas && <ApplicationCardStat icon="local_fire_department" />}
+        {application.applicable.hasElectricity && <ApplicationCardStat icon="flash_on" />}
+        <ApplicationCardStat icon="zoom_out_map" value={application.applicable.area} />
+      </>
+    );
+  }
 
-    if (compareTypes(applicable, new ShortPlot())) {
-      applicable = applicable as ShortPlot;
-      return (
-        <>
-          {applicable.hasWater && <ApplicationCardInfo icon={faDroplet} />}
-          {applicable.hasElectricity && <ApplicationCardInfo icon={faBolt} />}
-          {applicable.hasGas && <ApplicationCardInfo icon={faFire} />}
-        </>
-      );
-    }
-
-    if (compareTypes(applicable, new ShortApartment())) {
-      applicable = applicable as ShortApartment;
-      return (
-        <>
-          <ApplicationCardInfo icon={faBed} value={applicable.roomCount} />
-          {applicable.hasGarage && <ApplicationCardInfo icon={faCar} />}
-          <ApplicationCardInfo icon={faLayerGroup} value={`${applicable.level}/${applicable.levelCount}`} />
-        </>
-      );
-    }
-
-    if (compareTypes(applicable, new ShortRoom())) {
-      applicable = applicable as ShortRoom;
-      return (
-        <>
-          <ApplicationCardInfo icon={faLayerGroup} value={`${applicable.level}/${applicable.levelCount}`} />
-          {applicable.hasHeating && <ApplicationCardInfo icon={faTemperatureHigh} />}
-          {applicable.hasBath && <ApplicationCardInfo icon={faShower} />}
-        </>
-      );
-    }
+  function dateToMMDDYYYY() {
+    const month = application.date.getMonth() + 1;
+    const day = application.date.getDate();
+    const year = application.date.getFullYear();
+    return `${month}-${day}-${year}`;
   }
 
   return (
-    <div className="application-card">
-      <div className="application-card__info-container">
-        <img src={`${env.PHORO_URL}/${preview}`} alt="" className="application-card__preview" />
-        <h3 className="application-card__title">{buildTitle()}</h3>
-        <div className="application-card__infos">
-          <ApplicationCardInfo icon={faLocationDot} value={`г. ${city}, ул. ${street}, д. ${houseNumber}`} />
-          <ApplicationCardInfo icon={faRuble} bold value={price} unit={`руб ${contract === "Аренда" ? "/мес" : ""}`} />
-          <ApplicationCardInfo icon={faMaximize} value={area} unit="квм" />
+    <div className="application-card" onClick={() => <Navigate to={"/test"} />}>
+      <div className="application-card__status">{application.isActive ? "Active" : "Archived"}</div>
+      <img src={"http://localhost:8000/storage/" + application.previewUrl} alt="" className="application-card__image" />
+      <div className="application-card__title-grid">
+        <div className="application-card__upper-flexbox">
+          <h4 className="application-card__title">{application.title}</h4>
+          <p className="application-card__address">{application.address}</p>
         </div>
-        <div className="application-card__inner-grid">
-          <div className="application-card__stats-container">{selectStats()}</div>
-          <p className="application-card__date">{Converter.dateToFull(date)}</p>
-          <Button className="application-card__button" style="dotted" action={() => {}} text="Подробнее" to={id} />
+        <div className="application-card__upper-flexbox">
+          <p className="application-card__price-name">Property price</p>
+          <p className="application-card__price-value">${application.price}</p>
         </div>
+      </div>
+      <div className="application-card__stats-flexbox">{selectApplicable()}</div>
+      <div className="application-card__info-grid">
+        <ApplicationCardInfo name="Contract" value={application.contract} />
+        <ApplicationCardInfo name="Date" value={dateToMMDDYYYY()} />
+        <ApplicationCardInfo name="Client" value={application.client} />
       </div>
     </div>
   );
 }
-
-export default ApplicationCard;
