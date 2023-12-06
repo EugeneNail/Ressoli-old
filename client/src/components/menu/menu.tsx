@@ -1,9 +1,9 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import "./menu.sass";
 import { MenuLink } from "./menu-link";
-import { MenuUser } from "./menu-user";
 import { StorageUser } from "../../model/storage-user";
 import api from "../../service/api";
+import { Icon } from "../icon/icon";
 
 export function Menu() {
   const navigate = useNavigate();
@@ -24,17 +24,20 @@ export function Menu() {
       <nav className="menu__grid">
         <NavLink to="/houses" className="menu__app">
           <img src="/img/logo.png" alt="" className="menu__logo" />
-          <p className="menu__name">Ressoli</p>
         </NavLink>
         <div className="menu__links">
-          <p className="menu__header">Overview</p>
           <MenuLink icon="grid_view" text="Dashboard" to="/dashboard" />
           <MenuLink icon="house" text="Houses" to="/houses" />
-          <MenuLink icon="apartment" text="Apartments" to="/apartments" />
           <MenuLink icon="map" text="Land Parcels" to="/land-parcels" />
+          <MenuLink icon="apartment" text="Apartments" to="/apartments" />
           <MenuLink icon="bed" text="Rooms" to="/rooms" />
         </div>
-        <MenuUser imgUrl="/img/man-stock.jpg" email="eugene.a.nail@gmail.com" name="Anthony" logout={logout} />
+        <div className="menu__user">
+          <div className="menu__icon-container" onClick={logout}>
+            <Icon className="menu__logout" name="logout" />
+          </div>
+          <img src="/img/man-stock.jpg" alt="" className="menu__user-image" />
+        </div>
       </nav>
     </aside>
   );

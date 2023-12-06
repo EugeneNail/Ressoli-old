@@ -8,11 +8,10 @@ type MenuLinkProps = {
   to: string;
 };
 
-export function MenuLink({ icon, text, to }: MenuLinkProps) {
+export function MenuLink({ icon, to }: MenuLinkProps) {
   return (
     <NavLink className="menu-link" to={to}>
       <Icon className="menu-link__icon" name={icon} />
-      <p className="menu-link__text">{text}</p>
     </NavLink>
   );
 }

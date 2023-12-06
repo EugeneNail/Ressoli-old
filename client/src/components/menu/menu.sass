@@ -7,48 +7,57 @@
     &__grid
         height: 100%
         display: grid
-        grid-template-rows: auto 1fr auto
 
     &__app
-        padding: 2rem 3rem
-        display: flex
-        align-items: center
+        width: 100%
+        aspect-ratio: 1 / 1
+        display: grid
+        place-items: center
         gap: 1rem
-        border-bottom: 1px solid $border
+        margin-bottom: 4rem
 
     &__logo
+        place-self: center
         aspect-ratio: 1 / 1
         width: 32px
 
-    &__name
-        text-transform: uppercase
-        color: $font-strong
-        font-weight: 500
-        font-size: 2rem
-        letter-spacing: .2rem
-        font-family: RobotoCondensed
-
     &__links
-        padding: 0 2rem
+        padding: 0 1rem
         display: flex
         flex-direction: column
         gap: 0.5rem
 
-    &__header
-        padding-left: 1rem
-        font-size: 1.4rem
-        margin-top: 3rem
-        margin-bottom: 1rem
-        color: $font-weak
-        text-transform: uppercase
+    &__user
+        display: grid
+        flex-direction: column
+        align-self: end
+        justify-items: center
+
+    &__icon-container
+        width: 100%
+        aspect-ratio: 1 / 1
+        display: grid
+        place-items: center
+
+    &__logout
+        cursor: pointer
+
+        &:hover
+            color: $accent
+
+    &__user-image
+        border-radius: 50%
+        aspect-ratio: 1 / 1
+        object-fit: cover
+        width: 4rem
+        margin-bottom: 2rem
 
 .menu-link
     display: grid
-    gap: 0.5rem
-    height: 5rem
     border-radius: .8rem
-    grid-template-columns: 4.5rem 1fr
-    align-items: center
+    place-items: center
+    width: 100%
+    aspect-ratio: 1 / 1
 
     &:hover,
     &.active
@@ -62,50 +71,3 @@
         color: $font-medium
         place-self: center
         aspect-ratio: 1 / 1
-
-    &__text
-        color: $font-medium
-
-.menu-user
-    width: 100%
-    max-width: 100%
-    padding: 0 0 0 2rem
-    display: grid
-    column-gap: 1rem
-    grid-template-columns: 4.5rem 1fr 4.5rem
-    grid-template-areas: "image name logout" "image email logout"
-    margin-bottom: 1.5rem
-    padding-top: 1.5rem
-
-    &__image
-        grid-area: image
-        border-radius: 50%
-        aspect-ratio: 1 / 1
-        height: 4.5rem
-        object-fit: cover
-
-    &__name
-        color: $font-strong
-        text-overflow: ellipsis
-        white-space: nowrap
-        overflow: hidden
-        grid-area: name
-        font-size: 1.8rem
-
-    &__email
-        color: $font-weak
-        align-self: end
-        text-overflow: ellipsis
-        white-space: nowrap
-        overflow: hidden
-        grid-area: email
-        font-size: 1.4rem
-
-    &__logout
-        cursor: pointer
-        margin-right: 2rem
-        place-self: center
-        grid-area: logout
-
-        &:hover
-            color: $accent
