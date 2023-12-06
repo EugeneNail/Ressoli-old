@@ -17,6 +17,8 @@
         border: 2px solid $border
 
     &__status
+        left: 2rem
+        top: 2rem
         padding-left: 3rem
         font-size: 1.4rem
         position: absolute
@@ -26,6 +28,21 @@
         display: flex
         align-items: center
         padding-right: 1rem
+
+        &::before
+            position: absolute
+            left: 0
+            top: 0
+            content: ""
+            background: green
+            width: 0.7rem
+            height: 0.7rem
+            border-radius: 50%
+            top: .9rem
+            left: 1.2rem
+
+        &.inactive &::before
+            background: red
 
     &__image
         border-radius: .8rem
