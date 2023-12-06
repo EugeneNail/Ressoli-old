@@ -7,6 +7,7 @@ import { LandParcelOptions } from "../../model/options/land-parcel-options";
 import api from "../../service/api";
 import { SaveMark } from "./save-mark";
 import { Saveable } from "../../model/saveable";
+import { Field } from "../custom-control/field";
 
 export class LandParcelFormErrors {
   gas: string[] = [];
@@ -14,6 +15,7 @@ export class LandParcelFormErrors {
   electricity: string[] = [];
   sewer: string[] = [];
   area: string[] = [];
+  title: string[] = [];
 }
 
 type LandParcelFormProps = FormProps<LandParcelFormErrors> & Saveable & {};
@@ -67,6 +69,13 @@ export function LandParcelForm({ submit, errors, saved, unsave }: LandParcelForm
           step={1}
           max={10000}
           errors={errors.values.area}
+          resetError={errors.reset}
+        />
+        <Field
+          label="Title (optional)"
+          name="title"
+          icon="subtitles"
+          errors={errors.values.title}
           resetError={errors.reset}
         />
       </div>

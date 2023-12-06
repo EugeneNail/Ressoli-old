@@ -24,6 +24,7 @@ class LandParcelService {
             $prefix . "electricity" => ["required", "string", new WordsRule(), Rule::in($this->options["electricity"])],
             $prefix . "gas" => ["required", "string", new WordsRule(), Rule::in($this->options["gas"])],
             $prefix . "area" => ["required", "numeric", "min:1", "max:10000", "decimal:0,2"],
+            $prefix . "title" => ["nullable", new WordsRule()]
         ];
     }
 }

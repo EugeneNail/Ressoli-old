@@ -24,6 +24,7 @@ class ApplicationService {
             "contract" => $request->terms["contract"],
             "has_vat" => isset($request->terms["hasVat"]),
             "has_mortgage" => isset($request->terms["hasMortgage"]),
+            "is_active" => true
         ]);
     }
 

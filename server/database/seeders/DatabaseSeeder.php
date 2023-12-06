@@ -24,6 +24,6 @@ class DatabaseSeeder extends Seeder {
             ->each(fn ($table) => DB::table($table)->truncate());
 
         $this->call(DropOptionsSeeder::class);
-        $this->call(ApplicationSeeder::class);
+        // $this->call(ApplicationSeeder::class);
     }
 }
