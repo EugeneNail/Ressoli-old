@@ -41,7 +41,9 @@ Route::group(["middleware" => "auth:sanctum"], function () {
     Route::post("/clients", [ClientController::class, "persist"]);
 
     Route::group(["prefix" => "applications"], function () {
-        Route::post("/land-parcel", [ApplicationController::class, "persistWithLandParcel"]);
+        Route::post("/land-parcels", [ApplicationController::class, "persistWithLandParcel"]);
+        Route::get("/land-parcels", [ApplicationController::class, "index"]);
+        Route::post("/terms", [ApplicationController::class, "validateTerms"]);
     });
 
     Route::post("/addresses", [AddressController::class, "persist"]);
@@ -54,7 +56,6 @@ Route::group(["middleware" => "auth:sanctum"], function () {
 
     Route::post("/rooms", [RoomController::class, "persist"]);
 
-    Route::post("applications/terms", [ApplicationController::class, "validateTerms"]);
 
     Route::group(["prefix" => "options"], function () {
         Route::get("/address", [DropOptionController::class, "forAddress"]);

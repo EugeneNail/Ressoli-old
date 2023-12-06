@@ -1,10 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ApplicationCard } from "../../components/application-card/application-card";
 import { CardApplication } from "../../model/card-application/card-application";
 import "./applications-page.sass";
+import api from "../../service/api";
 
 export function LandParcelsPage() {
   const [applications, setApplications] = useState<CardApplication[]>([]);
+
+  useEffect(() => {
+    api
+      .get<CardApplication[]>("/applications/land-parcels?types[]=land-parcel")
+      .then(({ data }) => setApplications(data));
+  }, []);
 
   return (
     <div className="applications-page">
@@ -14,7 +21,7 @@ export function LandParcelsPage() {
       </div>
       <div className="applications-page__grid">
         {applications.map((application) => (
-          <ApplicationCard application={application} />
+          <ApplicationCard key={application.id} application={application} />
         ))}
       </div>
     </div>

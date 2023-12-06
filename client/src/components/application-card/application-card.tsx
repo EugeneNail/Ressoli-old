@@ -27,9 +27,10 @@ export function ApplicationCard({ application }: ApplicationCardProps) {
   }
 
   function dateToMMDDYYYY() {
-    const month = application.date.getMonth() + 1;
-    const day = application.date.getDate();
-    const year = application.date.getFullYear();
+    const date = new Date(application.date);
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const year = date.getFullYear();
     return `${month}-${day}-${year}`;
   }
 
