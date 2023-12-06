@@ -1,0 +1,38 @@
+@import ../../_variables
+
+.gallery
+    display: grid
+    grid-template-columns: 1fr 6fr
+    gap: 1rem
+
+    &__aside-photos-container
+        display: flex
+        flex-direction: column
+        overflow: auto
+        scrollbar-width: none
+        gap: 1rem
+        aspect-ratio: 45 / 152
+        -ms-overflow-style: none
+
+        &::-webkit-scrollbar
+            display: none
+
+    &__aside-photo
+        border: 1px solid $border
+        border-radius: .8rem
+        width: 100%
+        aspect-ratio: 1 / 1
+        position: relative
+        cursor: pointer
+        object-fit: cover
+
+        &.selected
+            border: 5px solid $accent
+
+    &__main-photo-container
+
+    &__main-photo
+        aspect-ratio: 16 / 9
+        border-radius: .8rem
+        object-fit: cover
+        width: 100%
