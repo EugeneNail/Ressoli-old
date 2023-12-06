@@ -1,4 +1,4 @@
-export class Plot {
+export class LandParcel {
   id: number = 0;
   water: string = "";
   gas: string = "";

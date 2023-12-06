@@ -51,6 +51,11 @@ class ApplicationController extends Controller {
         return collect($types)->map(fn ($type) => $map[$type])->toArray();
     }
 
+    public function show(int $id) {
+        $resource = new ApplicationResource(Application::find($id));
+        return new JsonResponse($resource);
+    }
+
     public function index(IndexApplicationsRequest $request) {
         $applicableTypes = $this->typeToClassName($request->types);
         $applications = Application::query()->with([

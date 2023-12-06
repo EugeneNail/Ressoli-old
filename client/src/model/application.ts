@@ -1,16 +1,19 @@
 import { Address } from "./address";
 import { Client } from "./client";
-import { Contract } from "./contract";
+import { LandParcel } from "./land-parcel";
 import { Photo } from "./photo";
-import { User } from "./user";
 
-export class Application<T> {
+export class Application<T extends LandParcel> {
   id: number = 0;
-  user: User = new User();
+  title: string = "";
+  isActive: boolean = false;
+  date: Date = new Date();
+  price: number = 0;
+  contract: string = "";
   client: Client = new Client();
   address: Address = new Address();
-  applicable: T = {} as T;
   photos: Photo[] = [];
-  contract: Contract = new Contract();
-  date: Date = new Date();
+  applicable: T = {} as T;
+  hasVat: boolean = false;
+  hasMortgage: boolean = false;
 }

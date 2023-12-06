@@ -43,6 +43,7 @@ Route::group(["middleware" => "auth:sanctum"], function () {
     Route::group(["prefix" => "applications"], function () {
         Route::post("/land-parcels", [ApplicationController::class, "persistWithLandParcel"]);
         Route::get("/land-parcels", [ApplicationController::class, "index"]);
+        Route::get("/land-parcels/{id}", [ApplicationController::class, "show"]);
         Route::post("/terms", [ApplicationController::class, "validateTerms"]);
     });
 
