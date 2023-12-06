@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\IndexApplicationsRequest;
 use App\Http\Requests\PersistApplicationRequest;
 use App\Http\Resources\ApplicationResource;
+use App\Http\Resources\CardApplicationResource;
 use App\Http\Resources\EditableApplicationResource;
 use App\Http\Resources\ShortApplicationResource;
 use App\Models\Address;
@@ -13,6 +15,7 @@ use App\Models\Client;
 use App\Models\House;
 use App\Models\Photo;
 use App\Models\LandParcel;
+use App\Models\Room;
 use App\Models\Support\Rules;
 use App\Services\ApplicationService;
 use App\Services\DropOptionsService;
@@ -36,6 +39,31 @@ class ApplicationController extends Controller {
     public function validateTerms(Request $request) {
         $request->validate($this->service->termsRules());
         return response()->noContent();
+    }
+
+    private function typeToClassName(array $types): array {
+        $map = [
+            "land-parcel" => LandParcel::class,
+            "house" => House::class,
+            "room" => Room::class,
+            "apartment" => Apartment::class
+        ];
+        return collect($types)->map(fn ($type) => $map[$type])->toArray();
+    }
+
+    public function index(IndexApplicationsRequest $request) {
+        $applicableTypes = $this->typeToClassName($request->types);
+        $applications = Application::query()->with([
+            "client:clients.id,name",
+            "address:addresses.id,city,street,address_number,apartment_number",
+            "applicable",
+            "photos"
+        ])
+            ->whereIn("applicable_type", $applicableTypes)
+            ->get();
+        $resources = CardApplicationResource::collection($applications);
+
+        return new JsonResponse($resources, Response::HTTP_OK);
     }
 
     public function persistWithLandParcel(PersistApplicationRequest $request) {
