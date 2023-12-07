@@ -6,6 +6,9 @@ use App\Models\Address;
 use App\Models\Application;
 use App\Models\Client;
 use App\Models\Photo;
+use App\Rules\AddressExistsRule;
+use App\Rules\ClientExistsRule;
+use App\Rules\TermsExistRule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
@@ -32,6 +35,7 @@ class ApplicationService {
         $application->user()->associate($request->user());
         $application->client_id = $request->clientId;
         $application->address_id = $request->addressId;
+        $application->terms_id = $request->termsId;
         $application->applicable()->associate($applicable);
     }
 
@@ -53,19 +57,13 @@ class ApplicationService {
     }
 
     public function rules(): array {
-        return array_merge([
-            "clientId" => ["numeric", "integer"],
-            "addressId" => ["numeric", "integer"],
+        return [
+            "clientId" => ["numeric", "integer", new ClientExistsRule()],
+            "addressId" => ["numeric", "integer", new AddressExistsRule()],
+            "termsId" => ["numeric", "integer", new TermsExistRule()],
             "applicableId" => ["numeric", "integer"],
             "photoIds" => "array",
             "photoIds.*" => ["required", "numeric"],
-        ], $this->termsRules("terms."));
-    }
-
-    public function termsRules(string $prefix = null): array {
-        return [
-            $prefix . "contract" => ["required", Rule::in($this->options["contract"])],
-            $prefix . "price" => ["required", "numeric", "min:1", "max: 100000000"],
         ];
     }
 }

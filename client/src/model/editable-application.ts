@@ -6,5 +6,5 @@ export class EditableApplication {
   addressId: number = 0;
   applicableId: number = 0;
   photoIds: number[] = [];
-  terms: Terms = new Terms();
+  termsId: number = 0;
 }

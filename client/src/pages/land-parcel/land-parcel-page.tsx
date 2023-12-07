@@ -61,7 +61,9 @@ export function LandParcelPage() {
     <div className="application-page">
       <div className="application-page__main-container">
         <div className="application-page__headline">
-          <h1 className="application-page__title">{application.title != null ? application.title : "Land Parcel"}</h1>
+          <h1 className="application-page__title">
+            {application.applicable.title != null ? application.applicable.title : "Land Parcel"}
+          </h1>
           <div className="application-page__status">{application.isActive ? "Active" : "Archived"}</div>
           <Button
             className={classNames("application-page__button", { inactive: !application.isActive })}
@@ -82,8 +84,8 @@ export function LandParcelPage() {
             value={application.client.phoneNumber}
             icon="contact_phone"
           />
-          <ApplicationPageInfo tooltip="Contract" value={application.contract} icon="description" />
-          <ApplicationPageInfo tooltip="Price" value={application.price} icon="payments" />
+          <ApplicationPageInfo tooltip="Contract" value={application.terms.contract} icon="description" />
+          <ApplicationPageInfo tooltip="Price" value={application.terms.price} icon="payments" />
         </div>
         <div className="application-page__address">
           <Icon className="application-page__address-icon" filled name="location_on" />

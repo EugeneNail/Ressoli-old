@@ -18,7 +18,7 @@ export function Dropdown({
   helperText = "",
   errors,
 }: DropdownProps) {
-  const [isActive, setActive] = useState(initialValue.length > 0);
+  const [isActive, setActive] = useState(initialValue?.length > 0);
   const [isInvalid, setInvalid] = useState(false);
   const isDirty = useRef(false);
 

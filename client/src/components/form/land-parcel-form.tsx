@@ -28,7 +28,6 @@ export function LandParcelForm({
   unsave,
   initialState = new LandParcel(),
 }: LandParcelFormProps) {
-  console.log(initialState);
   const [options, setOptions] = useState(new LandParcelOptions());
   useEffect(() => {
     api.get<LandParcelOptions>("/options/land-parcel").then(({ data }) => setOptions(data));

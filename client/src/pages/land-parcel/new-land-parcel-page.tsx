@@ -53,7 +53,7 @@ export function NewLandParcelPage() {
           <TermsForm
             saved={state.formSaves[4]}
             unsave={() => state.setSaved(4, false)}
-            submit={state.confirmTerms}
+            submit={state.persistTerms}
             errors={state.termsErrors}
           />
           <Button

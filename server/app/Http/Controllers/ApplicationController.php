@@ -36,11 +36,6 @@ class ApplicationController extends Controller {
         $this->service = $applicationService;
     }
 
-    public function validateTerms(Request $request) {
-        $request->validate($this->service->termsRules());
-        return response()->noContent();
-    }
-
     private function typeToClassName(array $types): array {
         $map = [
             "land-parcel" => LandParcel::class,
@@ -52,7 +47,8 @@ class ApplicationController extends Controller {
     }
 
     public function show(int $id) {
-        $resource = new ApplicationResource(Application::find($id));
+        $application = Application::with("client", "address", "applicable", "terms")->find($id);
+        $resource = new ApplicationResource($application);
         return new JsonResponse($resource);
     }
 
@@ -62,7 +58,7 @@ class ApplicationController extends Controller {
             "client:clients.id,name",
             "address:addresses.id,city,street,address_number,apartment_number",
             "applicable",
-            "photos"
+            "photos",
         ])
             ->whereIn("applicable_type", $applicableTypes)
             ->get();
@@ -74,14 +70,6 @@ class ApplicationController extends Controller {
     public function persistWithLandParcel(PersistApplicationRequest $request) {
         $errors = new MessageBag();
 
-        if (is_null(Client::find($request->clientId))) {
-            $errors->add("clientId", "No client with this id was found");
-        }
-
-        if (is_null(Address::find($request->addressId))) {
-            $errors->add("addressId", "No address with this id was found");
-        }
-
         $landParcel = LandParcel::find($request->applicableId);
         if (is_null($landParcel)) {
             $errors->add("applicableId", "No land parcel with this id was found");
@@ -92,7 +80,6 @@ class ApplicationController extends Controller {
         }
 
         $application = new Application();
-        $this->service->fill($application, $request);
         $this->service->associateDependencies($application, $request, $landParcel);
         $application->save();
         $this->service->savePhotos($application, $request->photoIds);

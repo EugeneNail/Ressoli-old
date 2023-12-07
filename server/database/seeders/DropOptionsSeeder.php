@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Application;
 use App\Models\LandParcel;
+use App\Models\Terms;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -13,7 +14,7 @@ class DropOptionsSeeder extends Seeder {
      * Run the database seeds.
      */
     public function run(): void {
-        DB::table("drop_options")->truncate();
+        DB::table("drop_options")->delete();
         DB::table("drop_options")->insert(
             [
                 ["type" => LandParcel::class, "name" => "water", "value" => "None"],
@@ -38,8 +39,8 @@ class DropOptionsSeeder extends Seeder {
                 ["type" => LandParcel::class, "name" => "electricity", "value" => "On the boundary"],
                 ["type" => LandParcel::class, "name" => "electricity", "value" => "Nearby"],
 
-                ["type" => Application::class, "name" => "contract", "value" => "Sale"],
-                ["type" => Application::class, "name" => "contract", "value" => "Rent"]
+                ["type" => Terms::class, "name" => "contract", "value" => "Sale"],
+                ["type" => Terms::class, "name" => "contract", "value" => "Rent"]
             ]
         );
     }

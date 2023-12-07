@@ -113,22 +113,21 @@ export function useEditableApplicationPageState() {
     }
   }
 
-  async function confirmTerms(event: FormEvent) {
+  async function persistTerms(event: FormEvent) {
     event?.preventDefault();
     const payload = new FormData(event.target as HTMLFormElement);
-    const { data, status } = await api.post("/applications/terms", payload);
+    const { data, status } = await api.post("/terms", payload);
 
     if (status === 422) {
       termsErrors.set(data.errors);
       return;
     }
 
-    application.terms = Object.fromEntries(Array.from(payload)) as unknown as Terms;
+    application.termsId = data;
     setSaved(4, true);
   }
 
   async function persistApplication() {
-    console.log(application);
     if (!formSaves.every((saved) => saved === true)) {
       //TODO replace with notification system
       alert("Not all the forms are saved");
@@ -136,11 +135,7 @@ export function useEditableApplicationPageState() {
     }
 
     const { data, status } = await api.post("/applications/land-parcels", application);
-
-    if (status === 422 || status === 409) {
-      console.log(data.errors);
-      //TODO replace with notification system
-      alert("Something went wrong");
+    if (status > 400) {
       return;
     }
 
@@ -164,7 +159,7 @@ export function useEditableApplicationPageState() {
     persistLandParcel,
     uploadToServer,
     removePhoto,
-    confirmTerms,
+    persistTerms: persistTerms,
     createNewApplication: persistApplication,
   };
 }

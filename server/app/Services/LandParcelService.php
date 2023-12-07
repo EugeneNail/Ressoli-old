@@ -11,11 +11,12 @@ use Nette\NotImplementedException;
 
 class LandParcelService {
 
+    private readonly array $options;
+
     public function __construct(DropOptionsService $options) {
         $this->options = $options->getFor(LandParcel::class);
     }
 
-    private readonly array $options;
 
     public function rules(string $prefix = null): array {
         return [

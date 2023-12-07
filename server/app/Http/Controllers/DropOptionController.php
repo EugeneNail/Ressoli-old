@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Application;
 use App\Models\LandParcel;
+use App\Models\Terms;
 use App\Services\DropOptionsService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -23,7 +24,7 @@ class DropOptionController extends Controller {
     }
 
     public function forTerms() {
-        return new JsonResponse($this->options->getFor(Application::class), Response::HTTP_OK);
+        return new JsonResponse($this->options->getFor(Terms::class), Response::HTTP_OK);
     }
 
     public function forLandParcel() {

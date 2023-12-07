@@ -12,6 +12,8 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 class Application extends Model {
     use HasFactory;
 
+    protected $fillable = ["user_id"];
+
     protected $guarded = [];
 
     public function user(): BelongsTo {
@@ -32,5 +34,9 @@ class Application extends Model {
 
     public function photos(): HasMany {
         return $this->hasMany(Photo::class);
+    }
+
+    public function terms(): HasOne {
+        return $this->hasOne(Terms::class, "id", "terms_id");
     }
 }

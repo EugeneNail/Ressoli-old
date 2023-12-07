@@ -23,7 +23,9 @@ export function TermsForm({ submit, errors, saved, unsave, initialState = new Te
   const [options, setOptions] = useState(new TermsOptions());
 
   useEffect(() => {
-    api.get<TermsOptions>("/options/terms").then(({ data }) => setOptions(data));
+    api.get<TermsOptions>("/options/terms").then(({ data }) => {
+      setOptions(data);
+    });
   }, []);
 
   return (
@@ -39,7 +41,7 @@ export function TermsForm({ submit, errors, saved, unsave, initialState = new Te
           resetError={errors.reset}
         />
         <Numeric
-          initialValue={initialState.price.toString()}
+          initialValue={initialState.price?.toString()}
           label="Price"
           name="price"
           icon="payments"

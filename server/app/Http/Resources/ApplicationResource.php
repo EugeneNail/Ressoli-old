@@ -18,7 +18,6 @@ class ApplicationResource extends JsonResource {
         return [
             "id" => $this->id,
             "isActive" => $this->is_active != null,
-            "title" => $this->applicable->title,
             "client" => [
                 "id" => $this->client->id,
                 "name" => $this->client->name,
@@ -36,10 +35,12 @@ class ApplicationResource extends JsonResource {
             ],
             "applicable" => $this->selectApplicable(),
             "photos" => $this->photos,
-            "hasVat" => $this->has_vat,
-            "hasMortgage" => $this->has_mortgage,
-            "price" => $this->price,
-            "contract" => $this->contract,
+            "terms" => [
+                "hasVat" => $this->terms->has_vat,
+                "hasMortgage" => $this->terms->has_mortgage,
+                "price" => $this->terms->price,
+                "contract" => $this->terms->contract,
+            ],
             "date" => $this->created_at,
         ];
     }
@@ -53,6 +54,7 @@ class ApplicationResource extends JsonResource {
                 "water" => $this->applicable->water,
                 "electricity" => $this->applicable->electricity,
                 "area" => $this->applicable->area,
+                "title" => $this->applicable->title
             ];
         }
     }

@@ -14,6 +14,7 @@ use App\Http\Controllers\PlotApplicationController;
 use App\Http\Controllers\LandParcelController;
 use App\Http\Controllers\RoomApplicationController;
 use App\Http\Controllers\RoomController;
+use App\Http\Controllers\TermsController;
 use App\Services\DropOptionsService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -57,6 +58,7 @@ Route::group(["middleware" => "auth:sanctum"], function () {
 
     Route::post("/rooms", [RoomController::class, "persist"]);
 
+    Route::post("/terms", [TermsController::class, "persist"]);
 
     Route::group(["prefix" => "options"], function () {
         Route::get("/address", [DropOptionController::class, "forAddress"]);
