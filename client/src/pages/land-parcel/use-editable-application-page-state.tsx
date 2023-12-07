@@ -1,29 +1,25 @@
 import { FormEvent, useRef, useState } from "react";
-import { ClientForm, ClientFormErrors } from "../../components/form/client-form";
-import { Spoiler } from "../../components/spoler/spoiler";
+import { AddressFormErrors } from "../../components/form/address-form";
+import { ClientFormErrors } from "../../components/form/client-form";
+import { LandParcelFormErrors } from "../../components/form/land-parcel-form";
+import { TermsFormErrors } from "../../components/form/terms-form";
 import { useErrors } from "../../service/use-errors";
-import "./editable-application-page.sass";
-import api from "../../service/api";
-import { AddressForm, AddressFormErrors } from "../../components/form/address-form";
-import { LandParcelForm, LandParcelFormErrors } from "../../components/form/land-parcel-form";
-import { TermsForm, TermsFormErrors } from "../../components/form/terms-form";
-import { EditableApplication } from "../../model/editable-application";
-import { PhotoForm } from "../../components/form/photo-form";
 import { Photo } from "../../model/photo";
-import Resizer from "react-image-file-resizer";
-import Button from "../../components/button/button";
-import { Terms } from "../../model/terms";
 import { useNavigate } from "react-router";
+import api from "../../service/api";
+import { EditableApplication } from "../../model/editable-application";
+import { Terms } from "../../model/terms";
+import Resizer from "react-image-file-resizer";
 
-export function EditableLandParcelPage() {
+export function useEditableApplicationPageState() {
   const clientErrors = useErrors(new ClientFormErrors());
   const addressErrors = useErrors(new AddressFormErrors());
   const landParcelErrors = useErrors(new LandParcelFormErrors());
   const termsErrors = useErrors(new TermsFormErrors());
-  const { current: application } = useRef(new EditableApplication());
   const [isUploading, setUploading] = useState(false);
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [formSaves, setFormSaves] = useState([false, false, false, false, false]);
+  const { current: application } = useRef(new EditableApplication());
   const navigate = useNavigate();
 
   function setSaved(indexToUpdate: number, newValue: boolean) {
@@ -35,7 +31,6 @@ export function EditableLandParcelPage() {
     const payload = new FormData(event.target as HTMLFormElement);
     const { data, status } = await api.post("/clients", payload);
     // setFormLocks([true, false, true, true, true]);
-
     if (status === 422 || status === 409) {
       clientErrors.set(data.errors);
       return;
@@ -132,17 +127,18 @@ export function EditableLandParcelPage() {
     setSaved(4, true);
   }
 
-  async function createNewApplication() {
+  async function persistApplication() {
+    console.log(application);
     if (!formSaves.every((saved) => saved === true)) {
       //TODO replace with notification system
       alert("Not all the forms are saved");
-      return;
       return;
     }
 
     const { data, status } = await api.post("/applications/land-parcels", application);
 
     if (status === 422 || status === 409) {
+      console.log(data.errors);
       //TODO replace with notification system
       alert("Something went wrong");
       return;
@@ -151,58 +147,24 @@ export function EditableLandParcelPage() {
     navigate("/land-parcels/" + data);
   }
 
-  return (
-    <div className="editable-application-page">
-      <h1 className="editable-application-page__header">New Land Parcel</h1>
-      <Spoiler open title="Client">
-        <ClientForm
-          saved={formSaves[0]}
-          unsave={() => setSaved(0, false)}
-          submit={persistClient}
-          errors={clientErrors}
-        />
-      </Spoiler>
-      <Spoiler open title="Address">
-        <AddressForm
-          saved={formSaves[1]}
-          unsave={() => setSaved(1, false)}
-          submit={persistAddress}
-          errors={addressErrors}
-        />
-      </Spoiler>
-      <Spoiler open title="Land Parcel">
-        <LandParcelForm
-          saved={formSaves[2]}
-          unsave={() => setSaved(2, false)}
-          submit={persistLandParcel}
-          errors={landParcelErrors}
-        />
-      </Spoiler>
-      <Spoiler open title="Photos">
-        <PhotoForm
-          saved={formSaves[3]}
-          unsave={() => setSaved(3, false)}
-          photos={photos}
-          submit={uploadToServer}
-          uploading={isUploading}
-          remove={removePhoto}
-        />
-      </Spoiler>
-      <Spoiler open title="Contract">
-        <>
-          <TermsForm
-            saved={formSaves[4]}
-            unsave={() => setSaved(4, false)}
-            submit={confirmTerms}
-            errors={termsErrors}
-          />
-          <Button
-            className="editable-application-page__button"
-            action={createNewApplication}
-            text="Create new application"
-          />
-        </>
-      </Spoiler>
-    </div>
-  );
+  return {
+    clientErrors,
+    addressErrors,
+    landParcelErrors,
+    termsErrors,
+    isUploading,
+    setUploading,
+    formSaves,
+    setFormSaves,
+    photos,
+    setPhotos,
+    setSaved,
+    persistClient,
+    persistAddress,
+    persistLandParcel,
+    uploadToServer,
+    removePhoto,
+    confirmTerms,
+    createNewApplication: persistApplication,
+  };
 }

@@ -4,7 +4,7 @@ import LoginPage from "./pages/guest/login-page";
 import SignupPage from "./pages/guest/signup-page";
 import DefaultLayout from "./layouts/default-layout/default-layout";
 import { useEffect } from "react";
-import { EditableLandParcelPage } from "./pages/land-parcel/editable-land-parcel-page";
+import { NewLandParcelPage } from "./pages/land-parcel/new-land-parcel-page";
 import { LandParcelsPage } from "./pages/land-parcel/land-parcels-page";
 import { LandParcelPage } from "./pages/land-parcel/land-parcel-page";
 
@@ -21,7 +21,7 @@ function RootRouter() {
         <Route path="/" element={<DefaultLayout />}>
           <Route path="" element={<Navigate to={"/dashboard"} />} />
           <Route path="/land-parcels">
-            <Route path="/land-parcels/new" element={<EditableLandParcelPage />} />
+            <Route path="/land-parcels/new" element={<NewLandParcelPage />} />
             <Route path="/land-parcels" element={<LandParcelsPage />} />
             <Route path="/land-parcels/:id" element={<LandParcelPage />} />
           </Route>
