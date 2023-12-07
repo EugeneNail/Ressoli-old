@@ -8,6 +8,7 @@ import api from "../../service/api";
 import { SaveMark } from "./save-mark";
 import { Saveable } from "../../model/saveable";
 import { Field } from "../custom-control/field";
+import { LandParcel } from "../../model/land-parcel";
 
 export class LandParcelFormErrors {
   gas: string[] = [];
@@ -18,9 +19,16 @@ export class LandParcelFormErrors {
   title: string[] = [];
 }
 
-type LandParcelFormProps = FormProps<LandParcelFormErrors> & Saveable & {};
+type LandParcelFormProps = FormProps<LandParcelFormErrors, LandParcel> & Saveable;
 
-export function LandParcelForm({ submit, errors, saved, unsave }: LandParcelFormProps) {
+export function LandParcelForm({
+  submit,
+  errors,
+  saved,
+  unsave,
+  initialState = new LandParcel(),
+}: LandParcelFormProps) {
+  console.log(initialState);
   const [options, setOptions] = useState(new LandParcelOptions());
   useEffect(() => {
     api.get<LandParcelOptions>("/options/land-parcel").then(({ data }) => setOptions(data));
@@ -36,6 +44,7 @@ export function LandParcelForm({ submit, errors, saved, unsave }: LandParcelForm
           options={options.water}
           errors={errors.values.water}
           resetError={errors.reset}
+          initialValue={initialState?.water}
         />
         <Dropdown
           label="Gas"
@@ -44,6 +53,7 @@ export function LandParcelForm({ submit, errors, saved, unsave }: LandParcelForm
           options={options.gas}
           errors={errors.values.gas}
           resetError={errors.reset}
+          initialValue={initialState?.gas}
         />
         <Dropdown
           label="Electicity"
@@ -52,6 +62,7 @@ export function LandParcelForm({ submit, errors, saved, unsave }: LandParcelForm
           options={options.electricity}
           errors={errors.values.electricity}
           resetError={errors.reset}
+          initialValue={initialState?.electricity}
         />
         <Dropdown
           label="Sewer"
@@ -60,6 +71,7 @@ export function LandParcelForm({ submit, errors, saved, unsave }: LandParcelForm
           options={options.sewer}
           errors={errors.values.sewer}
           resetError={errors.reset}
+          initialValue={initialState?.sewer}
         />
         <Numeric
           label="Area"
@@ -70,6 +82,7 @@ export function LandParcelForm({ submit, errors, saved, unsave }: LandParcelForm
           max={10000}
           errors={errors.values.area}
           resetError={errors.reset}
+          initialValue={initialState?.area?.toString()}
         />
         <Field
           label="Title (optional)"
@@ -77,6 +90,7 @@ export function LandParcelForm({ submit, errors, saved, unsave }: LandParcelForm
           icon="subtitles"
           errors={errors.values.title}
           resetError={errors.reset}
+          initialValue={initialState?.title}
         />
       </div>
       {!saved && (

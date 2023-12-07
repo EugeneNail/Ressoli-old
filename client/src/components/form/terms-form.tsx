@@ -8,6 +8,7 @@ import { TermsOptions } from "../../model/options/terms-options";
 import api from "../../service/api";
 import { Saveable } from "../../model/saveable";
 import { SaveMark } from "./save-mark";
+import { Terms } from "../../model/terms";
 
 export class TermsFormErrors {
   contract: string[] = [];
@@ -16,9 +17,9 @@ export class TermsFormErrors {
   price: string[] = [];
 }
 
-type TermsFormProps = FormProps<TermsFormErrors> & Saveable;
+type TermsFormProps = FormProps<TermsFormErrors, Terms> & Saveable;
 
-export function TermsForm({ submit, errors, saved, unsave }: TermsFormProps) {
+export function TermsForm({ submit, errors, saved, unsave, initialState = new Terms() }: TermsFormProps) {
   const [options, setOptions] = useState(new TermsOptions());
 
   useEffect(() => {
@@ -29,6 +30,7 @@ export function TermsForm({ submit, errors, saved, unsave }: TermsFormProps) {
     <form action="" className="form" onSubmit={submit} onClick={unsave}>
       <div className="form__control-group">
         <Dropdown
+          initialValue={initialState.contract}
           label="Contract"
           name="contract"
           icon="description"
@@ -37,6 +39,7 @@ export function TermsForm({ submit, errors, saved, unsave }: TermsFormProps) {
           resetError={errors.reset}
         />
         <Numeric
+          initialValue={initialState.price.toString()}
           label="Price"
           name="price"
           icon="payments"
@@ -48,8 +51,8 @@ export function TermsForm({ submit, errors, saved, unsave }: TermsFormProps) {
         />
       </div>
       <div className="form__control-group vertical">
-        <Checkbox label="Mortgage" name="hasMortgage" />
-        <Checkbox label="VAT" name="hasVat" />
+        <Checkbox label="Mortgage" name="hasMortgage" checked={initialState.hasMortgage} />
+        <Checkbox label="VAT" name="hasVat" checked={initialState.hasVat} />
       </div>
       {saved && <SaveMark />}
       <div className="form__button-group">{!saved && <Button className="form__button" text="Save" />}</div>

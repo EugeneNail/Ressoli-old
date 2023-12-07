@@ -5,4 +5,5 @@ export class LandParcel {
   electricity: string = "";
   sewer: string = "";
   area: number = 0;
+  title: string = "";
 }

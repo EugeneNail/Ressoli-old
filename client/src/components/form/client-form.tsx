@@ -4,6 +4,7 @@ import Button from "../button/button";
 import { FormProps } from "../../model/form-props";
 import { SaveMark } from "./save-mark";
 import { Saveable } from "../../model/saveable";
+import { Client } from "../../model/client";
 
 export class ClientFormErrors {
   name: string[] = [];
@@ -11,14 +12,22 @@ export class ClientFormErrors {
   phoneNumber: string[] = [];
 }
 
-type ClientFormProps = FormProps<ClientFormErrors> & Saveable & {};
+type ClientFormProps = FormProps<ClientFormErrors, Client> & Saveable;
 
-export function ClientForm({ submit, errors, saved, unsave }: ClientFormProps) {
+export function ClientForm({ submit, errors, saved, unsave, initialState = new Client() }: ClientFormProps) {
   return (
     <form method="POST" className="form" onSubmit={submit} onClick={unsave}>
       <div className="form__control-group">
-        <Field label="Name" name="name" icon="account_box" errors={errors.values.name} resetError={errors.reset} />
         <Field
+          initialValue={initialState.name}
+          label="Name"
+          name="name"
+          icon="account_box"
+          errors={errors.values.name}
+          resetError={errors.reset}
+        />
+        <Field
+          initialValue={initialState.surname}
           label="Surname"
           name="surname"
           icon="account_box"
@@ -26,6 +35,7 @@ export function ClientForm({ submit, errors, saved, unsave }: ClientFormProps) {
           resetError={errors.reset}
         />
         <Field
+          initialValue={initialState.phoneNumber}
           label="Phone number"
           name="phoneNumber"
           icon="contact_phone"

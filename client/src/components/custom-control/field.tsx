@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import "./custom-control.sass";
-import { useState, FocusEvent, useEffect } from "react";
+import { useState, FocusEvent, useEffect, useRef, EffectCallback } from "react";
 import { ControlProps } from "../../model/control-props";
 import { HelperText } from "./helper-text";
 import { Icon } from "../icon/icon";
@@ -9,13 +9,28 @@ type FieldProps = ControlProps & {
   password?: boolean;
 };
 
-export function Field({ name, label, value = "", icon, helperText = "", password, errors, resetError }: FieldProps) {
-  const [isActive, setActive] = useState(value.length > 0);
+export function Field({
+  name,
+  label,
+  initialValue = "",
+  icon,
+  helperText = "",
+  password,
+  errors,
+  resetError,
+}: FieldProps) {
+  const [isActive, setActive] = useState(false);
   const [isVisible, setVisible] = useState(false);
   const [isInvalid, setInvalid] = useState(false);
+  const isDirty = useRef(false);
+  const ref = useRef<HTMLInputElement>(document.createElement("input"));
 
   useEffect(() => {
     setInvalid(errors.length > 0);
+    if (!isDirty.current && initialValue != "") {
+      setActive(true);
+      isDirty.current = true;
+    }
   }, [errors]);
 
   function handleBlur(event: FocusEvent<HTMLInputElement>) {
@@ -31,12 +46,13 @@ export function Field({ name, label, value = "", icon, helperText = "", password
         </div>
         <p className="control__label">{label}</p>
         <input
+          ref={ref}
           autoComplete="on"
           type={password && !isVisible ? "password" : "text"}
           className={"control__input"}
           name={name}
           id={name}
-          defaultValue={value}
+          defaultValue={initialValue}
           onInput={() => setActive(true)}
           onFocus={() => setActive(true)}
           onBlur={handleBlur}

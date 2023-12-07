@@ -1,7 +1,7 @@
 export type ControlProps = {
   label: string;
   name: string;
-  value?: string;
+  initialValue?: string;
   icon: string;
   helperText?: string;
   resetError?: (name: string) => void;

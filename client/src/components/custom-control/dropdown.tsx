@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { ControlProps } from "../../model/control-props";
-import { useState, FocusEvent, useEffect } from "react";
+import { useState, FocusEvent, useEffect, useRef } from "react";
 import { HelperText } from "./helper-text";
 import { Icon } from "../icon/icon";
 
@@ -13,16 +13,21 @@ export function Dropdown({
   label,
   resetError,
   options,
-  value = "",
+  initialValue = "",
   icon,
   helperText = "",
   errors,
 }: DropdownProps) {
-  const [isActive, setActive] = useState(value.length > 0);
+  const [isActive, setActive] = useState(initialValue.length > 0);
   const [isInvalid, setInvalid] = useState(false);
+  const isDirty = useRef(false);
 
   useEffect(() => {
     setInvalid(errors.length > 0);
+    if (!isDirty.current && initialValue != "") {
+      setActive(true);
+      isDirty.current = true;
+    }
   }, [errors]);
 
   function handleBlur(event: FocusEvent<HTMLSelectElement>) {
@@ -47,10 +52,11 @@ export function Dropdown({
           onChange={handleChange}
           name={name}
           id={name}
-          defaultValue={value}
           className="control__input"
         >
-          <option value="" className="dropdown__option hidden" />
+          <option value={initialValue} className="dropdown__option hidden">
+            {initialValue}
+          </option>
           {options.map((option, index) => (
             <option key={index} value={option} className="dropdown__option">
               {option}

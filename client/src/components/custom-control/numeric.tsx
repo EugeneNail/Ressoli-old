@@ -15,7 +15,7 @@ type NumericProps = ControlProps & {
 export function Numeric({
   name,
   label,
-  value = "",
+  initialValue = "",
   icon,
   helperText = "",
   errors,
@@ -25,14 +25,19 @@ export function Numeric({
   step = 1,
   precision = 0,
 }: NumericProps) {
-  const [isActive, setActive] = useState(value.length > 0);
+  const [isActive, setActive] = useState(false);
   const intervalRef = useRef<number>(0);
   const timeoutRef = useRef<number>(0);
   const [isInvalid, setInvalid] = useState(false);
   const ref = useRef<HTMLInputElement>(document.createElement("input") as HTMLInputElement);
+  const isDirty = useRef(false);
 
   useEffect(() => {
     setInvalid(errors.length > 0);
+    if (!isDirty.current && initialValue != "") {
+      setActive(true);
+      isDirty.current = true;
+    }
   }, [errors]);
 
   function handleBlur(event: FocusEvent<HTMLInputElement>) {
@@ -93,7 +98,7 @@ export function Numeric({
           className={"control__input"}
           name={name}
           id={name}
-          defaultValue={value}
+          defaultValue={initialValue}
           onInput={() => setActive(true)}
           onFocus={() => setActive(true)}
           onBlur={handleBlur}

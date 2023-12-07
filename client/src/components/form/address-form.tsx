@@ -4,6 +4,7 @@ import Button from "../button/button";
 import { Field } from "../custom-control/field";
 import { SaveMark } from "./save-mark";
 import "./form.sass";
+import { Address } from "../../model/address";
 
 export class AddressFormErrors {
   addressNumber: string[] = [];
@@ -13,9 +14,9 @@ export class AddressFormErrors {
   typeOfStreet: string[] = [];
 }
 
-type AddressFormProps = FormProps<AddressFormErrors> & Saveable & {};
+type AddressFormProps = FormProps<AddressFormErrors, Address> & Saveable & {};
 
-export function AddressForm({ submit, errors, saved, unsave }: AddressFormProps) {
+export function AddressForm({ submit, errors, saved, unsave, initialState = new Address() }: AddressFormProps) {
   return (
     <form action="" className="form" onSubmit={submit} onClick={unsave}>
       <div className="form__control-group">
@@ -25,15 +26,31 @@ export function AddressForm({ submit, errors, saved, unsave }: AddressFormProps)
           icon="location_on"
           errors={errors.values.addressNumber}
           resetError={errors.reset}
+          initialValue={initialState?.addressNumber}
         />
-        <Field label="Street" name="street" icon="add_road" errors={errors.values.street} resetError={errors.reset} />
-        <Field label="City" name="city" icon="location_city" errors={errors.values.city} resetError={errors.reset} />
+        <Field
+          label="Street"
+          name="street"
+          icon="add_road"
+          errors={errors.values.street}
+          resetError={errors.reset}
+          initialValue={initialState?.street}
+        />
+        <Field
+          label="City"
+          name="city"
+          icon="location_city"
+          errors={errors.values.city}
+          resetError={errors.reset}
+          initialValue={initialState?.city}
+        />
         <Field
           label="Postal Code (optional)"
           name="zipCode"
           icon="mail"
           errors={errors.values.postalCode}
           resetError={errors.reset}
+          initialValue={initialState?.postalCode}
         />
       </div>
       {!saved && (
