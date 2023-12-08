@@ -8,8 +8,9 @@ import { Photo } from "../../model/photo";
 import { useNavigate } from "react-router";
 import api from "../../service/api";
 import { EditableApplication } from "../../model/editable-application";
-import { Terms } from "../../model/terms";
 import Resizer from "react-image-file-resizer";
+import { Application } from "../../model/application";
+import { LandParcel } from "../../model/land-parcel";
 
 export function useEditableApplicationPageState() {
   const clientErrors = useErrors(new ClientFormErrors());
@@ -18,9 +19,16 @@ export function useEditableApplicationPageState() {
   const termsErrors = useErrors(new TermsFormErrors());
   const [isUploading, setUploading] = useState(false);
   const [photos, setPhotos] = useState<Photo[]>([]);
-  const [formSaves, setFormSaves] = useState([false, false, false, false, false]);
-  const { current: application } = useRef(new EditableApplication());
+  const [formSaves, setFormSaves] = useState(Array(5).fill(false));
+  const { current } = useRef(new EditableApplication());
   const navigate = useNavigate();
+
+  function extractIndices(initial: Application<LandParcel>) {
+    current.clientId = initial.client.id;
+    current.addressId = initial.address.id;
+    current.applicableId = initial.applicable.id;
+    current.termsId = initial.terms.id;
+  }
 
   function setSaved(indexToUpdate: number, newValue: boolean) {
     setFormSaves(formSaves.map((value, index) => (index === indexToUpdate ? newValue : value)));
@@ -29,6 +37,7 @@ export function useEditableApplicationPageState() {
   async function persistClient(event: FormEvent) {
     event?.preventDefault();
     const payload = new FormData(event.target as HTMLFormElement);
+    payload.append("id", current.clientId.toString());
     const { data, status } = await api.post("/clients", payload);
     // setFormLocks([true, false, true, true, true]);
     if (status === 422 || status === 409) {
@@ -37,12 +46,13 @@ export function useEditableApplicationPageState() {
     }
 
     setSaved(0, true);
-    application.clientId = data;
+    current.clientId = data;
   }
 
   async function persistAddress(event: FormEvent) {
     event?.preventDefault();
     const payload = new FormData(event.target as HTMLFormElement);
+    payload.append("id", current.addressId.toString());
     const { data, status } = await api.post("/addresses", payload);
 
     if (status === 422 || status === 409) {
@@ -51,12 +61,13 @@ export function useEditableApplicationPageState() {
     }
 
     setSaved(1, true);
-    application.addressId = data;
+    current.addressId = data;
   }
 
   async function persistLandParcel(event: FormEvent) {
     event?.preventDefault();
     const payload = new FormData(event.target as HTMLFormElement);
+    payload.append("id", current.applicableId.toString());
     const { data, status } = await api.post("/land-parcels", payload);
 
     if (status === 422) {
@@ -65,7 +76,7 @@ export function useEditableApplicationPageState() {
     }
 
     setSaved(2, true);
-    application.applicableId = data;
+    current.applicableId = data;
   }
 
   function resizeFile(file: File) {
@@ -90,7 +101,7 @@ export function useEditableApplicationPageState() {
     if (response.status === 200) {
       const newPhotos = response.data;
       setPhotos([...photos, ...newPhotos]);
-      application.photoIds = [...application.photoIds, ...newPhotos.map((photo) => photo.id)];
+      current.photoIds = [...current.photoIds, ...newPhotos.map((photo) => photo.id)];
     } else {
       //TODO заменить по добавлении адекватной системы оповещений
       alert("Не удалось загрузить изображения");
@@ -107,7 +118,7 @@ export function useEditableApplicationPageState() {
 
     if (response.status === 204) {
       setPhotos(photos.filter((photo) => photo.id != id));
-      application.photoIds = application.photoIds.filter((photoId) => photoId != id);
+      current.photoIds = current.photoIds.filter((photoId) => photoId != id);
       setUploading(false);
       setSaved(3, true);
     }
@@ -116,6 +127,8 @@ export function useEditableApplicationPageState() {
   async function persistTerms(event: FormEvent) {
     event?.preventDefault();
     const payload = new FormData(event.target as HTMLFormElement);
+    console.log(current.termsId);
+    payload.append("id", current.termsId.toString());
     const { data, status } = await api.post("/terms", payload);
 
     if (status === 422) {
@@ -123,7 +136,7 @@ export function useEditableApplicationPageState() {
       return;
     }
 
-    application.termsId = data;
+    current.termsId = data;
     setSaved(4, true);
   }
 
@@ -134,10 +147,13 @@ export function useEditableApplicationPageState() {
       return;
     }
 
-    const { data, status } = await api.post("/applications/land-parcels", application);
+    const { data, status } = await api.post("/applications/land-parcels", current);
     if (status > 400) {
+      alert("Something went wrong");
       return;
     }
+
+    current.id = data;
 
     navigate("/land-parcels/" + data);
   }
@@ -159,7 +175,8 @@ export function useEditableApplicationPageState() {
     persistLandParcel,
     uploadToServer,
     removePhoto,
-    persistTerms: persistTerms,
-    createNewApplication: persistApplication,
+    persistTerms,
+    persistApplication,
+    extractMeta: extractIndices,
   };
 }

@@ -56,7 +56,7 @@ class ApplicationController extends Controller {
         $applicableTypes = $this->typeToClassName($request->types);
         $applications = Application::query()->with([
             "client:clients.id,name",
-            "address:addresses.id,city,street,address_number,apartment_number",
+            "address",
             "applicable",
             "photos",
         ])
@@ -80,6 +80,7 @@ class ApplicationController extends Controller {
         }
 
         $application = new Application();
+        $application->is_active = isset($request->isActive);
         $this->service->associateDependencies($application, $request, $landParcel);
         $application->save();
         $this->service->savePhotos($application, $request->photoIds);

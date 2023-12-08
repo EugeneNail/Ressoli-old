@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Http;
 class AddressService {
 
     public function updatePostalCode(Address $address, Request $request): void {
-        if ($address->postal_code === null) {
+        if ($address->postal_code == null) {
             $address->postal_code = $request->postalCode;
             $address->save();
         }

@@ -36,6 +36,7 @@ class ApplicationResource extends JsonResource {
             "applicable" => $this->selectApplicable(),
             "photos" => $this->photos,
             "terms" => [
+                "id" => $this->terms->id,
                 "hasVat" => $this->terms->has_vat,
                 "hasMortgage" => $this->terms->has_mortgage,
                 "price" => $this->terms->price,

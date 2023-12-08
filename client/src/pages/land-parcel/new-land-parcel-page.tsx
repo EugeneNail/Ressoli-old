@@ -58,7 +58,7 @@ export function NewLandParcelPage() {
           />
           <Button
             className="editable-application-page__button"
-            action={state.createNewApplication}
+            action={state.persistApplication}
             text="Create new application"
           />
         </>

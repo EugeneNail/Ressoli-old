@@ -8,11 +8,12 @@ use Illuminate\Http\Request;
 class ClientService {
 
     public function create(Request $request): int {
-        return Client::create([
+        $client = Client::create([
             "name" => $request->name,
             "surname" => $request->surname,
             "phone_number" => $request->phoneNumber
-        ])->id();
+        ]);
+        return $client->id();
     }
 
     public function rules(string $prefix = null): array {

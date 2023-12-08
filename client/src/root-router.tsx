@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { NewLandParcelPage } from "./pages/land-parcel/new-land-parcel-page";
 import { LandParcelsPage } from "./pages/land-parcel/land-parcels-page";
 import { LandParcelPage } from "./pages/land-parcel/land-parcel-page";
+import { EditLandParcelPage } from "./pages/land-parcel/edit-land-parcel-page";
 
 function RootRouter() {
   useEffect(() => {}, []);
@@ -24,6 +25,7 @@ function RootRouter() {
             <Route path="/land-parcels/new" element={<NewLandParcelPage />} />
             <Route path="/land-parcels" element={<LandParcelsPage />} />
             <Route path="/land-parcels/:id" element={<LandParcelPage />} />
+            <Route path="/land-parcels/:id/edit" element={<EditLandParcelPage />} />
           </Route>
           {/* <Route path="/plots">
             <Route path="/plots" element={<PlotsPage />} />

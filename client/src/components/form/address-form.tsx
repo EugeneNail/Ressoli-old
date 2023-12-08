@@ -46,7 +46,7 @@ export function AddressForm({ submit, errors, saved, unsave, initialState = new 
         />
         <Field
           label="Postal Code (optional)"
-          name="zipCode"
+          name="postalCode"
           icon="mail"
           errors={errors.values.postalCode}
           resetError={errors.reset}

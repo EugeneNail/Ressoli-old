@@ -78,15 +78,10 @@ export function PhotoForm({ submit, uploading, remove, photos, saved, unsave }: 
             )}
           </div>
         </div>
-        {photos.length > 0 &&
+        {photos?.length > 0 &&
           photos.map((photo) => (
-            <div className="photo-form__photo">
-              <img
-                key={photo.id}
-                src={"http://localhost:8000/storage/" + photo.path}
-                alt=""
-                className="photo-form__image"
-              />
+            <div key={photo.id} className="photo-form__photo">
+              <img src={"http://localhost:8000/storage/" + photo.path} alt="" className="photo-form__image" />
               <button className="photo-form__button" onClick={() => remove(photo.id)}>
                 <Icon className="photo-form__icon" name="delete" />
               </button>

@@ -1,5 +1,3 @@
-import { Photo } from "./photo";
-
 export class Address {
   id: number = 0;
   city: string = "";

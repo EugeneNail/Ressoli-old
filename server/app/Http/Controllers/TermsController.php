@@ -10,7 +10,7 @@ use Illuminate\Http\Response;
 
 class TermsController extends Controller {
     public function persist(PersistTermsRequest $request) {
-        $terms = Terms::find($request->termsId);
+        $terms = Terms::find($request->id);
         $fields = [
             "has_mortgage" => $request->hasMortgage != null,
             "has_vat" => $request->hasVat != null,

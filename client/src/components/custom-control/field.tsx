@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import "./custom-control.sass";
-import { useState, FocusEvent, useEffect, useRef, EffectCallback } from "react";
+import { useState, FocusEvent, useEffect, useRef } from "react";
 import { ControlProps } from "../../model/control-props";
 import { HelperText } from "./helper-text";
 import { Icon } from "../icon/icon";
